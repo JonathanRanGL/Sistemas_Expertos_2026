@@ -1,0 +1,9 @@
+
+Explicación algoritmo de Dijkstra (para mi uso y mejor entendimiento del algoritmo)
+
+- El algoritmo de Dijkstra siempre busca el camino más "barato" hasta el objetivo
+- Nunca regresa atrás, una vez marca un nodo como el elegido o "visitado" la decisión es definitiva y óptima
+- Calcula distancias óptimas desde un origen hacia toda la red
+- Conforme se ejecuta va guardando la "distancia" más corta para llegar la cada nodo.
+- Una vez que visita un nodo, su distancia es definitiva puesto que es la más óptima.
+- Al finalizar se guarda para cada nodo el camino óptimo para llegar a él, independientemente de si hay más caminos, el algorimo guarda solamente el más corto.
