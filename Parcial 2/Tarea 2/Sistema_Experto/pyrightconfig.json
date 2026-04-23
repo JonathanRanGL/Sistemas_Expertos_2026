@@ -1,0 +1,16 @@
+{
+  "include": [
+    "**/*.py"
+  ],
+  "executionEnvironments": [
+    {
+      "root": ".",
+      "extraPaths": [
+        "01_adquisicion",
+        "02_representacion",
+        "03_tratamiento",
+        "04_utilizacion"
+      ]
+    }
+  ]
+}
