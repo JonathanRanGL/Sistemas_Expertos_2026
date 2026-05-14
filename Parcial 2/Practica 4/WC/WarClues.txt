@@ -1,0 +1,107 @@
+War Clues es un juego estilo CLUE con 5 personajes, 5 lugares y 5 armas, es un juego corto con 5 escenarios predefinidos, presentados de forma aleatoria al seleccionar jugar en el que se te presentarán 3 pistas para cada caso, una para cada categoría (personaje, lugar y arma), el objetivo del juego es mediante estas 3 pistas adivinar quién (personaje), dónde (lugar) y con qué (arma) destruyeron un tanque, el jugador gana el juego cuando acierta las 3 opciones al acusar, pierde si falla una o más.
+
+El contexto del juego es:
+
+Eres un ingeniero de guerra y se te ha asignado una tarea, analizar un tanque y determinar quién (qué país ósea, personaje) te ha destruido, dónde (lugar) y con que ha sido. Se te presenta el tanque y te dan 3 pistas, una para cada categoría que tienes que elegir, es decir, una pista de personaje, una pista de lugar y una de arma, con esta información debes decidir de la lista de 5 opciones para cada una de las categorías piensas que fue el culpable y el lugar de los hechos.
+
+El juego propone una guerra ficticia iniciada en 1946 y terminada en 1952 en la que tu país (nunca se especifica cual) estuvo en guerra con 5 países diferentes cuyos conflictos en particular tuvieron presencia en años diferentes, el gran ataque a estados unidos llevado acabo en 1946, la invasión a Alemania de 1947 a 1949, el feroz ataque de los franceses en 1950, la retirada en Reino Unido a principios de 1951, el ataque relámpago en Italia a finales de 1952.
+
+Los datos son:
+
+LOS 5 PERSONAJES SON:
+
+1. ESTADOS UNIDOS: La pista que corresponde a estados unidos es la siguiente: Los datos del reporte indican que el tanque fue recuperado en mayo de 1946
+
+2. ALEMANIA: La pista que corresponde a Alemania es la siguiente: El reporte del tanque tiene poca información pero indica que su recuperación se dio en septiembre de 1948.
+
+3. FRANCIA: La pista que corresponde a Francia es la siguiente: Este tanque no tiene registro exacto de cuando fue recuperado, aunque en su lateral parece tener una inscripción que dice R - 120850 que indica la fecha que se recuperó el 12 de agosto de 1950
+
+4. REINO UNIDO: La pista que corresponde a Reino Unido es la siguiente: Este tanque cuenta un informe detallado, aunque no indica la fecha de su recuperación indica que perteneció a la brigada de acorazados S76 desplegada únicamente desde enero de 1951 hasta abril de ese mismo año.
+
+5. ITALIA: La pista que corresponde a Italia es la siguiente: El reporte no indica mucho, pero este tanque es una variante más moderna cuyas unidades fueron desplegadas hasta finales de 1952.
+
+
+LAS 5 UBICACIONES SON:
+
+1. DESIERTO: La pista para el desierto es la siguiente: El tanque parece estar limpio y libre de óxido a excepción de toda la arena fina que tiene esparcida en cada recoveco de este.
+
+2. BOSQUE: La pista para el bosque es la siguiente: El exterior del tanque parece tener un poco de tierra seca, ramas secas de árbol amarradas como camuflaje y hojas secas por todo el frente y las orugas.
+
+3. NIEVE: La pista para la nieve es la siguiente: El tanque está mayormente limpio de no ser por una excesiva cantidad de óxido en todo el sistema de tracción del tanque, sobre todo en las orugas
+
+4. PANTANO: La pista para el pantano es la siguiente: El tanque está muy sucio, lleno de montones de lo que parece ser lodo seco, tiene una presencia ligera de óxido y algunas hojas en las orugas.
+
+5. CIUDAD: La pista para la ciudad es la siguiente: El tanque está mayormente limpio, no presenta residuos de ningún tipo en su exterior, solo un poco de polvo. 
+
+
+LAS 5 ARMAS SON LAS SIGUIENTES:
+
+Como tal no son 5 armas, si no 5 tipos de daño que presenta el tanque que corresponden a 5 tipos de armamento o proyectiles usados para destruirlo:
+
+1. BOMBA: La pista para la bomba es: El tanque presenta severo daño en la parte superior, donde presenta pronunciadas abolladuras y una gran perforación en el techo de la torreta.
+
+2. MINA ANTI TANQUE: El tanque presenta un gran daño en su sistema de tracción con gran parte de este destruido de un lado, el otro lado presenta daños considerables, el suelo del tanque presenta una perforación leve.
+
+3. CAZA TANQUES: El tanque presenta un gran impacto con perforación en la parte frontal del chasis, es un solo impacto limpio en forma de círculo de unos 25cm de diámetro.
+
+4. MISIL ANTI TANQUE: El blindaje lateral del tanque presenta una perforación de pequeño diámetro con marcas en forma de estrella que marcan alrededor de la zona del impacto con un poco de restos de pólvora quemada en esa misma zona.
+
+5. GRANADA: El exterior del tanque está intacto, no presenta ningún daño, sin embargo el interior del tanque está en mal estado, con instrumentos dañados, controles quemados, ópticas destruidas y mecanismos severamente deteriorados, lo que parece producto de una explosión y un incendio. 
+
+
+
+LAS 5 HISTORIAS O EVENTOS (PREDEFINIDAS) SON:
+
+
+1. ESTADOS UNIDOS - PANTANO - MINA ANTI TANQUE
+
+2. ALEMANIA - CIUDAD - GRANADA
+
+3. FRANCIA - BOSQUE - BOMBA
+
+4. REINO UNIDO - NIVEVE - CAZA TANQUES
+
+5. ITALIA - DESIERTO - MISIL ANTI TANQUE
+
+
+INFORMACIÓN PROPORCIONADA POR LA BASE DE DATOS:
+
+PARA PERSONAJES:
+
+USA: En la gran guerra nuestro país organizó un ataque a estados unidos por cielo, mar y tierra en febrero de 1946, finalizando en noviembre de ese mismo año.
+
+ALEMANIA: Como parte de los eventos sucedidos en la gran guerra, la extensa invasión a tierras germanas fue llevada a cabo de abril de 1947 a octubre de 1949.
+
+FRANCIA: A mediados de la guerra, Francia organizó un feroz ataque a nuestro país que sacudió nuestras fronteras a inicios de 1950.
+
+REINO UNIDO: Después de algunos años en relativa paz, un explosivo avance por parte de nuestras tropas logró que los británicos se retiraran de todo territorio ocupado fuera de su isla de enero de 1951 hasta abril de ese mismo año, sin embargo su retirada no fue pacífica, sufrimos muchas bajas en el proceso.
+
+ITALIA: A finales de la guerra, en 1952 nuestro país ejecutó un ataque relámpago a Italia en respuesta a los bombardeos sufridos en nuestra capital, sin embargo debido a el gran avance tecnológico con el que contaba Italia en ese momento lograron repeler nuestro avance.
+
+PARA LUGARES:
+
+DESIERTO: Un área extremadamente calurosa y seca, de difícil acceso, la arena se mete en todos lados, el metal del tanque te cocina como lo haría una sartén en pleno fuego, la pesadilla de cualquier tanquista e ingeniero.
+
+BOSQUE: Baja visibilidad, avance lento y mucha vegetación que en ocasiones era amarrada a los tanques en forma de camuflaje con la esperanza no ser detectados por el enemigo tan fácilmente.
+
+NIEVE: Temperaturas que llevan al extremo a cada mecanismo y ser vivo, debido a la alta humedad del ambiente y a pasar constantemente sobre recientes nevadas, la nieve se metía en cada recoveco del tanque generando así gruesas capas de óxido.
+
+PANTANO: Uno de los entornos más desafiantes incluso para el conductor de tanques más experimentado, llegando a sumergirse en resbaladizo y espeso lodo a profundidades de hasta metro y medio, donde el lodo queda atrapado en cada engrane, rueda y hueco que el tanque tenga. 
+
+CIUDAD: Pareciera ser uno de los entornos menos desafiantes, quizá no lo sea con el tanque en sí, pero lo es con la tripulación; estrechas calles, no saber que puedes encontrar al girar en la siguiente esquina, sortear nubes de polvo y escombros, además de la constante posibilidad de ser flanqueado, lo convierten en la peor pesadilla, incluso de las mejores tripulaciones.
+
+
+PARA ARMAS:
+
+BOMBA: Una de las primeras armas implementadas después de empezar a usar aviones con intenciones bélicas, usada exclusivamente en ataques aire a tierra, su intención es caer desde el cielo al objetivo y mediante una carga explosiva de gran tamaño causar un daño devastador.
+
+
+MINA ANTI TANQUE: Las minas anti tanque son elementos explosivos colocados usualmente en caminos de vehículos pesados, estas se activan con la presión ejercida por el vehículo una vez este la pisa, están diseñadas para dirigir la explosión hacia arriba maximizando el daño y así perforar el blindaje inferior del tanque para destruirlo o como mínimo inmovilizarlo.
+
+CAZATANQUES: Una categoría de vehículos blindados con potentes cañones cuyo objetivo principal es destruir vehículos blindados enemigos a largas distancias, generalmente tienen un solo cañón de gran calibre con el que al disparar a su objetivo atraviesan el grueso blindaje logrando destruirlo de un solo impacto.
+
+
+MISIL ANTI TANQUE: Conocidos generalmente por las siglas ATGM, esta es un arma de más alta tecnología; ojivas tipo HEAT propulsadas por un cohete guiadas generalmente a láser o por calor a su objetivo, al impactar sueltan un chorro de metal líquido a altísima temperatura con el que perfora el blindaje principal, destruyendo o matando a todo módulo o tripulante a su paso. Debido a la forma en que opera la ojiva, el orificio de impacto resultante es pequeño y deja marcas radiales alrededor del impacto.
+
+
+GRANADA: Este es un explosivo de mano operado por infantería, una carga pequeña de TNT explota después de unos segundos de haber liberado el mecanismo, esto expulsa fragmentos de metal a alta velocidad que pueden ser letales a corta distancia, son usadas principalmente como arma antipersona o contra vehículos sin blindaje. No son efectivas contra el blindaje de un tanque puesto que no pueden dañarlo y mucho menos perforarlo, sin embargo, cuando un tanque era emboscado, un soldado podía abrir una de las escotillas del tanque y arrojar una o varias granadas a su interior con el objetivo de matar a toda la tripulación.

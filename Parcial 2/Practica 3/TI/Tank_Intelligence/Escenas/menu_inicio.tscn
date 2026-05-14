@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://gufdodge3mpr"]
+
+[ext_resource type="Script" uid="uid://n3omx7dpgeqv" path="res://Escenas/menu_inicio.gd" id="1_0wy8d"]
+[ext_resource type="Texture2D" uid="uid://c058028cts57y" path="res://Assets/MenuBKG.png" id="2_lhyxe"]
+[ext_resource type="AudioStream" uid="uid://c3bdmhvdyegdy" path="res://Assets/audio/MenuTheme.mp3" id="3_0wy8d"]
+
+[node name="MenuInicio" type="Control" unique_id=902720548]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0wy8d")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=469100676]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_lhyxe")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=573574311]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -34.5
+offset_top = -33.0
+offset_right = 34.5
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="VBoxContainer" unique_id=1289250174]
+layout_mode = 2
+text = "JUGAR"
+
+[node name="Button2" type="Button" parent="VBoxContainer" unique_id=1147290497]
+layout_mode = 2
+text = "CERRAR"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=366321516]
+stream = ExtResource("3_0wy8d")
+volume_db = -12.0
+autoplay = true
+
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_jugar_pressed"]
+[connection signal="pressed" from="VBoxContainer/Button2" to="." method="_on_cerrar_pressed"]

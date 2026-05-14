@@ -1,0 +1,755 @@
+[gd_scene format=3 uid="uid://tq8e6ae8uxs2"]
+
+[ext_resource type="Script" uid="uid://dlj5c1edece7m" path="res://war_clues_game.gd" id="1_h8px2"]
+[ext_resource type="AudioStream" uid="uid://lcihiboniakb" path="res://Assets/audio/BackgroundAmbience.mp3" id="1_jmibr"]
+[ext_resource type="FontFile" uid="uid://ddw350gmg24x7" path="res://Assets/SpecialElite-Regular.ttf" id="2_h8px2"]
+[ext_resource type="Texture2D" uid="uid://cg68kxyarwt56" path="res://Assets/botones/Banderas/USA.png" id="4_evajq"]
+[ext_resource type="Texture2D" uid="uid://c5ya8qqmgv01w" path="res://Assets/botones/Banderas/GER.png" id="5_bvlva"]
+[ext_resource type="Texture2D" uid="uid://bxtibhelnikrq" path="res://Assets/botones/Banderas/FRA.png" id="6_5h6yh"]
+[ext_resource type="Texture2D" uid="uid://bla6vxm5rvxhi" path="res://Assets/botones/Banderas/UK.png" id="7_qaqsm"]
+[ext_resource type="Texture2D" uid="uid://bdm0qk04nmjgm" path="res://Assets/botones/Banderas/ITA.png" id="8_bpoeu"]
+[ext_resource type="Texture2D" uid="uid://jxv4b4aqgv7e" path="res://Assets/botones/Lugares/desierto.png" id="9_8i8yw"]
+[ext_resource type="Texture2D" uid="uid://biepsxigkxoly" path="res://Assets/botones/Lugares/bosque.png" id="10_rwis6"]
+[ext_resource type="Texture2D" uid="uid://xv4dfqtca333" path="res://Assets/botones/Lugares/nieve.png" id="11_ki3re"]
+[ext_resource type="Texture2D" uid="uid://556xd0v8ks6i" path="res://Assets/botones/Lugares/pantano.png" id="12_3l1a3"]
+[ext_resource type="Texture2D" uid="uid://ci2x863yd1yyg" path="res://Assets/botones/Lugares/ciudad.png" id="13_lnvc8"]
+[ext_resource type="Texture2D" uid="uid://cowvjckolkrs3" path="res://Assets/botones/Arma/bomba.png" id="14_8tf0n"]
+[ext_resource type="Texture2D" uid="uid://blt5pgtldrdmi" path="res://Assets/botones/Arma/mina.png" id="15_rif8c"]
+[ext_resource type="Texture2D" uid="uid://dlq7h45fc84j0" path="res://Assets/botones/Arma/cazatanque.png" id="16_803jt"]
+[ext_resource type="Texture2D" uid="uid://8xg7kiry5rta" path="res://Assets/botones/Arma/misil.png" id="17_1urna"]
+[ext_resource type="Texture2D" uid="uid://cgpq3f4ddjhiq" path="res://Assets/botones/Arma/granada.png" id="18_l5fb5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xvxax"]
+content_margin_top = 10.0
+bg_color = Color(0.31431612, 0.31431612, 0.31431603, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eu62h"]
+content_margin_top = 10.0
+bg_color = Color(0.07683582, 0.07683582, 0.07683582, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5omst"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.21950099, 0.21950105, 0.21950087, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_xvxax"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_eu62h"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_5omst"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jfekx"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.288518, 0.288518, 0.2885179, 1)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="WarCluesGame" type="Control" unique_id=2052314306]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_h8px2")
+
+[node name="Fondo" type="ColorRect" parent="." unique_id=181286725]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.09886565, 0.09886565, 0.09886565, 1)
+
+[node name="MusicaFondo" type="AudioStreamPlayer" parent="." unique_id=1551979964]
+stream = ExtResource("1_jmibr")
+
+[node name="PanelLore" type="Panel" parent="." unique_id=1857838463]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextoLore" type="RichTextLabel" parent="PanelLore" unique_id=1008238861]
+custom_minimum_size = Vector2(800, 250)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -175.24
+offset_right = 300.0
+offset_bottom = -25.239502
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("2_h8px2")
+theme_override_font_sizes/normal_font_size = 24
+text = "Eres un ingeniero de guerra y se te ha asignado una tarea, analizar un tanque y determinar que país, en que entorno y con que arma fue destruído.
+
+Se te presentará un reporte que contiene información que se ha podido recuperar del tanque en cuestión. 
+
+Haz clic en iniciar cuando estes listo para continuar..."
+horizontal_alignment = 1
+
+[node name="BotonIniciar" type="Button" parent="PanelLore" unique_id=1993061360]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = 105.39499
+offset_right = 100.00012
+offset_bottom = 155.39499
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_h8px2")
+theme_override_font_sizes/font_size = 34
+theme_override_styles/normal = SubResource("StyleBoxFlat_xvxax")
+theme_override_styles/hover = SubResource("StyleBoxFlat_eu62h")
+text = "INICIAR"
+
+[node name="PanelInfo" type="Panel" parent="." unique_id=2002189738]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TituloInfo" type="Label" parent="PanelInfo" unique_id=682938460]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -230.0
+offset_top = 24.895
+offset_right = 230.0
+offset_bottom = 55.895004
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0.48557895, 3.85046e-07, 1)
+theme_override_fonts/font = ExtResource("2_h8px2")
+theme_override_font_sizes/font_size = 30
+text = "Base de datos de inteligencia"
+horizontal_alignment = 1
+
+[node name="TextoDetalle" type="RichTextLabel" parent="PanelInfo" unique_id=1894100413]
+custom_minimum_size = Vector2(800, 110)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 50.76
+offset_top = -132.53497
+offset_right = 650.76
+offset_bottom = -22.534973
+grow_vertical = 0
+theme_override_fonts/normal_font = ExtResource("2_h8px2")
+theme_override_font_sizes/normal_font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_5omst")
+text = "Detalles: "
+
+[node name="ContenedorColumnas" type="HBoxContainer" parent="PanelInfo" unique_id=321172712]
+custom_minimum_size = Vector2(1000, 400)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -525.0
+offset_top = -240.475
+offset_right = 525.0
+offset_bottom = 159.52524
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+
+[node name="ColPersonajes" type="VBoxContainer" parent="PanelInfo/ContenedorColumnas" unique_id=1992964127]
+custom_minimum_size = Vector2(330, 400)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Titulo" type="Label" parent="PanelInfo/ContenedorColumnas/ColPersonajes" unique_id=1116473388]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_h8px2")
+theme_override_font_sizes/font_size = 20
+text = "PAÍSES"
+horizontal_alignment = 1
+
+[node name="BotonUSA" type="Button" parent="PanelInfo/ContenedorColumnas/ColPersonajes" unique_id=1985832331]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+icon = ExtResource("4_evajq")
+
+[node name="BotonALE" type="Button" parent="PanelInfo/ContenedorColumnas/ColPersonajes" unique_id=501379544]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+icon = ExtResource("5_bvlva")
+
+[node name="BotonFRA" type="Button" parent="PanelInfo/ContenedorColumnas/ColPersonajes" unique_id=1552874929]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+icon = ExtResource("6_5h6yh")
+
+[node name="BotonUK" type="Button" parent="PanelInfo/ContenedorColumnas/ColPersonajes" unique_id=825831372]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+icon = ExtResource("7_qaqsm")
+
+[node name="BotonITA" type="Button" parent="PanelInfo/ContenedorColumnas/ColPersonajes" unique_id=1031785422]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+icon = ExtResource("8_bpoeu")
+
+[node name="ColLugares" type="VBoxContainer" parent="PanelInfo/ContenedorColumnas" unique_id=156521432]
+custom_minimum_size = Vector2(330, 400)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Título" type="Label" parent="PanelInfo/ContenedorColumnas/ColLugares" unique_id=1382040707]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_h8px2")
+theme_override_font_sizes/font_size = 20
+text = "ENTORNOS"
+horizontal_alignment = 1
+
+[node name="BotonDesierto" type="Button" parent="PanelInfo/ContenedorColumnas/ColLugares" unique_id=716071535]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+icon = ExtResource("9_8i8yw")
+
+[node name="BotonBosque" type="Button" parent="PanelInfo/ContenedorColumnas/ColLugares" unique_id=843945683]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+icon = ExtResource("10_rwis6")
+
+[node name="BotonNieve" type="Button" parent="PanelInfo/ContenedorColumnas/ColLugares" unique_id=949369456]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+icon = ExtResource("11_ki3re")
+
+[node name="BotonPantano" type="Button" parent="PanelInfo/ContenedorColumnas/ColLugares" unique_id=1501779940]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+icon = ExtResource("12_3l1a3")
+
+[node name="BotonCiudad" type="Button" parent="PanelInfo/ContenedorColumnas/ColLugares" unique_id=160448824]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+icon = ExtResource("13_lnvc8")
+
+[node name="ColArmas" type="VBoxContainer" parent="PanelInfo/ContenedorColumnas" unique_id=1010503553]
+custom_minimum_size = Vector2(330, 400)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Titulo" type="Label" parent="PanelInfo/ContenedorColumnas/ColArmas" unique_id=991043365]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_h8px2")
+theme_override_font_sizes/font_size = 20
+text = "ARMAMENTO"
+horizontal_alignment = 1
+
+[node name="BotonBomba" type="Button" parent="PanelInfo/ContenedorColumnas/ColArmas" unique_id=886985847]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+icon = ExtResource("14_8tf0n")
+
+[node name="BotonMina" type="Button" parent="PanelInfo/ContenedorColumnas/ColArmas" unique_id=890625183]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+icon = ExtResource("15_rif8c")
+
+[node name="BotonCazatanques" type="Button" parent="PanelInfo/ContenedorColumnas/ColArmas" unique_id=339944702]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+icon = ExtResource("16_803jt")
+
+[node name="BotonMisil" type="Button" parent="PanelInfo/ContenedorColumnas/ColArmas" unique_id=1502840034]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+icon = ExtResource("17_1urna")
+
+[node name="BotonGranada" type="Button" parent="PanelInfo/ContenedorColumnas/ColArmas" unique_id=80675073]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+icon = ExtResource("18_l5fb5")
+
+[node name="BotonSiguiente" type="Button" parent="PanelInfo" unique_id=325433956]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -254.36499
+offset_top = -100.724976
+offset_right = -54.36487
+offset_bottom = -50.724976
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_h8px2")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_xvxax")
+theme_override_styles/hover = SubResource("StyleBoxFlat_eu62h")
+text = "Generar caso"
+
+[node name="PanelPistas" type="Panel" parent="." unique_id=1574448518]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TituloPistas" type="Label" parent="PanelPistas" unique_id=2061296403]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -146.0
+offset_top = 26.99
+offset_right = 146.0
+offset_bottom = 57.99
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0.4862745, 0, 1)
+theme_override_fonts/font = ExtResource("2_h8px2")
+theme_override_font_sizes/font_size = 30
+text = "Reporte del tanque"
+
+[node name="TextoPistas" type="RichTextLabel" parent="PanelPistas" unique_id=1987277437]
+custom_minimum_size = Vector2(1050, 430)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -525.0
+offset_top = -221.445
+offset_right = 525.0
+offset_bottom = 178.55505
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("2_h8px2")
+theme_override_font_sizes/normal_font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_5omst")
+bbcode_enabled = true
+horizontal_alignment = 1
+
+[node name="BotonContinuar" type="Button" parent="PanelPistas" unique_id=694062065]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -254.36499
+offset_top = -100.724976
+offset_right = -54.36487
+offset_bottom = -50.724976
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_h8px2")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_xvxax")
+theme_override_styles/hover = SubResource("StyleBoxFlat_eu62h")
+text = "CONTINUAR"
+
+[node name="BotonRegresarInfo" type="Button" parent="PanelPistas" unique_id=1591822485]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1102.295
+offset_top = -101.44
+offset_right = -902.29425
+offset_bottom = -51.440002
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_h8px2")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_xvxax")
+theme_override_styles/hover = SubResource("StyleBoxFlat_eu62h")
+text = "REGRESAR"
+
+[node name="PanelAcusacion" type="Panel" parent="." unique_id=543270544]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TituloAcusacion" type="Label" parent="PanelAcusacion" unique_id=272437309]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -169.0
+offset_top = 26.545
+offset_right = 169.0
+offset_bottom = 57.54502
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0.4862745, 0, 1)
+theme_override_fonts/font = ExtResource("2_h8px2")
+theme_override_font_sizes/font_size = 30
+text = "Resultado del análsis"
+
+[node name="ContenedorOpciones" type="HBoxContainer" parent="PanelAcusacion" unique_id=488205488]
+custom_minimum_size = Vector2(1000, 400)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -525.0
+offset_top = -240.475
+offset_right = 525.0
+offset_bottom = 159.52524
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+
+[node name="GrupoPersonajes" type="VBoxContainer" parent="PanelAcusacion/ContenedorOpciones" unique_id=1722437455]
+custom_minimum_size = Vector2(330, 400)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="BotonUSA" type="Button" parent="PanelAcusacion/ContenedorOpciones/GrupoPersonajes" unique_id=5743403]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+toggle_mode = true
+button_group = SubResource("ButtonGroup_xvxax")
+icon = ExtResource("4_evajq")
+
+[node name="BotonALE" type="Button" parent="PanelAcusacion/ContenedorOpciones/GrupoPersonajes" unique_id=1186433153]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+toggle_mode = true
+button_group = SubResource("ButtonGroup_xvxax")
+icon = ExtResource("5_bvlva")
+
+[node name="BotonFRA" type="Button" parent="PanelAcusacion/ContenedorOpciones/GrupoPersonajes" unique_id=1910709195]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+toggle_mode = true
+button_group = SubResource("ButtonGroup_xvxax")
+icon = ExtResource("6_5h6yh")
+
+[node name="BotonUK" type="Button" parent="PanelAcusacion/ContenedorOpciones/GrupoPersonajes" unique_id=1785277876]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+toggle_mode = true
+button_group = SubResource("ButtonGroup_xvxax")
+icon = ExtResource("7_qaqsm")
+
+[node name="BotonITA" type="Button" parent="PanelAcusacion/ContenedorOpciones/GrupoPersonajes" unique_id=2097635788]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+toggle_mode = true
+button_group = SubResource("ButtonGroup_xvxax")
+icon = ExtResource("8_bpoeu")
+
+[node name="GrupoLugares" type="VBoxContainer" parent="PanelAcusacion/ContenedorOpciones" unique_id=1621436159]
+custom_minimum_size = Vector2(330, 400)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="BotonDesierto" type="Button" parent="PanelAcusacion/ContenedorOpciones/GrupoLugares" unique_id=1576434772]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+toggle_mode = true
+button_group = SubResource("ButtonGroup_eu62h")
+icon = ExtResource("9_8i8yw")
+
+[node name="BotonBosque" type="Button" parent="PanelAcusacion/ContenedorOpciones/GrupoLugares" unique_id=1929537223]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+toggle_mode = true
+button_group = SubResource("ButtonGroup_eu62h")
+icon = ExtResource("10_rwis6")
+
+[node name="BotonNieve" type="Button" parent="PanelAcusacion/ContenedorOpciones/GrupoLugares" unique_id=2128796780]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+toggle_mode = true
+button_group = SubResource("ButtonGroup_eu62h")
+icon = ExtResource("11_ki3re")
+
+[node name="BotonPantano" type="Button" parent="PanelAcusacion/ContenedorOpciones/GrupoLugares" unique_id=1481247942]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+toggle_mode = true
+button_group = SubResource("ButtonGroup_eu62h")
+icon = ExtResource("12_3l1a3")
+
+[node name="BotonCiudad" type="Button" parent="PanelAcusacion/ContenedorOpciones/GrupoLugares" unique_id=1545735389]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+toggle_mode = true
+button_group = SubResource("ButtonGroup_eu62h")
+icon = ExtResource("13_lnvc8")
+
+[node name="GrupoArmas" type="VBoxContainer" parent="PanelAcusacion/ContenedorOpciones" unique_id=689952961]
+custom_minimum_size = Vector2(330, 400)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="BotonBomba" type="Button" parent="PanelAcusacion/ContenedorOpciones/GrupoArmas" unique_id=1570359848]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+toggle_mode = true
+button_group = SubResource("ButtonGroup_5omst")
+icon = ExtResource("14_8tf0n")
+
+[node name="BotonMina" type="Button" parent="PanelAcusacion/ContenedorOpciones/GrupoArmas" unique_id=242278205]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+toggle_mode = true
+button_group = SubResource("ButtonGroup_5omst")
+icon = ExtResource("15_rif8c")
+
+[node name="BotonCazatanques" type="Button" parent="PanelAcusacion/ContenedorOpciones/GrupoArmas" unique_id=362074780]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+toggle_mode = true
+button_group = SubResource("ButtonGroup_5omst")
+icon = ExtResource("16_803jt")
+
+[node name="BotonMisil" type="Button" parent="PanelAcusacion/ContenedorOpciones/GrupoArmas" unique_id=4662521]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+toggle_mode = true
+button_group = SubResource("ButtonGroup_5omst")
+icon = ExtResource("17_1urna")
+
+[node name="BotonGranada" type="Button" parent="PanelAcusacion/ContenedorOpciones/GrupoArmas" unique_id=662253971]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+toggle_mode = true
+button_group = SubResource("ButtonGroup_5omst")
+icon = ExtResource("18_l5fb5")
+
+[node name="ResumenSeleccion" type="Label" parent="PanelAcusacion" unique_id=123161185]
+custom_minimum_size = Vector2(600, 100)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 51.0
+offset_top = -121.91498
+offset_right = 651.0
+offset_bottom = -41.914978
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_h8px2")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_jfekx")
+text = "Ha seleccionado: "
+vertical_alignment = 1
+
+[node name="BotonContinuar" type="Button" parent="PanelAcusacion" unique_id=83036338]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -254.36499
+offset_top = -117.34497
+offset_right = -54.36487
+offset_bottom = -67.34497
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_h8px2")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_xvxax")
+theme_override_styles/hover = SubResource("StyleBoxFlat_eu62h")
+text = "CONFIRMAR"
+
+[node name="BotonRegresarPistas" type="Button" parent="PanelAcusacion" unique_id=313158151]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -476.58002
+offset_top = -116.58502
+offset_right = -276.55853
+offset_bottom = -66.58502
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_h8px2")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_xvxax")
+theme_override_styles/hover = SubResource("StyleBoxFlat_eu62h")
+text = "REGRESAR"
+
+[node name="PanelResultado" type="Panel" parent="." unique_id=595515966]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextoResultado" type="RichTextLabel" parent="PanelResultado" unique_id=738040614]
+custom_minimum_size = Vector2(800, 400)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -55.0
+offset_right = 400.0
+offset_bottom = 55.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("2_h8px2")
+theme_override_font_sizes/normal_font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_5omst")
+bbcode_enabled = true
+text = "El resultado de su reporte es el siguiente: "
+horizontal_alignment = 1
+
+[node name="BotonFinalizar" type="Button" parent="PanelResultado" unique_id=2024970801]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -96.78003
+offset_right = 100.00012
+offset_bottom = -46.78003
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_h8px2")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_xvxax")
+theme_override_styles/hover = SubResource("StyleBoxFlat_eu62h")
+text = "FINALIZAR"

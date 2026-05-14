@@ -1,0 +1,48 @@
+Eres el operador de radio de un tanque.
+
+Sucesión de eventos en el juego.
+
+Aparece una cinemática en la que se muestra desde el interior de un tanque recorriendo un camino, se escucha un disparo e inmediatamente el tanque del protagonista recibe un impacto, se escucha el efecto de sonido de la radio dañada y el comandante indicar que la radio ha sido dañada.
+
+Se detiene la cinemática y se muestra un menú.
+
+Aparece un diálogo que dice "Tú: Mierda la radio ha sido dañada, pero aún parece funcionar un poco"
+
+Aparece otro diálogo que dice: "Radio: *bzztt* (aquí va una designación a la tripulación del tanque) reporten su estado, fueron impactados?"
+
+Aparece otro diálogo que dice: "Tú: Parece que aún funciona un poco, pero no podemos hablar, solo enviar afirmativo o negativo, informaré positivo" 
+
+*Suena un pitido y se ve que el pulsador de "afirmativo" fue presionado"*
+
+Aparece otro diálogo y dice: "Radio: ¿La tripulación se encuentra bien?"
+
+*Suena un pitido y se ve que el pulsador de "afirmativo" fue presionado"*
+
+Aparece otro diálogo y dice: "Radio: ¿El tanque recibió daños críticos?"
+
+*Suena un pitido y se ve que el pulsador de "afirmativo" fue presionado"*
+
+Aparece otro diálogo y dice: "Radio: ¿El tanque puede moverse, pueden salir de donde están?"
+
+*Suena un pitido y se ve que el pulsador de "negativo" fue presionado"*
+
+Aparece otro diálogo y dice: "Radio: ¿Siguen expuestos a fuego enemigo?"
+
+*Suena un pitido y se ve que el pulsador de "negativo" fue presionado"*
+
+Aparece otro diálogo y dice: "Radio: Bien, pero es probable que los enemigos estén avanzando a su posición, debemos sacarlos de ahí rápido, soldado ¿Su radio está dañada?"
+
+*Suena un pitido y se ve que el pulsador de "afirmativo" fue presionado"*
+
+Aparece otro diálogo y dice: "Radio: ¿Pueden comunicarse por voz?"
+
+*Suena un pitido y se ve que el pulsador de "negativo" fue presionado"*
+
+Aparece otro diálogo y dice: "Radio: Entendido, continuaremos comunicándonos mediante comandos de afirmativo y negativo, pero necesito saber lo antes posible que tanque llevan para enviarles refuerzos y piezas para reparar ese tanque en específico."
+
+Aparece otro diálogo y dice: "Radio: "Le haré unas prenguntas y necesito que me responda con afirmativo o negativo para poder determinar qué tanque lleva, ¿está listo?".
+
+A partir de aquí termina el modo de diálogos automático y el juego se queda a la espera de que presiones "afirmativo" para iniciar con la parte de hacer preguntas y adivinar el tanque (tanque presente en el juego World Of Tanks).
+
+(Alternativo: Si en esta parte el jugador presiona "Negativo" aparece un diálogo más: "Radio: Soldado, está es la única forma de que pueda salir vivo de esta, ¿Comprende eso?, ahora, le repito ¿Está listo?" Si el jugador presiona afirmativo el juego inicia como describí pero si el jugador vuelve a presionar negativo el juego se cierra y termina la partida.
+

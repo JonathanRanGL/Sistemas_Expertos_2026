@@ -1,0 +1,143 @@
+[gd_scene format=3 uid="uid://gufdodge3mpr"]
+
+[ext_resource type="Script" uid="uid://n3omx7dpgeqv" path="res://Escenas/menu_inicio.gd" id="1_0wy8d"]
+[ext_resource type="Texture2D" uid="uid://c058028cts57y" path="res://Assets/MenuBKG.png" id="2_lhyxe"]
+[ext_resource type="AudioStream" uid="uid://c3bdmhvdyegdy" path="res://Assets/audio/MenuTheme.mp3" id="3_0wy8d"]
+[ext_resource type="FontFile" uid="uid://ddw350gmg24x7" path="res://Assets/SpecialElite-Regular.ttf" id="3_lhyxe"]
+[ext_resource type="Texture2D" uid="uid://dar56gcrw000w" path="res://Assets/logo.jpg" id="3_x84wf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x84wf"]
+content_margin_top = 25.0
+bg_color = Color(0, 0.4509804, 0, 1)
+border_width_left = 20
+border_width_top = 20
+border_width_right = 20
+border_width_bottom = 20
+border_color = Color(0, 0.19607843, 0, 1)
+border_blend = true
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lhyxe"]
+content_margin_top = 25.0
+bg_color = Color(0, 0.27450982, 0, 1)
+border_width_left = 20
+border_width_top = 20
+border_width_right = 20
+border_width_bottom = 20
+border_color = Color(0, 0.19607843, 0, 1)
+border_blend = true
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ujxjh"]
+content_margin_top = 25.0
+bg_color = Color(0.8627451, 0, 0, 1)
+border_width_left = 20
+border_width_top = 20
+border_width_right = 20
+border_width_bottom = 20
+border_color = Color(0.3137255, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ntk23"]
+content_margin_top = 25.0
+bg_color = Color(0.39215687, 0, 0, 1)
+border_width_left = 20
+border_width_top = 20
+border_width_right = 20
+border_width_bottom = 20
+border_color = Color(0.3137255, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="MenuInicio" type="Control" unique_id=902720548]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0wy8d")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=469100676]
+modulate = Color(0.4149491, 0.4149491, 0.4149491, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_lhyxe")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=1358740860]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -151.38501
+offset_top = 77.0
+offset_right = 872.615
+offset_bottom = 568.0001
+grow_horizontal = 2
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("3_x84wf")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=573574311]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -89.875
+offset_top = 48.38501
+offset_right = 89.875
+offset_bottom = 134.38504
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 28
+
+[node name="Button" type="Button" parent="VBoxContainer" unique_id=1289250174]
+custom_minimum_size = Vector2(190, 70)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.875, 0.875, 0.875, 1)
+theme_override_colors/font_hover_color = Color(0.2303147, 0.23031497, 0.23031548, 1)
+theme_override_fonts/font = ExtResource("3_lhyxe")
+theme_override_font_sizes/font_size = 42
+theme_override_styles/normal = SubResource("StyleBoxFlat_x84wf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_lhyxe")
+text = "JUGAR"
+
+[node name="Button2" type="Button" parent="VBoxContainer" unique_id=1147290497]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.875, 0.875, 0.875, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.2159017, 0.21590173, 0.2159017, 1)
+theme_override_fonts/font = ExtResource("3_lhyxe")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_ujxjh")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ntk23")
+text = "CERRAR"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=366321516]
+stream = ExtResource("3_0wy8d")
+volume_db = -12.0
+autoplay = true
+
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_jugar_pressed"]
+[connection signal="pressed" from="VBoxContainer/Button2" to="." method="_on_cerrar_pressed"]
