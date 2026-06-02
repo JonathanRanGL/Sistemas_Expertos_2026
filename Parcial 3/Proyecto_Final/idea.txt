@@ -2,6 +2,12 @@ Lista de ideas que quizá podría usar
 
 podría implementar una tienda de componentes de PC inteligente, con atención personalizada   - VIABLE
 
-implementar una refaccionaria de una marca en específico, por ejemplo de partes para vehículos toyota  - VIABLE pero se me ocurren algunos peros
+me quedo con la idea de componentes de PC
 
-implementar un asistente de compra de vehiculo, basado en preguntas a los clientes, necesidades y sugerencias reales  - MEDIANAMENTE VIABLE, se me ocurren varios problemas con esta idea.
+solo venta
+no reparación
+asistencia personalizada durante la venta
+componentes de PC para PCs de escritorio
+venta de PCs armadas
+venta de laptops
+venta de accesorios como teclados, mouse, mousepad, audífonos, escritorio, monitores, reguladores, ups
