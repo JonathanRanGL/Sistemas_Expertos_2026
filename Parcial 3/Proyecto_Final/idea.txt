@@ -1,8 +1,6 @@
 Lista de ideas que quizá podría usar
 
-podría implementar una tienda de componentes de PC inteligente, con atención personalizada   - VIABLE
-
-me quedo con la idea de componentes de PC
+implementar una tienda de componentes de PC inteligente, con atención personalizada  
 
 solo venta
 no reparación
