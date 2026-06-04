@@ -47,10 +47,6 @@ La aplicación funciona como una página interactiva donde el usuario puede colo
 
 ## Uso
 
-1. Abrir la página web de la tienda inteligente.
-2. Navegar por las categorías.
-3. Responder al asistente virtual sobre necesidades y presupuesto.
-4. Revisar las recomendaciones y confirmar el pedido.
 
 ## Extensiones viables 
 
