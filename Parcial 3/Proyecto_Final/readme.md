@@ -1,61 +1,52 @@
 # Tienda Inteligente de Componentes de PC
 
-## Descripción del proyecto
+## Descripción
 
-Este proyecto es un sistema experto para una tienda en línea de componentes de PC. Su objetivo es ofrecer atención personalizada durante la compra, ayudando al cliente a elegir los productos adecuados según sus necesidades y preferencias.
-
-La aplicación funciona como una página interactiva donde el usuario puede colocar su pedido y conversar con el sistema experto para recibir recomendaciones.
+Tienda Inteligente es un sistema experto para una tienda en línea de componentes y equipos informáticos. Proporciona asistencia personalizada durante la compra mediante un asistente conversacional que sugiere productos y configuraciones según presupuesto, uso y preferencias del cliente.
 
 ## Características principales
 
-- Venta exclusiva de productos, sin reparación
-- Atención personalizada durante la venta
-- Productos disponibles:
-  - Componentes para PCs de escritorio
-  - PCs armadas
-  - Laptops
-  - Accesorios: teclados, mouse, mousepad, audífonos, escritorios, monitores, reguladores, UPS
+- Venta de componentes, PCs armadas, laptops y accesorios.
+- Asistente conversacional para recomendaciones personalizadas.
+- Paquetes y compatibilidades validadas por el motor de reglas.
+- Interfaz simple para confirmar pedidos y generar resúmenes.
 
 ## Flujo de interacción
 
-1. El usuario ingresa a la página de la tienda.
-2. Selecciona el tipo de compra deseada:
-   - componente suelto
-   - PC armada
-   - laptop
-   - accesorio
-3. El sistema experto formula preguntas sobre:
-   - presupuesto
-   - uso principal (gaming, oficina, edición, estudio)
-   - preferencias de marcas o características
-4. Con base en las respuestas, el sistema sugiere productos y paquetes adecuados.
-5. El usuario confirma el pedido y recibe un resumen final.
+1. El usuario accede a la tienda y selecciona la categoría de interés.
+2. Responde preguntas del asistente sobre presupuesto, uso y preferencias.
+3. El motor experto filtra y sugiere componentes o paquetes óptimos.
+4. El usuario revisa las recomendaciones y confirma la compra.
 
-## Beneficios
+## Arquitectura (sugerida)
 
-- Recomendaciones inteligentes y enfocadas
-- Compra guiada para usuarios con poco conocimiento técnico
-- Catálogo orientado a PCs de escritorio, laptops y accesorios
-- Experiencia de compra más rápida y confiable
+- Frontend: página web interactiva (HTML/CSS/JS o framework moderno).
+- Backend: API REST para catálogo, reglas y gestión de pedidos.
+- Motor de reglas / Sistema experto: módulo de inferencia para recomendaciones.
+- Base de datos: productos, compatibilidades y historial de recomendaciones.
+- Assets: carpeta `assets/` para imágenes y capturas.
 
-## Posible arquitectura
+## Guía rápida de uso
 
-- Interfaz de usuario web o página interactiva
-- Motor de reglas / sistema experto para recomendaciones
-- Base de conocimientos con productos y compatibilidades
-- Módulo de interacción para diálogos de asistencia personalizada
+1. Colocar los assets visuales en `assets/` (p. ej. `assets/screenshots/`).
+2. Abrir la página principal y navegar por categorías.
+3. Iniciar conversación con el asistente y responder las preguntas.
 
-## Uso
+## Pautas para imágenes y capturas
 
-1. Abrir la página web de la tienda inteligente.
-2. Navegar por las categorías.
-3. Responder al asistente virtual sobre necesidades y presupuesto.
-4. Revisar las recomendaciones y confirmar el pedido.
+- Imágenes de producto: `assets/products/`.
+- Capturas de pantalla: `assets/screenshots/`.
+- Para insertar imágenes en este README use la sintaxis:
 
-## Extensiones viables 
+   ![Descripción de la imagen](assets/screenshots/ejemplo.png)
 
-- Soporte de filtros avanzados por precio, marca, rendimiento
-- Historial de pedidos y recomendaciones guardadas
-- Integración con métodos de pago y facturación
-- Chatbot avanzado para asistencia más natural
+- Recomendación: use imágenes en formato JPG/PNG y optimice el tamaño para web.
+
+## Contribuciones
+
+Si deseas aportar mejoras, crea un pull request con cambios claros en la estructura del proyecto y ejemplos de assets añadidos.
+
+## Licencia
+
+Proyecto de ejemplo para fines académicos. Añadir licencia específica si procede.
 
