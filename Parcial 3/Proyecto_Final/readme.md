@@ -48,5 +48,5 @@ Si deseas aportar mejoras, crea un pull request con cambios claros en la estruct
 
 ## Licencia
 
-Proyecto de ejemplo para fines académicos. Añadir licencia específica si procede.
+Proyecto de ejemplo para fines académicos. 
 
