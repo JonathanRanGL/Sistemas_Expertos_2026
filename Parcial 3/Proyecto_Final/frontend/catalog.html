@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo - Tienda Inteligente</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+            color: #333;
+        }
+        
+        /* ========== HEADER ========== */
+        header {
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        
+        .logo {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #333;
+            cursor: pointer;
+        }
+        
+        nav {
+            flex: 1;
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: #666;
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+        
+        nav a:hover {
+            color: #667eea;
+        }
+        
+        .nav-right {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .btn-ia {
+            background: #2c2c2c;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .btn-ia:hover {
+            background: #667eea;
+        }
+        
+        /* ========== MAIN CONTENT ========== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .page-title {
+            margin-bottom: 40px;
+        }
+        
+        .page-title h1 {
+            font-size: 2.5em;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: #1a1a1a;
+        }
+        
+        .page-title p {
+            color: #666;
+            font-size: 1.1em;
+        }
+        
+        /* ========== SEARCH & FILTERS ========== */
+        .search-filters {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .search-bar {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .search-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.95em;
+            transition: border-color 0.3s;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .filter-btn {
+            background: white;
+            border: 2px solid #e0e0e0;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .filter-btn:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+        
+        .filters {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-select {
+            padding: 10px 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+        
+        .filter-select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        /* ========== PRODUCTS GRID ========== */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+        
+        .product-image {
+            background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-trending {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #666;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .product-discount {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff4444;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+        
+        .product-body {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-category {
+            color: #999;
+            font-size: 0.75em;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        
+        .product-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+            line-height: 1.3;
+            min-height: 2.6em;
+        }
+        
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 10px;
+            font-size: 0.85em;
+        }
+        
+        .stars {
+            color: #ffc107;
+            font-size: 0.9em;
+        }
+        
+        .rating-count {
+            color: #999;
+            font-size: 0.8em;
+        }
+        
+        .product-price {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+        
+        .product-oldprice {
+            color: #ccc;
+            text-decoration: line-through;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        
+        .product-stock {
+            font-size: 0.85em;
+            margin-bottom: 15px;
+            padding: 6px 10px;
+            background: #f0f0f0;
+            border-radius: 6px;
+            display: inline-block;
+        }
+        
+        .stock-available {
+            color: #4caf50;
+        }
+        
+        .stock-low {
+            color: #ff9800;
+        }
+        
+        .product-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+        }
+        
+        .btn-add {
+            flex: 1;
+            background: #2c2c2c;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 0.9em;
+        }
+        
+        .btn-add:hover {
+            background: #1a1a1a;
+        }
+        
+        .btn-favorite {
+            background: white;
+            border: 2px solid #e0e0e0;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: all 0.3s;
+            color: #999;
+        }
+        
+        .btn-favorite:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+        
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .navbar-container {
+                flex-wrap: wrap;
+            }
+            
+            nav {
+                order: 3;
+                width: 100%;
+                gap: 15px;
+                justify-content: center;
+            }
+            
+            .search-bar {
+                flex-direction: column;
+            }
+            
+            .search-input {
+                min-width: auto;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .page-title h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ========== HEADER ========== -->
+    <header>
+        <div class="navbar-container">
+            <div class="logo" onclick="window.location.href='../index.html'">🖥️ Tienda Inteligente</div>
+            
+            <nav>
+                <a href="#productos">Productos</a>
+                <a href="#ofertas">Ofertas</a>
+                <a href="#arma-tu-pc">Arma tu PC</a>
+                <a href="#soporte">Soporte</a>
+            </nav>
+            
+            <div class="nav-right">
+                <button class="btn-ia" onclick="window.location.href='chat.html'">
+                    <i class="bi bi-cpu"></i> Asistente IA
+                </button>
+                <i class="bi bi-person"></i>
+                <i class="bi bi-cart"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <div class="container">
+        <div class="page-title">
+            <h1>Catálogo de Productos</h1>
+            <p>Explora nuestro catálogo completo de componentes de PC de primera calidad</p>
+        </div>
+
+        <!-- ========== SEARCH & FILTERS ========== -->
+        <div class="search-filters">
+            <div class="search-bar">
+                <input 
+                    type="text" 
+                    class="search-input" 
+                    placeholder="Buscar productos..."
+                    id="searchInput"
+                >
+                <button class="filter-btn">
+                    <i class="bi bi-funnel"></i> Filtros
+                </button>
+            </div>
+            
+            <div class="filters">
+                <select class="filter-select" id="categoryFilter">
+                    <option value="">Todas las categorías</option>
+                    <option value="GPU">GPU</option>
+                    <option value="CPU">CPU</option>
+                    <option value="RAM">RAM</option>
+                    <option value="SSD">SSD</option>
+                    <option value="Motherboard">Motherboard</option>
+                    <option value="Fuente">Fuente</option>
+                    <option value="Cooler">Cooler</option>
+                    <option value="Gabinete">Gabinete</option>
+                </select>
+                
+                <select class="filter-select" id="brandFilter">
+                    <option value="">Todas las marcas</option>
+                    <option value="NVIDIA">NVIDIA</option>
+                    <option value="AMD">AMD</option>
+                    <option value="Intel">Intel</option>
+                    <option value="Corsair">Corsair</option>
+                    <option value="Samsung">Samsung</option>
+                    <option value="ASUS">ASUS</option>
+                </select>
+                
+                <input 
+                    type="number" 
+                    class="filter-select" 
+                    placeholder="Precio máximo"
+                    id="maxPriceFilter"
+                >
+            </div>
+        </div>
+
+        <!-- ========== PRODUCTS GRID ========== -->
+        <div class="products-grid" id="productsGrid">
+            <!-- Las tarjetas de productos se cargarán dinámicamente aquí -->
+            <p style="grid-column: 1/-1; text-align: center; color: #999; padding: 40px;">
+                📦 Los productos se cargarán desde la API en futuras iteraciones
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Datos de ejemplo (serán reemplazados por datos reales de la API)
+        const sampleProducts = [
+            {
+                id: 1,
+                name: "NVIDIA GeForce RTX 4090 24GB GDDR6X",
+                category: "GPU",
+                brand: "NVIDIA",
+                price: 169999,
+                oldPrice: 189999,
+                stock: 5,
+                rating: 4.9,
+                reviews: 847,
+                trending: true,
+                discount: -11
+            },
+            {
+                id: 2,
+                name: "Samsung 990 PRO 2TB NVMe SSD",
+                category: "SSD",
+                brand: "Samsung",
+                price: 18999,
+                oldPrice: null,
+                stock: 15,
+                rating: 4.9,
+                reviews: 956,
+                trending: false,
+                discount: null
+            },
+            {
+                id: 3,
+                name: "NZXT H7 Flow RGB Mid-Tower Case",
+                category: "Gabinete",
+                brand: "NZXT",
+                price: 13999,
+                oldPrice: 16999,
+                stock: 8,
+                rating: 4.6,
+                reviews: 445,
+                trending: false,
+                discount: -18
+            }
+        ];
+
+        function renderProducts(products) {
+            const grid = document.getElementById('productsGrid');
+            
+            if (products.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999; padding: 40px;">No hay productos que coincidan con los filtros</p>';
+                return;
+            }
+            
+            grid.innerHTML = products.map(product => `
+                <div class="product-card">
+                    <div class="product-image">
+                        ${product.trending ? '<div class="product-trending"><i class="bi bi-graph-up"></i> Tendencia</div>' : ''}
+                        ${product.discount ? `<div class="product-discount">${product.discount}%</div>` : ''}
+                        📦
+                    </div>
+                    
+                    <div class="product-body">
+                        <div class="product-category">${product.category}</div>
+                        <div class="product-name">${product.name}</div>
+                        
+                        <div class="product-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span>${product.rating}</span>
+                            <span class="rating-count">(${product.reviews})</span>
+                        </div>
+                        
+                        ${product.oldPrice ? `<div class="product-oldprice">$${product.oldPrice.toLocaleString()}</div>` : ''}
+                        <div class="product-price">$${product.price.toLocaleString()}</div>
+                        
+                        <div class="product-stock ${product.stock > 10 ? 'stock-available' : 'stock-low'}">
+                            ${product.stock > 10 ? '✓ En stock' : `⚠ Solo ${product.stock} disponibles`}
+                        </div>
+                        
+                        <div class="product-buttons">
+                            <button class="btn-add">Agregar al carrito</button>
+                            <button class="btn-favorite"><i class="bi bi-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Inicializar
+        renderProducts(sampleProducts);
+
+        // Event listeners para filtros
+        document.getElementById('searchInput')?.addEventListener('input', function() {
+            console.log('Filtrar por:', this.value);
+        });
+
+        document.getElementById('categoryFilter')?.addEventListener('change', function() {
+            console.log('Categoría seleccionada:', this.value);
+        });
+
+        document.getElementById('brandFilter')?.addEventListener('change', function() {
+            console.log('Marca seleccionada:', this.value);
+        });
+
+        document.getElementById('maxPriceFilter')?.addEventListener('change', function() {
+            console.log('Precio máximo:', this.value);
+        });
+    </script>
+</body>
+</html>
