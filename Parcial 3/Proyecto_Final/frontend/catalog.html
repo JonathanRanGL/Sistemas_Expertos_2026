@@ -471,53 +471,34 @@
     </div>
 
     <script>
-        // Datos de ejemplo (serán reemplazados por datos reales de la API)
-        const sampleProducts = [
-            {
-                id: 1,
-                name: "NVIDIA GeForce RTX 4090 24GB GDDR6X",
-                category: "GPU",
-                brand: "NVIDIA",
-                price: 169999,
-                oldPrice: 189999,
-                stock: 5,
-                rating: 4.9,
-                reviews: 847,
-                trending: true,
-                discount: -11
-            },
-            {
-                id: 2,
-                name: "Samsung 990 PRO 2TB NVMe SSD",
-                category: "SSD",
-                brand: "Samsung",
-                price: 18999,
-                oldPrice: null,
-                stock: 15,
-                rating: 4.9,
-                reviews: 956,
-                trending: false,
-                discount: null
-            },
-            {
-                id: 3,
-                name: "NZXT H7 Flow RGB Mid-Tower Case",
-                category: "Gabinete",
-                brand: "NZXT",
-                price: 13999,
-                oldPrice: 16999,
-                stock: 8,
-                rating: 4.6,
-                reviews: 445,
-                trending: false,
-                discount: -18
+        const BASE_API_URL = 'http://127.0.0.1:8000/api';
+
+        async function fetchProducts() {
+            const search = document.getElementById('searchInput').value.trim();
+            const category = document.getElementById('categoryFilter').value;
+            const brand = document.getElementById('brandFilter').value;
+            const maxPrice = document.getElementById('maxPriceFilter').value;
+
+            const params = new URLSearchParams();
+            if (search) params.append('q', search);
+            if (category) params.append('category', category);
+            if (brand) params.append('brand', brand);
+            if (maxPrice) params.append('max_price', maxPrice);
+
+            try {
+                const response = await fetch(`${BASE_API_URL}/products?${params.toString()}`);
+                const products = await response.json();
+                renderProducts(products);
+            } catch (error) {
+                console.error('Error cargando productos:', error);
+                document.getElementById('productsGrid').innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999; padding: 40px;">No se pudieron cargar los productos. Asegúrate de que el backend esté corriendo en http://127.0.0.1:8000</p>';
             }
-        ];
+        }
 
         function renderProducts(products) {
             const grid = document.getElementById('productsGrid');
             
-            if (products.length === 0) {
+            if (!products || products.length === 0) {
                 grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999; padding: 40px;">No hay productos que coincidan con los filtros</p>';
                 return;
             }
@@ -525,23 +506,23 @@
             grid.innerHTML = products.map(product => `
                 <div class="product-card">
                     <div class="product-image">
-                        ${product.trending ? '<div class="product-trending"><i class="bi bi-graph-up"></i> Tendencia</div>' : ''}
-                        ${product.discount ? `<div class="product-discount">${product.discount}%</div>` : ''}
+                        ${product.es_tendencia ? '<div class="product-trending"><i class="bi bi-graph-up"></i> Tendencia</div>' : ''}
+                        ${product.precio_original ? `<div class="product-discount">-${Math.round((1 - product.precio / product.precio_original) * 100)}%</div>` : ''}
                         📦
                     </div>
                     
                     <div class="product-body">
-                        <div class="product-category">${product.category}</div>
-                        <div class="product-name">${product.name}</div>
+                        <div class="product-category">${product.categoria}</div>
+                        <div class="product-name">${product.nombre}</div>
                         
                         <div class="product-rating">
                             <span class="stars">★★★★☆</span>
-                            <span>${product.rating}</span>
-                            <span class="rating-count">(${product.reviews})</span>
+                            <span>${product.rating.toFixed(1)}</span>
+                            <span class="rating-count">(${product.num_reviews})</span>
                         </div>
                         
-                        ${product.oldPrice ? `<div class="product-oldprice">$${product.oldPrice.toLocaleString()}</div>` : ''}
-                        <div class="product-price">$${product.price.toLocaleString()}</div>
+                        ${product.precio_original ? `<div class="product-oldprice">$${product.precio_original.toLocaleString()}</div>` : ''}
+                        <div class="product-price">$${product.precio.toLocaleString()}</div>
                         
                         <div class="product-stock ${product.stock > 10 ? 'stock-available' : 'stock-low'}">
                             ${product.stock > 10 ? '✓ En stock' : `⚠ Solo ${product.stock} disponibles`}
@@ -557,24 +538,13 @@
         }
 
         // Inicializar
-        renderProducts(sampleProducts);
+        fetchProducts();
 
         // Event listeners para filtros
-        document.getElementById('searchInput')?.addEventListener('input', function() {
-            console.log('Filtrar por:', this.value);
-        });
-
-        document.getElementById('categoryFilter')?.addEventListener('change', function() {
-            console.log('Categoría seleccionada:', this.value);
-        });
-
-        document.getElementById('brandFilter')?.addEventListener('change', function() {
-            console.log('Marca seleccionada:', this.value);
-        });
-
-        document.getElementById('maxPriceFilter')?.addEventListener('change', function() {
-            console.log('Precio máximo:', this.value);
-        });
+        document.getElementById('searchInput')?.addEventListener('input', fetchProducts);
+        document.getElementById('categoryFilter')?.addEventListener('change', fetchProducts);
+        document.getElementById('brandFilter')?.addEventListener('change', fetchProducts);
+        document.getElementById('maxPriceFilter')?.addEventListener('change', fetchProducts);
     </script>
 </body>
 </html>

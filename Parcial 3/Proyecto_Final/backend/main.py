@@ -18,6 +18,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from backend.api.products import router as products_router
+from backend.api.clients import router as clients_router
+from backend.api.orders import router as orders_router
+from backend.api.chat import router as chat_router
+
+app.include_router(products_router, prefix="/api")
+app.include_router(clients_router, prefix="/api")
+app.include_router(orders_router, prefix="/api")
+app.include_router(chat_router, prefix="/api")
+
 
 @app.get("/")
 def root():
@@ -32,5 +42,3 @@ def root():
 @app.get("/health")
 def health():
     return {"status": "ok"}
-
-# Los routers de productos, clientes y chat se añaden en commits posteriores

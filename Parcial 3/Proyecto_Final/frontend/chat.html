@@ -437,7 +437,7 @@
     </div>
 
     <script>
-        function sendMessage() {
+        async function sendMessage() {
             const input = document.getElementById('userInput');
             const message = input.value.trim();
             
@@ -445,7 +445,6 @@
             
             const chatMessages = document.getElementById('chatMessages');
             
-            // Añadir mensaje del usuario
             const userDiv = document.createElement('div');
             userDiv.className = 'message user';
             userDiv.innerHTML = `
@@ -456,27 +455,45 @@
                 <div class="message-avatar">👤</div>
             `;
             chatMessages.appendChild(userDiv);
-            
-            // Simular respuesta del asistente
-            setTimeout(() => {
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ mensaje: message }),
+                });
+
+                const data = await response.json();
                 const assistantDiv = document.createElement('div');
                 assistantDiv.className = 'message assistant';
                 assistantDiv.innerHTML = `
                     <div class="message-avatar">🤖</div>
                     <div class="message-content-wrapper">
                         <div class="message-label">Asistente</div>
-                        <div class="message-bubble">
-                            Entendido tu solicitud: "<strong>${message}</strong>"<br><br>
-                            En futuras iteraciones, esta respuesta provendrá del Agente 1 (Atención al Cliente) con procesamiento de lenguaje natural mediante Gemini API.
-                        </div>
+                        <div class="message-bubble">${data.respuesta}</div>
                     </div>
                 `;
                 chatMessages.appendChild(assistantDiv);
                 chatMessages.scrollTop = chatMessages.scrollHeight;
-            }, 800);
-            
+            } catch (error) {
+                console.error('Error enviando mensaje:', error);
+                const assistantDiv = document.createElement('div');
+                assistantDiv.className = 'message assistant';
+                assistantDiv.innerHTML = `
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-content-wrapper">
+                        <div class="message-label">Asistente</div>
+                        <div class="message-bubble">No se pudo conectar con el servidor. Asegúrate de que el backend esté corriendo en http://127.0.0.1:8000</div>
+                    </div>
+                `;
+                chatMessages.appendChild(assistantDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
             input.value = '';
-            chatMessages.scrollTop = chatMessages.scrollHeight;
         }
         
         function handleKeyPress(event) {
