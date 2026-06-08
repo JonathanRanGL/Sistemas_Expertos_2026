@@ -2,6 +2,8 @@ from fastapi import APIRouter
 from pydantic import BaseModel
 from typing import Optional
 
+from backend.agents.agent1_customer import CustomerAgent
+
 router = APIRouter(tags=["chat"])
 
 class ChatRequest(BaseModel):
@@ -11,14 +13,15 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     respuesta: str
     origen: str
+    metadata: Optional[dict] = None
+
+agent = CustomerAgent()
 
 @router.post("/chat", response_model=ChatResponse)
 def chat_message(payload: ChatRequest):
-    respuesta = (
-        f"¡Hola! He recibido tu mensaje: '{payload.mensaje}'. "
-        "En esta etapa, la respuesta se simula localmente para validar la conexión entre frontend y backend."
-    )
+    result = agent.generate_response(payload.mensaje, payload.cliente_id)
     return {
-        "respuesta": respuesta,
-        "origen": "Agente 1 (simulado)"
+        "respuesta": result["respuesta"],
+        "origen": "Agente 1 - Atención al Cliente",
+        "metadata": result.get("metadata"),
     }
