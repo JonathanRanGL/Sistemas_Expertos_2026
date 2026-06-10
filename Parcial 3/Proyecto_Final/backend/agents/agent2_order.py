@@ -5,6 +5,7 @@ Procesa pedidos, valida stock, aplica reglas y persiste la orden.
 import json
 from typing import Any, Dict, List
 
+from backend.agents.agent3_supervisor import SupervisorAgent
 from backend.core.inference_engine import InferenceEngine
 from backend.db.database import query, execute, execute_many
 
@@ -12,6 +13,7 @@ from backend.db.database import query, execute, execute_many
 class OrderAgent:
     def __init__(self) -> None:
         self.engine = InferenceEngine()
+        self.supervisor = SupervisorAgent()
 
     def _fetch_client(self, cliente_id: int) -> Dict[str, Any]:
         result = query("SELECT * FROM clientes WHERE id = ?", (cliente_id,))
@@ -67,6 +69,16 @@ class OrderAgent:
         envio_gratis = 1 if inference["envio_gratis"] else 0
         total = subtotal - descuento
 
+        detalle_items = [
+            {
+                "producto_id": item["producto_id"],
+                "cantidad": item["cantidad"],
+                "precio_unit": products_by_id[item["producto_id"]]["precio"],
+                "subtotal": products_by_id[item["producto_id"]]["precio"] * item["cantidad"],
+            }
+            for item in items
+        ]
+
         inferencias_json = json.dumps(
             {
                 "rules_triggered": inference["rules_triggered"],
@@ -81,7 +93,7 @@ class OrderAgent:
             INSERT INTO pedidos (cliente_id, subtotal, descuento, total, envio_gratis, notas_agente, inferencias)
             VALUES (?, ?, ?, ?, ?, ?, ?)
             """,
-            (cliente_id, subtotal, descuento, total, envio_gratis, notas, inferencias_json),
+            (cliente_id, subtotal, descuento, total, envio_gratis, "", inferencias_json),
         )
 
         detalle_params = [
@@ -89,10 +101,10 @@ class OrderAgent:
                 pedido_id,
                 item["producto_id"],
                 item["cantidad"],
-                products_by_id[item["producto_id"]]["precio"],
-                products_by_id[item["producto_id"]]["precio"] * item["cantidad"],
+                item["precio_unit"],
+                item["subtotal"],
             )
-            for item in items
+            for item in detalle_items
         ]
         execute_many(
             """
@@ -104,6 +116,21 @@ class OrderAgent:
 
         self._decrement_stock(items)
 
+        order_summary = {
+            "pedido_id": pedido_id,
+            "cliente_id": cliente_id,
+            "subtotal": subtotal,
+            "descuento": descuento,
+            "total": total,
+            "envio_gratis": bool(envio_gratis),
+        }
+
+        notas_agente = self.supervisor.explain(order_summary, detalle_items, inference)
+        execute(
+            "UPDATE pedidos SET notas_agente = ? WHERE id = ?",
+            (notas_agente, pedido_id),
+        )
+
         return {
             "pedido_id": pedido_id,
             "cliente_id": cliente_id,
@@ -112,4 +139,5 @@ class OrderAgent:
             "total": total,
             "envio_gratis": bool(envio_gratis),
             "inferencias": inference,
+            "notas_agente": notas_agente,
         }
