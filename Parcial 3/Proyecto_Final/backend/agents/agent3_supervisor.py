@@ -15,8 +15,9 @@ class SupervisorAgent:
         linea_items = [f"{item['cantidad']}x {item['producto_id']}" for item in details]
         pedido_id = order.get("pedido_id") or order.get("id")
         cliente_id = order.get("cliente_id")
+        cliente_label = cliente_id if cliente_id else "Invitado"
         summary = {
-            "titulo": f"Pedido #{pedido_id} - Cliente {cliente_id}",
+            "titulo": f"Pedido #{pedido_id} - Cliente {cliente_label}",
             "subtotal": order.get("subtotal"),
             "descuento": order.get("descuento"),
             "total": order.get("total"),

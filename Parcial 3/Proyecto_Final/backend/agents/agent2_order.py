@@ -3,7 +3,7 @@ Agente 2 — Generador de Pedido
 Procesa pedidos, valida stock, aplica reglas y persiste la orden.
 """
 import json
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 from backend.agents.agent3_supervisor import SupervisorAgent
 from backend.core.inference_engine import InferenceEngine
@@ -33,9 +33,10 @@ class OrderAgent:
                 (item["cantidad"], item["producto_id"]),
             )
 
-    def create_order(self, cliente_id: int, items: List[Dict[str, Any]], notas: str = "") -> Dict[str, Any]:
+    def create_order(self, cliente_id: Optional[int], items: List[Dict[str, Any]], notas: str = "") -> Dict[str, Any]:
         if not items:
             raise ValueError("El pedido debe contener al menos un artículo.")
+        cliente_id = cliente_id or None
 
         product_ids = list({item["producto_id"] for item in items})
         products = self._fetch_products(product_ids)

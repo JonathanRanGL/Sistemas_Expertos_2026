@@ -1,5 +1,5 @@
 import json
-from typing import List
+from typing import List, Optional
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
@@ -16,7 +16,7 @@ class OrderItem(BaseModel):
     cantidad: int
 
 class OrderRequest(BaseModel):
-    cliente_id: int
+    cliente_id: Optional[int] = None
     items: List[OrderItem]
     notas: str = ""
 

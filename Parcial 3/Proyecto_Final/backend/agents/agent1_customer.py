@@ -64,9 +64,8 @@ class CustomerAgent:
                 respuesta = (
                     "He encontrado estos productos que pueden ayudarte: "
                     + "; ".join([f"{p['nombre']} - ${p['precio']}" for p in productos])
-                    + ".
-" 
-                    "Si quieres, puedo generar un pedido con cualquiera de ellos."
+                    + ". "
+                    + "Si quieres, puedo generar un pedido con cualquiera de ellos."
                 )
             else:
                 respuesta = (
