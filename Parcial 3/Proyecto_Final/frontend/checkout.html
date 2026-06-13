@@ -50,6 +50,7 @@
             </div>
 
             <div id="message" style="margin-top:18px;"></div>
+            <div id="orderSummary" style="margin-top:18px;"></div>
         </div>
     </div>
 
@@ -105,7 +106,7 @@
             const notas = document.getElementById('notas').value || '';
 
             const payload = {
-                cliente_id: cliente_id || 0,
+                cliente_id: cliente_id,
                 items: cart.map(i => ({ producto_id: i.producto_id, cantidad: i.cantidad })),
                 notas: notas,
             };
@@ -118,12 +119,36 @@
                 if (!resp.ok) { throw new Error(data.detail || 'Error al crear pedido'); }
 
                 document.getElementById('message').innerHTML = `<div style="color:green;">Pedido creado: #${data.pedido_id}. Total: $${data.total}</div>`;
+                renderOrderSummary(data);
                 clearCart();
             } catch (err) {
                 console.error(err);
                 document.getElementById('message').innerHTML = `<div style="color:red;">No se pudo crear el pedido: ${err.message}</div>`;
             }
         });
+
+        function renderOrderSummary(data) {
+            const summaryArea = document.getElementById('orderSummary');
+            const rulesList = data.resumen.reglas_aplicadas || [];
+            const warnings = data.resumen.advertencias || [];
+            const recommendations = data.resumen.recomendaciones || [];
+
+            summaryArea.innerHTML = `
+                <div style="margin-top:20px; padding:16px; border:1px solid #ddd; border-radius:8px; background:#f7f7f7;">
+                    <h3>Resumen del pedido</h3>
+                    <p><strong>ID:</strong> ${data.pedido_id}</p>
+                    <p><strong>Subtotal:</strong> $${data.subtotal.toLocaleString()}</p>
+                    <p><strong>Descuento:</strong> $${data.descuento.toLocaleString()}</p>
+                    <p><strong>Total final:</strong> $${data.total.toLocaleString()}</p>
+                    <p><strong>Envío gratis:</strong> ${data.envio_gratis ? 'Sí' : 'No'}</p>
+                    <p><strong>Explicación del agente:</strong></p>
+                    <p>${data.notas_agente}</p>
+                    <p><strong>Reglas aplicadas:</strong> ${rulesList.length ? rulesList.join(', ') : 'Ninguna'}</p>
+                    <p><strong>Avisos:</strong> ${warnings.length ? warnings.join('; ') : 'Ninguno'}</p>
+                    <p><strong>Recomendaciones:</strong> ${recommendations.length ? recommendations.join('; ') : 'Ninguna'}</p>
+                </div>
+            `;
+        }
 
         // Inicializar vista
         renderCart();

@@ -205,6 +205,23 @@ class BackendAPITestCase(unittest.TestCase):
         self.assertIn("respuesta", body)
         self.assertEqual(body["origen"], "Agente 1 - Atención al Cliente")
 
+    def test_create_client(self) -> None:
+        payload = {
+            "nombre": "Cliente Test",
+            "email": "cliente_test@example.com",
+            "telefono": "555-1234",
+        }
+        response = self.client.post("/api/clients", json=payload)
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertEqual(data["nombre"], payload["nombre"])
+        self.assertEqual(data["email"], payload["email"])
+
+        list_response = self.client.get("/api/clients")
+        self.assertEqual(list_response.status_code, 200)
+        clients = list_response.json()
+        self.assertTrue(any(c["email"] == payload["email"] for c in clients))
+
 
 if __name__ == "__main__":
     unittest.main()

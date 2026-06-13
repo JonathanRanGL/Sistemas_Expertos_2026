@@ -56,7 +56,10 @@ class OrderAgent:
                 raise ValueError(f"Stock insuficiente para el producto {product['nombre']}.")
             subtotal += product["precio"] * item["cantidad"]
 
-        cliente = self._fetch_client(cliente_id)
+        cliente = self._fetch_client(cliente_id) if cliente_id is not None else {}
+        if cliente_id is not None and not cliente:
+            raise ValueError("Cliente no encontrado.")
+
         inference = self.engine.evaluate(
             {
                 "cliente": cliente,
@@ -116,6 +119,16 @@ class OrderAgent:
         )
 
         self._decrement_stock(items)
+
+        if cliente:
+            nuevos_compras = cliente.get("total_compras", 0) + 1
+            nuevos_gastado = cliente.get("total_gastado", 0.0) + total
+            es_frecuente = 1 if nuevos_compras > 5 else cliente.get("es_frecuente", 0)
+            descuento_aplicable = 0.2 if nuevos_gastado > 100000 else 0.1 if nuevos_compras > 5 else 0.0
+            execute(
+                "UPDATE clientes SET total_compras = ?, total_gastado = ?, es_frecuente = ?, descuento_aplicable = ? WHERE id = ?",
+                (nuevos_compras, nuevos_gastado, es_frecuente, descuento_aplicable, cliente_id),
+            )
 
         order_summary = {
             "pedido_id": pedido_id,
