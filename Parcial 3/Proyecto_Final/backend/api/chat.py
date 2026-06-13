@@ -9,7 +9,7 @@ class ChatMessage(BaseModel):
     message: str
 
 # Llave directa sin validaciones confusas
-GEMINI_API_KEY = "AQ.Ab8RN6JJEfznJzc0mK8oFtjDDbm1XLO2JTvmaFg5m55aaHpnTw"
+GEMINI_API_KEY = "TU_LLAVE_DE_API_AQUI"
 genai.configure(api_key=GEMINI_API_KEY)
 
 @router.post("/chat")
