@@ -168,6 +168,7 @@ class BackendAPITestCase(unittest.TestCase):
         self.assertIsInstance(data["inferencias"], dict)
         self.assertIsInstance(data["resumen"], dict)
         self.assertIn("notas_agente", data)
+        self.assertEqual(data["notas_cliente"], "Prueba de pedido")
 
     def test_create_order_insufficient_stock(self) -> None:
         payload = {

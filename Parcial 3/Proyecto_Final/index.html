@@ -356,21 +356,20 @@
     <!-- ========== HEADER ========== -->
     <header>
         <div class="navbar-container">
-            <div class="logo">🖥️ Tienda Inteligente</div>
+            <div class="logo" onclick="window.location.href='index.html'" style="cursor: pointer;">🖥️ Tienda Inteligente</div>
             
             <nav>
-                <a href="#productos">Productos</a>
-                <a href="#ofertas">Ofertas</a>
-                <a href="#arma-tu-pc">Arma tu PC</a>
-                <a href="#soporte">Soporte</a>
+                <a href="frontend/catalog.html">Productos</a>
+                <a href="frontend/ofertas.html">Ofertas</a>
+                <a href="frontend/armatupc.html">Arma tu PC</a>
+                <a href="frontend/soporte.html">Soporte</a>
             </nav>
             
             <div class="nav-right">
-                <button class="btn-ia">
+                <button class="btn-ia" onclick="window.location.href='frontend/chat.html'">
                     <i class="bi bi-cpu"></i> Asistente IA
                 </button>
-                <i class="bi bi-person nav-icon"></i>
-                <i class="bi bi-cart nav-icon"></i>
+                <i class="bi bi-cart nav-icon" onclick="window.location.href='frontend/checkout.html'" style="cursor: pointer;"></i>
             </div>
         </div>
     </header>

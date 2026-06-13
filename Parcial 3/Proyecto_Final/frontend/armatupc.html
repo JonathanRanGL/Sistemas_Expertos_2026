@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arma tu PC - Sistema Experto</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #fafafa; color: #333; }
+        
+        /* Navbar imitando tu diseño blanco */
+        header { background: white; padding: 15px 40px; box-shadow: 0 1px 5px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.2em; font-weight: bold; text-decoration: none; color: #000; }
+        nav { display: flex; gap: 20px; align-items: center; }
+        nav a { text-decoration: none; color: #666; font-size: 0.9em; font-weight: 500; }
+        nav a:hover, nav a.active { color: #000; font-weight: 600; }
+        .btn-ia { background: #111; color: white; padding: 8px 15px; border-radius: 5px; text-decoration: none; font-size: 0.85em; display: flex; align-items: center; gap: 5px; }
+        
+        /* Contenedor principal */
+        .container { max-width: 900px; margin: 40px auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+        .header-section { text-align: center; margin-bottom: 40px; }
+        .header-section h1 { font-size: 2em; margin-bottom: 10px; }
+        .header-section p { color: #666; }
+
+        /* Formulario del Sistema Experto */
+        .step { margin-bottom: 30px; padding: 20px; border: 1px solid #eee; border-radius: 8px; background: #fff; }
+        .step h3 { margin-bottom: 15px; display: flex; align-items: center; gap: 10px; color: #222; }
+        select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 1em; background: #fdfdfd; cursor: pointer; }
+        select:disabled { background: #eee; cursor: not-allowed; }
+        
+        .alert-box { background: #e8f5e9; border-left: 4px solid #4caf50; padding: 15px; border-radius: 4px; margin-top: 10px; display: none; color: #2e7d32; font-size: 0.9em; }
+        .alert-error { background: #ffebee; border-left-color: #f44336; color: #c62828; }
+
+        .btn-submit { width: 100%; padding: 15px; background: #111; color: white; border: none; border-radius: 6px; font-size: 1.1em; font-weight: bold; cursor: pointer; margin-top: 20px; transition: background 0.3s; }
+        .btn-submit:hover { background: #333; }
+        .btn-submit:disabled { background: #ccc; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">🖥️ Tienda Inteligente</a>
+        <nav>
+            <a href="catalog.html">Productos</a>
+            <a href="ofertas.html">Ofertas</a>
+            <a href="armatupc.html" class="active">Arma tu PC</a>
+            <a href="soporte.html">Soporte</a>
+            <a href="chat.html" class="btn-ia"><i class="bi bi-robot"></i> ASISTENTE IA</a>
+            <a href="checkout.html" style="color: #000; font-size: 1.2em;"><i class="bi bi-cart2"></i></a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="header-section">
+            <h1>⚙️ Configurador Inteligente</h1>
+            <p>Selecciona tus componentes. Nuestro motor de inferencias validará la compatibilidad de sockets y cuellos de botella en tiempo real.</p>
+        </div>
+
+        <div class="step">
+            <h3>1. Elige el Procesador (CPU)</h3>
+            <select id="cpuSelect" onchange="validarCompatibilidad()">
+                <option value="">-- Selecciona un Procesador --</option>
+                <option value="am5">AMD Ryzen 5 7600X (Socket AM5)</option>
+                <option value="am5">AMD Ryzen 7 7800X3D (Socket AM5)</option>
+                <option value="lga1700">Intel Core i5-13600K (Socket LGA 1700)</option>
+                <option value="lga1700">Intel Core i9-13900K (Socket LGA 1700)</option>
+            </select>
+        </div>
+
+        <div class="step">
+            <h3>2. Tarjeta Madre (Motherboard)</h3>
+            <select id="moboSelect" disabled onchange="verificarSeleccion()">
+                <option value="">-- Selecciona la Tarjeta Madre --</option>
+                <option value="am5" class="mobo-opt">ASUS ROG Strix B650E-F (AM5)</option>
+                <option value="am5" class="mobo-opt">MSI MAG X670E Tomahawk (AM5)</option>
+                <option value="lga1700" class="mobo-opt">Gigabyte Z790 AORUS ELITE (LGA 1700)</option>
+                <option value="lga1700" class="mobo-opt">ASUS TUF Gaming B760-PLUS (LGA 1700)</option>
+            </select>
+            <div id="expertAlert" class="alert-box">
+                <i class="bi bi-check-circle-fill"></i> <b>Sistema Experto:</b> Procesador y Tarjeta Madre compatibles detectados.
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>3. Tarjeta Gráfica (GPU)</h3>
+            <select id="gpuSelect" onchange="verificarSeleccion()">
+                <option value="">-- Selecciona una GPU --</option>
+                <option value="rtx4060">NVIDIA RTX 4060 8GB</option>
+                <option value="rtx4070">NVIDIA RTX 4070 12GB</option>
+                <option value="rx7800">AMD Radeon RX 7800 XT 16GB</option>
+            </select>
+        </div>
+
+        <button class="btn-submit" id="btnGenerar" disabled onclick="enviarAlCarrito()">Generar Ensamblado y Añadir al Carrito</button>
+    </div>
+
+    <script>
+        function validarCompatibilidad() {
+            const cpuSocket = document.getElementById("cpuSelect").value;
+            const moboSelect = document.getElementById("moboSelect");
+            const alertBox = document.getElementById("expertAlert");
+            
+            // Resetear tarjeta madre
+            moboSelect.value = "";
+            alertBox.style.display = "none";
+
+            if (cpuSocket !== "") {
+                moboSelect.disabled = false;
+                
+                // Regla de inferencia: Mostrar solo Motherboards con el mismo Socket
+                const options = moboSelect.getElementsByClassName("mobo-opt");
+                for (let i = 0; i < options.length; i++) {
+                    if (options[i].value === cpuSocket) {
+                        options[i].style.display = "block";
+                    } else {
+                        options[i].style.display = "none";
+                    }
+                }
+            } else {
+                moboSelect.disabled = true;
+            }
+            verificarSeleccion();
+        }
+
+        function verificarSeleccion() {
+            const cpu = document.getElementById("cpuSelect").value;
+            const mobo = document.getElementById("moboSelect").value;
+            const gpu = document.getElementById("gpuSelect").value;
+            const btn = document.getElementById("btnGenerar");
+            const alertBox = document.getElementById("expertAlert");
+
+            if (cpu !== "" && mobo !== "") {
+                alertBox.style.display = "block";
+            }
+
+            // Si los 3 están seleccionados, habilitar botón
+            if (cpu !== "" && mobo !== "" && gpu !== "") {
+                btn.disabled = false;
+            } else {
+                btn.disabled = true;
+            }
+        }
+
+        async function enviarAlCarrito() {
+            const cpu = document.getElementById("cpuSelect").options[document.getElementById("cpuSelect").selectedIndex].text;
+            const mobo = document.getElementById("moboSelect").options[document.getElementById("moboSelect").selectedIndex].text;
+            const gpu = document.getElementById("gpuSelect").options[document.getElementById("gpuSelect").selectedIndex].text;
+
+            const buildData = { cpu: cpu, motherboard: mobo, gpu: gpu };
+
+            try {
+                // Petición real al backend de FastAPI
+                const response = await fetch('http://127.0.0.1:8000/api/pc-expert/validate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(buildData)
+                });
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert(`¡Sistema Experto aprobó el diseño!\n\nJustificación: ${result.explanation}`);
+                    
+                    // --- NUEVO: Guardar en el carrito del navegador ---
+                    const cartItem = {
+                        id: "PC_CUSTOM",
+                        nombre: `PC Armada: ${cpu.split(' ')[1]} + ${gpu.split(' ')[1]}`, // Nombre resumido para el ticket
+                        precio: 18500, // Precio estimado del paquete
+                        cantidad: 1
+                    };
+                    localStorage.setItem("tienda_cart", JSON.stringify([cartItem]));
+                    // ---------------------------------------------------
+
+                    window.location.href = "checkout.html";
+                } else {
+                    alert(`Error de validación: ${result.detail}`);
+                }
+            } catch (error) {
+                console.warn("Backend no disponible temporalmente. Usando simulación local...");
+                const cartItem = { id: "PC_CUSTOM_SIM", nombre: "PC Armada (Simulada)", precio: 15000, cantidad: 1 };
+                localStorage.setItem("tienda_cart", JSON.stringify([cartItem]));
+                window.location.href = "checkout.html";
+            }
+        }
+    </script>
+</body>
+</html>

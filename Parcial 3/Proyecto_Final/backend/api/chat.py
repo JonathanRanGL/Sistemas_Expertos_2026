@@ -1,27 +1,31 @@
-from fastapi import APIRouter
+import os
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from typing import Optional
+import google.generativeai as genai
 
-from backend.agents.agent1_customer import CustomerAgent
+router = APIRouter()
 
-router = APIRouter(tags=["chat"])
+class ChatMessage(BaseModel):
+    message: str
 
-class ChatRequest(BaseModel):
-    cliente_id: Optional[int] = None
-    mensaje: str
+# Llave directa sin validaciones confusas
+GEMINI_API_KEY = "AQ.Ab8RN6JJEfznJzc0mK8oFtjDDbm1XLO2JTvmaFg5m55aaHpnTw"
+genai.configure(api_key=GEMINI_API_KEY)
 
-class ChatResponse(BaseModel):
-    respuesta: str
-    origen: str
-    metadata: Optional[dict] = None
-
-agent = CustomerAgent()
-
-@router.post("/chat", response_model=ChatResponse)
-def chat_message(payload: ChatRequest):
-    result = agent.generate_response(payload.mensaje, payload.cliente_id)
-    return {
-        "respuesta": result["respuesta"],
-        "origen": "Agente 1 - Atención al Cliente",
-        "metadata": result.get("metadata"),
-    }
+@router.post("/chat")
+async def chat_with_agent(chat: ChatMessage):
+    try:
+        model = genai.GenerativeModel('gemini-pro')
+        
+        prompt_contexto = (
+            "Eres el Agente 1 de 'Tienda Inteligente', un sistema experto de venta de componentes de PC. "
+            "Eres amable, técnico y conciso. Ayudas a los usuarios a saber qué comprar, explicas cuellos de botella "
+            "y recomiendas usar la herramienta 'Arma tu PC'. Responde a este mensaje del cliente: "
+        )
+        
+        response = model.generate_content(prompt_contexto + chat.message)
+        return {"reply": response.text}
+        
+    except Exception as e:
+        # Si la API falla, te mandamos el error real a la pantalla para saber qué pasa
+        return {"reply": f"Error interno del Agente: {str(e)}"}

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tienda Inteligente - Componentes PC</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
         * {
             margin: 0;
@@ -16,9 +17,71 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
+        }
+
+        /* ========== BARRA DE NAVEGACIÓN ========== */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 40px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #333;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #667eea;
+        }
+
+        .nav-icons a {
+            color: #333;
+            font-size: 1.3em;
+            transition: transform 0.2s ease;
+            display: inline-block;
+        }
+
+        .nav-icons a:hover {
+            transform: scale(1.1);
+            color: #667eea;
+        }
+
+        /* ========== CONTENIDO PRINCIPAL ========== */
+        .main-wrapper {
+            flex: 1;
+            display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 40px 20px;
         }
         
         .container {
@@ -32,14 +95,8 @@
         }
         
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         h1 {
@@ -131,40 +188,60 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🖥️ Tienda Inteligente</h1>
-        <p class="subtitle">
-            Sistema Experto de Venta de Componentes PC<br>
-            <em>Impulsado por IA y Agentes Inteligentes</em>
-        </p>
-        
-        <div class="features">
-            <div class="feature">
-                <h3>🤖 Agentes Inteligentes</h3>
-                <p>3 agentes colaborativos para atender, procesar y validar pedidos automáticamente</p>
-            </div>
-            <div class="feature">
-                <h3>🧠 Motor de Inferencias</h3>
-                <p>Sistema experto que aplica reglas y lógica automática en tiempo real</p>
-            </div>
-            <div class="feature">
-                <h3>💾 Base de Datos</h3>
-                <p>SQLite con esquema completo para productos, clientes y pedidos</p>
-            </div>
-            <div class="feature">
-                <h3>📊 Explicabilidad</h3>
-                <p>Cada decisión es explicada y justificada por el sistema</p>
-            </div>
+
+    <header>
+        <div class="navbar-container">
+            <a href="index.html" class="logo">🖥️ Tienda Inteligente</a>
+            <nav>
+                <a href="ofertas.html">Ofertas</a>
+                <a href="armatupc.html">Arma tu PC</a>
+                <a href="soporte.html">Soporte</a>
+                
+                <div class="nav-icons">
+                    <a href="checkout.html" title="Ir al Checkout">
+                        <i class="bi bi-cart3"></i>
+                    </a>
+                </div>
+            </nav>
         </div>
-        
-        <div class="buttons">
-            <button class="btn-primary" onclick="goTo('catalog.html')">📦 Catálogo</button>
-            <button class="btn-primary" onclick="goTo('chat.html')">💬 Chat IA</button>
-            <button class="btn-secondary" onclick="alert('Documentación en construcción')">📖 Docs</button>
-        </div>
-        
-        <div class="status">
-            ✅ Sistema en Desarrollo — Base inicializada correctamente
+    </header>
+
+    <div class="main-wrapper">
+        <div class="container">
+            <h1>🖥️ Tienda Inteligente</h1>
+            <p class="subtitle">
+                Sistema Experto de Venta de Componentes PC<br>
+                <em>Impulsado por IA y Agentes Inteligentes</em>
+            </p>
+            
+            <div class="features">
+                <div class="feature">
+                    <h3>🤖 Agentes Inteligentes</h3>
+                    <p>3 agentes colaborativos para atender, procesar y validar pedidos automáticamente</p>
+                </div>
+                <div class="feature">
+                    <h3>🧠 Motor de Inferencias</h3>
+                    <p>Sistema experto que aplica reglas y lógica automática en tiempo real</p>
+                </div>
+                <div class="feature">
+                    <h3>💾 Base de Datos</h3>
+                    <p>SQLite con esquema completo para productos, clientes y pedidos</p>
+                </div>
+                <div class="feature">
+                    <h3>📊 Explicabilidad</h3>
+                    <p>Cada decisión es explicada y justificada por el sistema</p>
+                </div>
+            </div>
+            
+            <div class="buttons">
+                <button class="btn-primary" onclick="goTo('catalog.html')">📦 Catálogo</button>
+                <button class="btn-primary" onclick="goTo('chat.html')">💬 Chat IA</button>
+                <button class="btn-secondary" onclick="alert('Documentación en construcción')">📖 Docs</button>
+            </div>
+            
+            <div class="status">
+                ✅ Sistema en Desarrollo — Base inicializada correctamente
+            </div>
         </div>
     </div>
     

@@ -56,6 +56,7 @@ CREATE TABLE IF NOT EXISTS pedidos (
     descuento       REAL DEFAULT 0.0,
     total           REAL NOT NULL DEFAULT 0.0,
     envio_gratis    INTEGER DEFAULT 0,
+    notas_cliente   TEXT,                       -- Notas del cliente / pedido
     notas_agente    TEXT,                       -- Explicación del Agente 3
     inferencias     TEXT,                       -- JSON con reglas disparadas
     fecha_pedido    TEXT DEFAULT (datetime('now')),

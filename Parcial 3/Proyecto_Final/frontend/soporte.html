@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soporte - Tienda Inteligente</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ========== BARRA DE NAVEGACIÓN ========== */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 40px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #333;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #667eea;
+        }
+
+        .nav-icons a {
+            color: #333;
+            font-size: 1.3em;
+            transition: transform 0.2s ease;
+            display: inline-block;
+        }
+
+        .nav-icons a:hover {
+            transform: scale(1.1);
+            color: #667eea;
+        }
+
+        /* ========== CONTENIDO DE SOPORTE ========== */
+        .main-wrapper {
+            flex: 1;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .support-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            padding: 50px;
+            max-width: 800px;
+            width: 100%;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .support-container h1 {
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .support-container > p {
+            color: #666;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .faq-section {
+            margin-bottom: 40px;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-item h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .faq-item p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .chat-banner {
+            background: #f8f9fa;
+            border: 2px dashed #667eea;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .chat-banner h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .btn-chat {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-chat:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="navbar-container">
+            <a href="index.html" class="logo">🖥️ Tienda Inteligente</a>
+            <nav>
+                <a href="ofertas.html">Ofertas</a>
+                <a href="armatupc.html">Arma tu PC</a>
+                <a href="soporte.html" style="color: #667eea;">Soporte</a>
+                
+                <div class="nav-icons">
+                    <a href="checkout.html" title="Ir al Checkout">
+                        <i class="bi bi-cart3"></i>
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="main-wrapper">
+        <div class="support-container">
+            <h1>Centro de Soporte</h1>
+            <p>Resuelve tus dudas rápidas o contacta a nuestros agentes inteligentes.</p>
+
+            <div class="faq-section">
+                <div class="faq-item">
+                    <h3><i class="bi bi-question-circle"></i> ¿Cómo funciona el validador de compatibilidad?</h3>
+                    <p>Nuestro sistema experto analiza los sockets, voltajes y dimensiones de los componentes que elijas para asegurar que tu PC ensamble sin problemas.</p>
+                </div>
+                <div class="faq-item">
+                    <h3><i class="bi bi-box-seam"></i> ¿Cuánto tardan los envíos?</h3>
+                    <p>El Agente de Logística procesa tu pedido en tiempo real. Generalmente los envíos locales se completan en 24 a 48 horas hábiles.</p>
+                </div>
+                <div class="faq-item">
+                    <h3><i class="bi bi-shield-check"></i> ¿Los componentes tienen garantía?</h3>
+                    <p>Sí, todos nuestros componentes cuentan con garantía directa de fábrica. Nuestro sistema guarda el registro digital de tus compras para cualquier aclaración.</p>
+                </div>
+            </div>
+
+            <div class="chat-banner">
+                <h2>¿Necesitas atención personalizada?</h2>
+                <p style="color: #666; margin-bottom: 20px;">Habla directamente con nuestro Agente 1 de Atención al Cliente para consultas técnicas o seguimiento de pedidos.</p>
+                <a href="chat.html" class="btn-chat"><i class="bi bi-robot"></i> Iniciar Chat Inteligente</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

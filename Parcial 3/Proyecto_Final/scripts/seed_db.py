@@ -44,8 +44,8 @@ PRODUCTOS = [
     (14, "NZXT Kraken X93 RGB", "Cooler", "NZXT", 1899.00, None, 18, "Cooler líquido 360mm", json.dumps({"type": "liquid", "size": "360mm", "tdp": "300W"}), 4.7, 170, 1, 1),
     
     # Gabinetes
-    (15, "Lian Li Lancool 303", "Gabinete", "Lian Li", 899.00, None, 12, "Gabinete moderno", json.dumps({"form_factor": "ATX", "airflow": "excellent", "tempered_glass": true}), 4.6, 130, 0, 1),
-    (16, "NZXT H7 Flow RGB", "Gabinete", "NZXT", 1199.00, None, 10, "Gabinete gaming", json.dumps({"form_factor": "ATX", "fans": "2x120mm", "tempered_glass": true}), 4.5, 100, 0, 1),
+    (15, "Lian Li Lancool 303", "Gabinete", "Lian Li", 899.00, None, 12, "Gabinete moderno", json.dumps({"form_factor": "ATX", "airflow": "excellent", "tempered_glass": True}), 4.6, 130, 0, 1),
+    (16, "NZXT H7 Flow RGB", "Gabinete", "NZXT", 1199.00, None, 10, "Gabinete gaming", json.dumps({"form_factor": "ATX", "fans": "2x120mm", "tempered_glass": True}), 4.5, 100, 0, 1),
 ]
 
 print("📊 Cargando productos de prueba...")

@@ -94,10 +94,10 @@ class OrderAgent:
 
         pedido_id = execute(
             """
-            INSERT INTO pedidos (cliente_id, subtotal, descuento, total, envio_gratis, notas_agente, inferencias)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO pedidos (cliente_id, subtotal, descuento, total, envio_gratis, notas_cliente, notas_agente, inferencias)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             """,
-            (cliente_id, subtotal, descuento, total, envio_gratis, "", inferencias_json),
+            (cliente_id, subtotal, descuento, total, envio_gratis, notas, "", inferencias_json),
         )
 
         detalle_params = [
@@ -139,7 +139,8 @@ class OrderAgent:
             "envio_gratis": bool(envio_gratis),
         }
 
-        notas_agente = self.supervisor.explain(order_summary, detalle_items, inference)
+        explanation = self.supervisor.explain(order_summary, detalle_items, inference)
+        notas_agente = f"Notas del cliente: {notas}. {explanation}" if notas else explanation
         execute(
             "UPDATE pedidos SET notas_agente = ? WHERE id = ?",
             (notas_agente, pedido_id),
@@ -153,5 +154,6 @@ class OrderAgent:
             "total": total,
             "envio_gratis": bool(envio_gratis),
             "inferencias": inference,
+            "notas_cliente": notas,
             "notas_agente": notas_agente,
         }
