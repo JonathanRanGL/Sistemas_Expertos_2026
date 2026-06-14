@@ -312,7 +312,7 @@
     <!-- ========== HEADER ========== -->
     <header>
         <div class="navbar-container">
-            <div class="logo" onclick="window.location.href='../index.html'" style="cursor: pointer;">🖥️ Tienda Inteligente</div>
+            <div class="logo" onclick="window.location.href='index.html'" style="cursor: pointer;">🖥️ Tienda Inteligente</div>
             
             <nav>
                 <a href="catalog.html">Productos</a>
@@ -349,7 +349,7 @@
     </div>
 
     <script>
-        const BASE_API_URL = 'http://127.0.0.1:8000/api';
+        const BASE_API_URL = 'http://127.0.0.1:8080/api';
 
         async function fetchDeals() {
             try {
@@ -358,7 +358,7 @@
                 renderProducts(products);
             } catch (error) {
                 console.error('Error cargando ofertas:', error);
-                document.getElementById('productsGrid').innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999; padding: 40px;">No se pudieron cargar las ofertas. Asegúrate de que el backend esté corriendo en http://127.0.0.1:8000</p>';
+                document.getElementById('productsGrid').innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999; padding: 40px;">No se pudieron cargar las ofertas. Asegúrate de que el backend esté corriendo en http://127.0.0.1:8080</p>';
             }
         }
 

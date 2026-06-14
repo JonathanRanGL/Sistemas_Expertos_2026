@@ -24,7 +24,11 @@
         .msg { max-width: 80%; padding: 12px 18px; border-radius: 15px; font-size: 0.95em; line-height: 1.4; }
         .msg.bot { background: #e9ecef; color: #333; align-self: flex-start; border-bottom-left-radius: 2px; }
         .msg.user { background: #667eea; color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
-        
+
+        .suggestions { display: flex; flex-wrap: wrap; gap: 10px; padding: 0 20px 15px 20px; }
+        .suggestion-chip { background: white; border: 1px solid #ddd; border-radius: 20px; padding: 8px 14px; font-size: 0.85em; color: #555; cursor: pointer; transition: all 0.2s; }
+        .suggestion-chip:hover { border-color: #667eea; color: #667eea; background: #f0f4ff; }
+
         .chat-input-area { padding: 20px; background: white; border-top: 1px solid #eee; display: flex; gap: 10px; }
         input[type="text"] { flex: 1; padding: 12px 15px; border: 1px solid #ccc; border-radius: 25px; font-size: 1em; outline: none; transition: border-color 0.2s; }
         input[type="text"]:focus { border-color: #667eea; }
@@ -55,7 +59,14 @@
         <div class="chat-messages" id="chatBox">
             <div class="msg bot">¡Hola! Soy el Agente 1 de Tienda Inteligente. ¿En qué puedo asesorarte hoy sobre componentes de PC?</div>
         </div>
-        
+
+        <div class="suggestions" id="suggestions">
+            <div class="suggestion-chip" data-text="¿Cuál es la mejor GPU para gaming en 1440p?">¿Mejor GPU para 1440p?</div>
+            <div class="suggestion-chip" data-text="¿Qué procesador me recomiendas con un presupuesto de $5000?">CPU con presupuesto $5000</div>
+            <div class="suggestion-chip" data-text="¿Cómo sé si una motherboard es compatible con mi CPU?">¿Cómo veo compatibilidad CPU/Mobo?</div>
+            <div class="suggestion-chip" data-text="¿Cuántos watts de fuente necesito para una RTX 4070 y un Ryzen 7?">¿Qué fuente necesito?</div>
+        </div>
+
         <div class="chat-input-area">
             <input type="text" id="userInput" placeholder="Escribe tu duda aquí..." onkeypress="handleKeyPress(event)">
             <button onclick="sendMessage()">Enviar <i class="bi bi-send"></i></button>
@@ -89,6 +100,16 @@
             if (e.key === 'Enter') sendMessage();
         }
 
+        // Preguntas sugeridas: al hacer click, se envían como si el usuario las escribiera
+        document.querySelectorAll('.suggestion-chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                const text = chip.getAttribute('data-text');
+                document.getElementById('userInput').value = text;
+                sendMessage();
+                document.getElementById('suggestions').style.display = 'none';
+            });
+        });
+
         async function sendMessage() {
             const inputField = document.getElementById("userInput");
             const message = inputField.value.trim();
@@ -96,11 +117,12 @@
 
             addMessage(message, "user");
             inputField.value = "";
+            document.getElementById("suggestions").style.display = "none";
             
             document.getElementById("typingIndicator").style.display = "block";
 
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/chat', {
+                const response = await fetch('http://127.0.0.1:8080/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ message: message })

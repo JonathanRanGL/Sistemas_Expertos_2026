@@ -110,9 +110,12 @@ class InferenceEngine:
             recommendations.append(f"Reabastecer productos: {', '.join(low_stock_products)}")
             add_trigger("sugerir_reabastecimiento", "Productos con stock bajo detectados")
 
-        if cpu and motherboard and cpu.get("socket") != motherboard.get("socket"):
-            warnings.append("Incompatibilidad de socket entre CPU y motherboard.")
-            add_trigger("incompatibilidad_socket", "Los sockets del CPU y la motherboard no coinciden")
+        if cpu and motherboard:
+            cpu_socket = cpu.get("specs", {}).get("socket")
+            mobo_socket = motherboard.get("specs", {}).get("socket")
+            if cpu_socket and mobo_socket and cpu_socket != mobo_socket:
+                warnings.append("Incompatibilidad de socket entre CPU y motherboard.")
+                add_trigger("incompatibilidad_socket", "Los sockets del CPU y la motherboard no coinciden")
 
         if psu_wattage and total_tdp and total_tdp > psu_wattage * 0.8:
             warnings.append("La potencia de la fuente podría no ser suficiente para la configuración.")

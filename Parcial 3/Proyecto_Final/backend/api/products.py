@@ -1,48 +1,72 @@
-from fastapi import APIRouter, HTTPException, Query
+"""
+backend/api/products.py
+Endpoints del catálogo de productos.
+Usa la base de datos unificada (backend/db/database.py + models.py).
+"""
 from typing import Optional
-import sqlite3
-import os
+from fastapi import APIRouter, HTTPException
+
+from backend.db.database import query
 
 router = APIRouter()
-DB_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "tienda.db")
 
-def get_db_connection():
-    conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row  # Permite acceder a las columnas por nombre
-    return conn
 
 @router.get("/products")
 def get_products(
     q: Optional[str] = None,
     category: Optional[str] = None,
     brand: Optional[str] = None,
-    max_price: Optional[float] = None
+    max_price: Optional[float] = None,
 ):
-    conn = get_db_connection()
+    """Lista productos del catálogo con filtros opcionales."""
     try:
-        query = "SELECT * FROM productos WHERE activo = 1"
-        params = []
-        
+        sql = "SELECT * FROM productos WHERE activo = 1"
+        params: list = []
+
         if q:
-            query += " AND nombre LIKE ?"
+            sql += " AND nombre LIKE ?"
             params.append(f"%{q}%")
         if category:
-            query += " AND categoria = ?"
+            sql += " AND categoria = ?"
             params.append(category)
         if brand:
-            query += " AND marca = ?"
+            sql += " AND marca = ?"
             params.append(brand)
         if max_price is not None:
-            query += " AND precio <= ?"
+            sql += " AND precio <= ?"
             params.append(max_price)
-            
-        cursor = conn.cursor()
-        cursor.execute(query, params)
-        rows = cursor.fetchall()
-        
-        # Convertimos sqlite3.Row a diccionarios
-        return [dict(row) for row in rows]
+
+        sql += " ORDER BY id"
+        return query(sql, tuple(params))
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error en la base de datos: {str(e)}")
-    finally:
-        conn.close()
+
+
+@router.get("/products/deals")
+def get_deals():
+    """
+    Productos en oferta: aquellos que tienen precio_original
+    (es decir, tienen un descuento activo).
+    """
+    try:
+        sql = """
+            SELECT *,
+                   ROUND((1 - precio * 1.0 / precio_original) * 100) AS porcentaje_descuento
+            FROM productos
+            WHERE activo = 1
+              AND precio_original IS NOT NULL
+              AND precio_original > precio
+            ORDER BY porcentaje_descuento DESC
+        """
+        return query(sql)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error en la base de datos: {str(e)}")
+
+
+@router.get("/products/{product_id}")
+def get_product(product_id: int):
+    """Detalle de un producto específico."""
+    rows = query("SELECT * FROM productos WHERE id = ? AND activo = 1", (product_id,))
+    if not rows:
+        raise HTTPException(status_code=404, detail="Producto no encontrado.")
+    return rows[0]

@@ -148,10 +148,11 @@
             const gpu = document.getElementById("gpuSelect").options[document.getElementById("gpuSelect").selectedIndex].text;
 
             const buildData = { cpu: cpu, motherboard: mobo, gpu: gpu };
+            const CART_KEY = 'tienda_cart_v1';
 
             try {
                 // Petición real al backend de FastAPI
-                const response = await fetch('http://127.0.0.1:8000/api/pc-expert/validate', {
+                const response = await fetch('http://127.0.0.1:8080/api/pc-expert/validate', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(buildData)
@@ -160,26 +161,27 @@
 
                 if (response.ok) {
                     alert(`¡Sistema Experto aprobó el diseño!\n\nJustificación: ${result.explanation}`);
-                    
-                    // --- NUEVO: Guardar en el carrito del navegador ---
-                    const cartItem = {
-                        id: "PC_CUSTOM",
-                        nombre: `PC Armada: ${cpu.split(' ')[1]} + ${gpu.split(' ')[1]}`, // Nombre resumido para el ticket
-                        precio: 18500, // Precio estimado del paquete
-                        cantidad: 1
-                    };
-                    localStorage.setItem("tienda_cart", JSON.stringify([cartItem]));
-                    // ---------------------------------------------------
+
+                    // Guardar el ensamblado en el carrito compartido (mismo formato que el catálogo)
+                    const cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+                    // El ensamblado se representa con el producto_id 1 (placeholder de "PC Armada")
+                    // junto con una descripción legible para mostrar en el checkout.
+                    cart.push({
+                        producto_id: 1,
+                        cantidad: 1,
+                        es_build: true,
+                        descripcion_build: `PC Armada: ${cpu} + ${mobo} + ${gpu}`,
+                        precio_estimado: result.precio_estimado
+                    });
+                    localStorage.setItem(CART_KEY, JSON.stringify(cart));
 
                     window.location.href = "checkout.html";
                 } else {
                     alert(`Error de validación: ${result.detail}`);
                 }
             } catch (error) {
-                console.warn("Backend no disponible temporalmente. Usando simulación local...");
-                const cartItem = { id: "PC_CUSTOM_SIM", nombre: "PC Armada (Simulada)", precio: 15000, cantidad: 1 };
-                localStorage.setItem("tienda_cart", JSON.stringify([cartItem]));
-                window.location.href = "checkout.html";
+                console.warn("No se pudo conectar con el backend:", error);
+                alert("No se pudo conectar con el servidor. Verifica que el backend esté corriendo en http://127.0.0.1:8080");
             }
         }
     </script>

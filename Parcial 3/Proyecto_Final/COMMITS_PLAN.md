@@ -221,31 +221,51 @@ feat: Frontend UI - Product Catalog & Chat
 
 ---
 
-### 🐛 DÍA 8 — `fix: Integration & Testing`
+### 🐛 DÍA 8 — `fix: Integration & Testing` ✅ HECHO
 
 **Fecha:** 13 de Junio, 2026
 
-**Descripción:** Pruebas, integración y corrección de bugs.
+**Descripción:** Corrección integral de bugs de integración backend-frontend detectados
+al correr el sistema end-to-end. Ver `FIXES_DIA8.md` para el detalle completo.
 
-**Tareas:**
-- [ ] Tests unitarios
-- [ ] Tests de integración
-- [ ] Validar flujo completo usuario-sistema
-- [ ] Performance testing
-- [ ] Corrección de bugs encontrados
-- [ ] Documentación de API
+**Resumen de lo corregido:**
+- ✅ Unificación del esquema de base de datos (un solo `tienda.db`, un solo schema)
+- ✅ Corregidos imports inconsistentes (`backend.db.database` en todos los módulos)
+- ✅ Endpoint `/api/products` (era 500 por esquema desincronizado)
+- ✅ Nuevo endpoint `/api/products/deals` (era 404)
+- ✅ Nuevo endpoint `/api/products/{id}` (detalle de producto)
+- ✅ Nuevo router `/api/pc-expert/validate` (Agente 2 - configurador "Arma tu PC")
+- ✅ Reescrito `/api/orders/checkout` conectado a Agente 2 + Agente 3 (motor de inferencias real)
+- ✅ Corregido `inference_engine.py` (lectura de `socket` desde `specs`)
+- ✅ Eliminada API Key hardcodeada de `chat.py`; ahora usa `.env` + fallback rule-based
+- ✅ Unificada la clave de `localStorage` del carrito (`tienda_cart_v1`) entre todas las páginas
+- ✅ Corregido contrato de datos del carrito entre `armatupc.html` y `checkout.html`
+- ✅ Reescrito `checkout.html`: nombres/precios reales, control de cantidades, eliminar items
+- ✅ Agregadas preguntas sugeridas al chat (`chat.html`)
+- ✅ Corregidos enlaces rotos `../index.html` → `index.html` en `catalog.html` y `ofertas.html`
+- ✅ Eliminados archivos duplicados/obsoletos (`backend/api/seed_db.py`, `index.html` raíz, `tests/tienda_test.db`)
+- ✅ Actualizado y verificado `tests/test_api.py` (11/11 tests pasan)
+- ✅ Limpiado `requirements.txt` (removidas dependencias de LangChain no usadas, causaban conflictos)
 
 **Commit:**
 ```
-fix: Integration Testing & Bug Fixes
+fix: integración completa backend-frontend + sistema experto funcional
 
-- Tests unitarios para agentes
-- Tests de integración BD-API-Frontend
-- Validar flujo completo de venta
-- Performance optimization
-- Corrección de bugs encontrados
-- Documentación de API (Swagger)
-- README actualizado con instrucciones
+- Unificar esquema y ruta única de tienda.db
+- Corregir imports backend.* en todos los módulos
+- products.py: fix 500 en /api/products, agregar /products/deals y /products/{id}
+- Nuevo router pc_expert.py: /api/pc-expert/validate (Agente 2)
+- Reescribir orders.py: /api/orders/checkout conectado a InferenceEngine + SupervisorAgent
+- inference_engine.py: leer socket desde specs (fix incompatibilidad_socket)
+- chat.py: quitar API key hardcodeada, usar .env + fallback CustomerAgent
+- agent1_customer.py: mejorar búsqueda por categorías/marcas (NLU básico)
+- Unificar localStorage 'tienda_cart_v1' en armatupc/catalog/ofertas/checkout
+- Reescribir checkout.html: nombres reales, cantidades, eliminar items, totales
+- chat.html: agregar preguntas sugeridas
+- Corregir enlaces rotos de navegación
+- Limpiar archivos duplicados/obsoletos
+- Actualizar tests/test_api.py (11/11 OK)
+- Limpiar requirements.txt (quitar LangChain sin uso)
 ```
 
 ---
