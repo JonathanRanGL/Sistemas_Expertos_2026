@@ -68,6 +68,17 @@ def init_test_db(path: Path) -> None:
          "Fuente modular 850W", json.dumps({"wattage": "850W"}), 4.7, 60, 0, 1),
     )
 
+    # CPU AM5 para probar incompatibilidad de socket con la motherboard LGA1700 (id=3)
+    cursor.execute(
+        """
+        INSERT INTO productos (id, nombre, categoria, marca, precio, precio_original, stock,
+                               descripcion, specs, rating, num_reviews, es_tendencia, activo)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """,
+        (5, "AMD Ryzen 5 7600X", "CPU", "AMD", 3299.0, None, 18,
+         "CPU gama media Zen 4 socket AM5", json.dumps({"socket": "AM5", "tdp": "105W"}), 4.6, 210, 0, 1),
+    )
+
     cursor.execute(
         """
         INSERT INTO clientes (id, nombre, email, telefono, total_compras, total_gastado, es_frecuente, descuento_aplicable)
@@ -227,24 +238,34 @@ class BackendAPITestCase(unittest.TestCase):
 
     # ── Arma tu PC (Agente 2 - validación de compatibilidad) ──
     def test_pc_expert_compatible(self) -> None:
+        # CPU id=2 (LGA1700) + Motherboard id=3 (LGA1700) — mismos sockets
         payload = {
-            "cpu": "Intel Core i5-13600K (Socket LGA 1700)",
-            "motherboard": "ASUS TUF Gaming B760-PLUS (LGA 1700)",
-            "gpu": "NVIDIA RTX 4060 8GB",
+            "cpu_id": 2,
+            "motherboard_id": 3,
+            "gpu_id": 1,
+            "fuente_id": 4,
         }
         response = self.client.post("/api/pc-expert/validate", json=payload)
         self.assertEqual(response.status_code, 200)
-        self.assertTrue(response.json()["valido"])
+        data = response.json()
+        self.assertTrue(data["valido"])
+        self.assertIn("precio_total", data)
+        self.assertIsInstance(data["warnings"], list)
 
     def test_pc_expert_incompatible(self) -> None:
+        # CPU id=5 (AM5) + Motherboard id=3 (LGA1700) — sockets distintos
         payload = {
-            "cpu": "AMD Ryzen 5 7600X (Socket AM5)",
-            "motherboard": "ASUS TUF Gaming B760-PLUS (LGA 1700)",
-            "gpu": "NVIDIA RTX 4060 8GB",
+            "cpu_id": 5,
+            "motherboard_id": 3,
         }
         response = self.client.post("/api/pc-expert/validate", json=payload)
         self.assertEqual(response.status_code, 400)
         self.assertIn("Incompatibilidad", response.json()["detail"])
+
+    def test_pc_expert_product_not_found(self) -> None:
+        payload = {"cpu_id": 999, "motherboard_id": 3}
+        response = self.client.post("/api/pc-expert/validate", json=payload)
+        self.assertEqual(response.status_code, 404)
 
 
 if __name__ == "__main__":

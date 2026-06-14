@@ -20,6 +20,7 @@ from backend.api.orders import router as orders_router
 from backend.api.chat import router as chat_router
 from backend.api.pc_expert import router as pc_expert_router
 from backend.api.clients import router as clients_router
+from backend.api.admin import router as admin_router
 
 app = FastAPI(
     title="Tienda Inteligente API",
@@ -42,6 +43,7 @@ app.include_router(orders_router, prefix="/api", tags=["Pedidos"])
 app.include_router(chat_router, prefix="/api", tags=["Chat - Agente 1"])
 app.include_router(pc_expert_router, prefix="/api", tags=["Arma tu PC - Agente 2"])
 app.include_router(clients_router, prefix="/api", tags=["Clientes"])
+app.include_router(admin_router, prefix="/api", tags=["Admin"])
 
 
 @app.get("/")

@@ -3,187 +3,553 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arma tu PC - Sistema Experto</title>
+    <title>Arma tu PC - Tienda Inteligente</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #fafafa; color: #333; }
-        
-        /* Navbar imitando tu diseño blanco */
-        header { background: white; padding: 15px 40px; box-shadow: 0 1px 5px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.2em; font-weight: bold; text-decoration: none; color: #000; }
-        nav { display: flex; gap: 20px; align-items: center; }
-        nav a { text-decoration: none; color: #666; font-size: 0.9em; font-weight: 500; }
-        nav a:hover, nav a.active { color: #000; font-weight: 600; }
-        .btn-ia { background: #111; color: white; padding: 8px 15px; border-radius: 5px; text-decoration: none; font-size: 0.85em; display: flex; align-items: center; gap: 5px; }
-        
-        /* Contenedor principal */
-        .container { max-width: 900px; margin: 40px auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
-        .header-section { text-align: center; margin-bottom: 40px; }
-        .header-section h1 { font-size: 2em; margin-bottom: 10px; }
-        .header-section p { color: #666; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa; color: #333; }
 
-        /* Formulario del Sistema Experto */
-        .step { margin-bottom: 30px; padding: 20px; border: 1px solid #eee; border-radius: 8px; background: #fff; }
-        .step h3 { margin-bottom: 15px; display: flex; align-items: center; gap: 10px; color: #222; }
-        select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 1em; background: #fdfdfd; cursor: pointer; }
-        select:disabled { background: #eee; cursor: not-allowed; }
-        
-        .alert-box { background: #e8f5e9; border-left: 4px solid #4caf50; padding: 15px; border-radius: 4px; margin-top: 10px; display: none; color: #2e7d32; font-size: 0.9em; }
-        .alert-error { background: #ffebee; border-left-color: #f44336; color: #c62828; }
+        /* ========== HEADER ========== */
+        header { background: white; border-bottom: 1px solid #e0e0e0; padding: 15px 0; position: sticky; top: 0; z-index: 100; }
+        .navbar-container { max-width: 1400px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+        .logo { font-size: 1.5em; font-weight: 700; color: #333; text-decoration: none; }
+        nav { flex: 1; display: flex; gap: 30px; justify-content: center; }
+        nav a { text-decoration: none; color: #666; font-weight: 500; transition: color 0.3s; }
+        nav a:hover, nav a.active { color: #667eea; font-weight: 600; }
+        .nav-right { display: flex; gap: 15px; align-items: center; }
+        .btn-ia { background: #2c2c2c; color: white; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 8px; transition: all 0.3s; text-decoration: none; font-size: 0.95em; }
+        .btn-ia:hover { background: #667eea; }
 
-        .btn-submit { width: 100%; padding: 15px; background: #111; color: white; border: none; border-radius: 6px; font-size: 1.1em; font-weight: bold; cursor: pointer; margin-top: 20px; transition: background 0.3s; }
-        .btn-submit:hover { background: #333; }
+        /* ========== PÁGINA ========== */
+        .page-wrapper { max-width: 1100px; margin: 0 auto; padding: 40px 20px 60px; }
+
+        .page-header { text-align: center; margin-bottom: 36px; }
+        .page-header h1 { font-size: 2em; font-weight: 800; color: #1a1a2e; margin-bottom: 10px; }
+        .page-header p { color: #666; max-width: 640px; margin: 0 auto; line-height: 1.6; }
+
+        /* ========== TOOLBAR ========== */
+        .toolbar { display: flex; gap: 12px; margin-bottom: 16px; align-items: center; }
+        .search-wrap { flex: 1; display: flex; align-items: center; gap: 10px; background: white; border: 1px solid #e0e0e0; border-radius: 10px; padding: 10px 16px; }
+        .search-wrap i { color: #aaa; font-size: 1em; }
+        .search-wrap input { border: none; outline: none; flex: 1; font-size: 0.95em; color: #333; background: transparent; }
+        .btn-filter-toggle { background: white; border: 1px solid #e0e0e0; border-radius: 10px; padding: 10px 18px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.9em; font-weight: 600; color: #555; transition: 0.2s; white-space: nowrap; }
+        .btn-filter-toggle:hover { border-color: #667eea; color: #667eea; }
+
+        /* ========== FILTER PANEL ========== */
+        .filter-panel { background: white; border: 1px solid #e0e0e0; border-radius: 10px; padding: 18px 20px; margin-bottom: 24px; display: none; }
+        .filter-row { display: flex; gap: 24px; align-items: flex-end; flex-wrap: wrap; }
+        .filter-group { display: flex; flex-direction: column; gap: 6px; min-width: 200px; }
+        .filter-group label { font-size: 0.85em; font-weight: 600; color: #555; }
+        .filter-group input[type="range"] { accent-color: #667eea; cursor: pointer; }
+        .filter-group select { padding: 8px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 0.9em; outline: none; cursor: pointer; }
+        .btn-clear-filters { background: none; border: 1px solid #ddd; border-radius: 8px; padding: 8px 14px; font-size: 0.85em; color: #888; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 6px; }
+        .btn-clear-filters:hover { border-color: #dc3545; color: #dc3545; }
+
+        /* ========== STEPS GRID ========== */
+        .steps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
+
+        .step-card { background: white; border-radius: 12px; border: 1px solid #e8e8e8; padding: 20px; transition: 0.2s; }
+        .step-card:hover { border-color: #c5cff7; box-shadow: 0 2px 10px rgba(100,110,220,0.07); }
+        .step-card.step-done { border-color: #c3e6cb; }
+
+        .step-header { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+        .step-num { width: 32px; height: 32px; border-radius: 50%; background: #1a1a2e; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.85em; font-weight: 700; flex-shrink: 0; }
+        .step-card.step-done .step-num { background: #2e7d32; }
+        .step-title { flex: 1; }
+        .step-title h3 { font-size: 0.97em; font-weight: 700; color: #1a1a2e; display: flex; align-items: center; gap: 7px; margin-bottom: 2px; }
+        .step-title small { font-size: 0.78em; color: #999; }
+        .step-status { flex-shrink: 0; font-size: 1.1em; }
+
+        .step-card select { width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 0.88em; background: #fdfdfd; cursor: pointer; outline: none; }
+        .step-card select:focus { border-color: #667eea; }
+        .step-card select:disabled { background: #f5f5f5; color: #aaa; cursor: not-allowed; }
+
+        .product-info { margin-top: 8px; display: flex; gap: 12px; flex-wrap: wrap; font-size: 0.8em; color: #555; align-items: center; }
+        .product-info span { display: flex; align-items: center; gap: 4px; }
+
+        /* ========== SUMMARY ========== */
+        .build-summary { background: white; border-radius: 12px; border: 1px solid #e8e8e8; padding: 24px; margin-bottom: 20px; display: none; }
+        .build-summary h3 { font-size: 1.05em; font-weight: 700; color: #1a1a2e; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+        .summary-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #f5f5f5; font-size: 0.9em; }
+        .summary-row:last-child { border-bottom: none; }
+        .summary-label { font-weight: 600; color: #555; min-width: 140px; font-size: 0.85em; }
+        .summary-name { flex: 1; color: #333; }
+        .summary-price { font-weight: 700; color: #1a1a2e; white-space: nowrap; }
+        .summary-total { margin-top: 14px; padding-top: 14px; border-top: 2px solid #f0f0f0; text-align: right; font-size: 1.1em; color: #1a1a2e; }
+
+        /* ========== SUBMIT ========== */
+        .btn-submit { width: 100%; padding: 16px; background: #1a1a2e; color: white; border: none; border-radius: 10px; font-size: 1.05em; font-weight: 700; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px; }
+        .btn-submit:hover:not(:disabled) { background: #2d2d50; }
         .btn-submit:disabled { background: #ccc; cursor: not-allowed; }
+
+        /* ========== VALIDATION RESULT ========== */
+        .result-box { border-radius: 10px; padding: 24px; display: none; }
+        .result-ok { background: #e8f5e9; border-left: 5px solid #2e7d32; }
+        .result-error { background: #ffebee; border-left: 5px solid #c62828; }
+        .result-box h4 { font-size: 1.05em; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .result-ok h4 { color: #2e7d32; }
+        .result-error h4 { color: #c62828; }
+        .result-box p { color: #444; font-size: 0.92em; line-height: 1.6; margin-bottom: 10px; }
+        .warning-list { margin: 10px 0 10px 18px; color: #e65100; font-size: 0.9em; }
+        .warning-list li { margin-bottom: 4px; }
+        .btn-go-cart { display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; background: #1a1a2e; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.95em; transition: 0.2s; }
+        .btn-go-cart:hover { background: #667eea; }
+
+        @media (max-width: 700px) {
+            .steps-grid { grid-template-columns: 1fr; }
+            .filter-row { flex-direction: column; gap: 16px; }
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <a href="index.html" class="logo">🖥️ Tienda Inteligente</a>
-        <nav>
-            <a href="catalog.html">Productos</a>
-            <a href="ofertas.html">Ofertas</a>
-            <a href="armatupc.html" class="active">Arma tu PC</a>
-            <a href="soporte.html">Soporte</a>
-            <a href="chat.html" class="btn-ia"><i class="bi bi-robot"></i> ASISTENTE IA</a>
-            <a href="checkout.html" style="color: #000; font-size: 1.2em;"><i class="bi bi-cart2"></i></a>
-        </nav>
+        <div class="navbar-container">
+            <a href="index.html" class="logo">🖥️ Tienda Inteligente</a>
+            <nav>
+                <a href="catalog.html">Productos</a>
+                <a href="ofertas.html">Ofertas</a>
+                <a href="armatupc.html" class="active">Arma tu PC</a>
+                <a href="soporte.html">Soporte</a>
+            </nav>
+            <div class="nav-right">
+                <a href="chat.html" class="btn-ia"><i class="bi bi-robot"></i> Asistente IA</a>
+                <div style="position:relative; cursor:pointer;" onclick="window.location.href='checkout.html'">
+                    <i class="bi bi-cart" style="font-size:1.2em;"></i>
+                    <span id="cartCount" style="position:absolute; top:-6px; right:-10px; background:#ff4444; color:white; font-size:0.75em; padding:2px 6px; border-radius:12px; display:none;">0</span>
+                </div>
+            </div>
+        </div>
     </header>
 
-    <div class="container">
-        <div class="header-section">
-            <h1>⚙️ Configurador Inteligente</h1>
-            <p>Selecciona tus componentes. Nuestro motor de inferencias validará la compatibilidad de sockets y cuellos de botella en tiempo real.</p>
+    <div class="page-wrapper">
+
+        <div class="page-header">
+            <h1><i class="bi bi-cpu-fill"></i> Configurador Inteligente</h1>
+            <p>Selecciona tus 8 componentes. El motor de inferencias validará compatibilidad de sockets, potencia de la fuente y stock disponible en tiempo real.</p>
         </div>
 
-        <div class="step">
-            <h3>1. Elige el Procesador (CPU)</h3>
-            <select id="cpuSelect" onchange="validarCompatibilidad()">
-                <option value="">-- Selecciona un Procesador --</option>
-                <option value="am5">AMD Ryzen 5 7600X (Socket AM5)</option>
-                <option value="am5">AMD Ryzen 7 7800X3D (Socket AM5)</option>
-                <option value="lga1700">Intel Core i5-13600K (Socket LGA 1700)</option>
-                <option value="lga1700">Intel Core i9-13900K (Socket LGA 1700)</option>
-            </select>
+        <!-- Buscador + filtros -->
+        <div class="toolbar">
+            <div class="search-wrap">
+                <i class="bi bi-search"></i>
+                <input type="text" id="searchInput" placeholder="Buscar por nombre o marca (ej: Ryzen, ASUS, Samsung…)" oninput="applyFilters()">
+            </div>
+            <button class="btn-filter-toggle" onclick="toggleFilterPanel()">
+                <i class="bi bi-sliders"></i> Filtros
+            </button>
         </div>
 
-        <div class="step">
-            <h3>2. Tarjeta Madre (Motherboard)</h3>
-            <select id="moboSelect" disabled onchange="verificarSeleccion()">
-                <option value="">-- Selecciona la Tarjeta Madre --</option>
-                <option value="am5" class="mobo-opt">ASUS ROG Strix B650E-F (AM5)</option>
-                <option value="am5" class="mobo-opt">MSI MAG X670E Tomahawk (AM5)</option>
-                <option value="lga1700" class="mobo-opt">Gigabyte Z790 AORUS ELITE (LGA 1700)</option>
-                <option value="lga1700" class="mobo-opt">ASUS TUF Gaming B760-PLUS (LGA 1700)</option>
-            </select>
-            <div id="expertAlert" class="alert-box">
-                <i class="bi bi-check-circle-fill"></i> <b>Sistema Experto:</b> Procesador y Tarjeta Madre compatibles detectados.
+        <div class="filter-panel" id="filterPanel">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label>Precio máximo: <strong>$<span id="priceLabel">200,000</span></strong></label>
+                    <input type="range" id="priceFilter" min="0" max="200000" step="1000" value="200000"
+                           oninput="document.getElementById('priceLabel').textContent=Number(this.value).toLocaleString('es-MX'); applyFilters()">
+                </div>
+                <div class="filter-group">
+                    <label>Marca</label>
+                    <select id="brandFilter" onchange="applyFilters()">
+                        <option value="">Todas las marcas</option>
+                    </select>
+                </div>
+                <button class="btn-clear-filters" onclick="clearFilters()">
+                    <i class="bi bi-x-circle"></i> Limpiar filtros
+                </button>
             </div>
         </div>
 
-        <div class="step">
-            <h3>3. Tarjeta Gráfica (GPU)</h3>
-            <select id="gpuSelect" onchange="verificarSeleccion()">
-                <option value="">-- Selecciona una GPU --</option>
-                <option value="rtx4060">NVIDIA RTX 4060 8GB</option>
-                <option value="rtx4070">NVIDIA RTX 4070 12GB</option>
-                <option value="rx7800">AMD Radeon RX 7800 XT 16GB</option>
-            </select>
+        <!-- 8 pasos -->
+        <div class="steps-grid" id="stepsGrid">
+            <!-- Generado dinámicamente -->
         </div>
 
-        <button class="btn-submit" id="btnGenerar" disabled onclick="enviarAlCarrito()">Generar Ensamblado y Añadir al Carrito</button>
+        <!-- Resumen del ensamblado -->
+        <div class="build-summary" id="buildSummary">
+            <h3><i class="bi bi-list-check"></i> Resumen del Ensamblado</h3>
+            <div id="summaryContent"></div>
+            <div class="summary-total" id="summaryTotal"></div>
+        </div>
+
+        <button class="btn-submit" id="btnGenerar" disabled onclick="validarYAgregar()">
+            <i class="bi bi-bag-check-fill"></i> Validar Ensamblado y Agregar al Carrito
+        </button>
+
+        <div class="result-box" id="validationResult"></div>
+
     </div>
 
     <script>
-        function validarCompatibilidad() {
-            const cpuSocket = document.getElementById("cpuSelect").value;
-            const moboSelect = document.getElementById("moboSelect");
-            const alertBox = document.getElementById("expertAlert");
-            
-            // Resetear tarjeta madre
-            moboSelect.value = "";
-            alertBox.style.display = "none";
+        const BASE_URL = 'http://127.0.0.1:8080/api';
+        const CART_KEY = 'tienda_cart_v1';
 
-            if (cpuSocket !== "") {
-                moboSelect.disabled = false;
-                
-                // Regla de inferencia: Mostrar solo Motherboards con el mismo Socket
-                const options = moboSelect.getElementsByClassName("mobo-opt");
-                for (let i = 0; i < options.length; i++) {
-                    if (options[i].value === cpuSocket) {
-                        options[i].style.display = "block";
-                    } else {
-                        options[i].style.display = "none";
+        const STEPS = [
+            { key: 'cpu',      label: 'Procesador (CPU)',         cat: 'CPU',         icon: 'bi-cpu',             hint: 'Define el socket compatible de la placa madre' },
+            { key: 'mobo',     label: 'Tarjeta Madre',             cat: 'Motherboard', icon: 'bi-hdd-rack',        hint: 'Filtrada automáticamente por socket del procesador' },
+            { key: 'ram',      label: 'Memoria RAM',               cat: 'RAM',         icon: 'bi-stack',           hint: 'Verifica compatibilidad DDR4/DDR5 con la placa' },
+            { key: 'ssd',      label: 'Almacenamiento (SSD)',      cat: 'SSD',         icon: 'bi-hdd',             hint: 'NVMe M.2 para máxima velocidad, SATA para económico' },
+            { key: 'gpu',      label: 'Tarjeta Gráfica (GPU)',     cat: 'GPU',         icon: 'bi-display',         hint: 'El TDP se suma al total para validar la fuente' },
+            { key: 'fuente',   label: 'Fuente de Poder',           cat: 'Fuente',      icon: 'bi-lightning',       hint: 'Debe cubrir el 80% del TDP total del sistema' },
+            { key: 'cooler',   label: 'Enfriamiento (Cooler)',     cat: 'Cooler',      icon: 'bi-wind',            hint: 'Aire o líquido (AIO) según el TDP del procesador' },
+            { key: 'gabinete', label: 'Gabinete / Case',           cat: 'Gabinete',    icon: 'bi-box-seam',        hint: 'Verifica compatibilidad de tamaño con la placa' },
+        ];
+
+        let productsByCategory = {};
+        let cpuSocket = null;
+        let filterText = '';
+        let filterMaxPrice = Infinity;
+        let filterBrand = '';
+
+        // ── Cart helpers ──────────────────────────────────────
+        function loadCart() { try { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); } catch(e) { return []; } }
+        function saveCart(c) { localStorage.setItem(CART_KEY, JSON.stringify(c)); }
+        function updateCartCount() {
+            const total = loadCart().reduce((s, it) => s + it.cantidad, 0);
+            const badge = document.getElementById('cartCount');
+            if (!badge) return;
+            badge.style.display = total > 0 ? 'inline-block' : 'none';
+            badge.textContent = total;
+        }
+
+        // ── Build step cards ──────────────────────────────────
+        function buildStepsGrid() {
+            const grid = document.getElementById('stepsGrid');
+            grid.innerHTML = STEPS.map((step, i) => `
+                <div class="step-card" id="card-${step.key}">
+                    <div class="step-header">
+                        <div class="step-num">${i + 1}</div>
+                        <div class="step-title">
+                            <h3><i class="bi ${step.icon}"></i> ${step.label}</h3>
+                            <small>${step.hint}</small>
+                        </div>
+                        <div class="step-status" id="status-${step.key}">
+                            <i class="bi bi-circle" style="color:#ccc;"></i>
+                        </div>
+                    </div>
+                    <select id="sel-${step.key}" onchange="onSelChange('${step.key}')"
+                        ${step.key === 'mobo' ? 'disabled' : ''}>
+                        <option value="">— Cargando… —</option>
+                    </select>
+                    <div class="product-info" id="info-${step.key}"></div>
+                </div>
+            `).join('');
+        }
+
+        // ── Fetch & init ──────────────────────────────────────
+        async function fetchProducts() {
+            try {
+                const res = await fetch(`${BASE_URL}/products`);
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const products = await res.json();
+
+                productsByCategory = {};
+                const brands = new Set();
+                for (const p of products) {
+                    const cat = p.categoria;
+                    if (!productsByCategory[cat]) productsByCategory[cat] = [];
+                    try { p._specs = JSON.parse(p.specs || '{}'); } catch(e) { p._specs = {}; }
+                    productsByCategory[cat].push(p);
+                    brands.add(p.marca);
+                }
+
+                const brandSel = document.getElementById('brandFilter');
+                for (const b of [...brands].sort()) {
+                    const opt = document.createElement('option');
+                    opt.value = b; opt.textContent = b;
+                    brandSel.appendChild(opt);
+                }
+
+                filterMaxPrice = Infinity;
+
+                renderAllSteps();
+            } catch(err) {
+                for (const step of STEPS) {
+                    const sel = document.getElementById(`sel-${step.key}`);
+                    if (sel) sel.innerHTML = `<option value="">⚠ Error al cargar — verifica el backend en :8080</option>`;
+                }
+            }
+        }
+
+        // ── Render steps ──────────────────────────────────────
+        function renderAllSteps() {
+            for (const step of STEPS) renderStep(step);
+            updateSubmitButton();
+        }
+
+        function renderStep(step) {
+            const sel = document.getElementById(`sel-${step.key}`);
+            if (!sel) return;
+
+            // Motherboard disabled until CPU chosen
+            if (step.key === 'mobo') {
+                if (!cpuSocket) {
+                    sel.innerHTML = `<option value="">— Primero selecciona una CPU —</option>`;
+                    sel.disabled = true;
+                    return;
+                }
+                sel.disabled = false;
+            }
+
+            let products = productsByCategory[step.cat] || [];
+
+            // Socket filter (mobo only)
+            if (step.key === 'mobo' && cpuSocket) {
+                products = products.filter(p => p._specs.socket === cpuSocket);
+            }
+
+            // Text filter
+            if (filterText) {
+                products = products.filter(p =>
+                    p.nombre.toLowerCase().includes(filterText) ||
+                    p.marca.toLowerCase().includes(filterText)
+                );
+            }
+
+            // Price filter
+            if (filterMaxPrice < Infinity) {
+                products = products.filter(p => p.precio <= filterMaxPrice);
+            }
+
+            // Brand filter
+            if (filterBrand) {
+                products = products.filter(p => p.marca === filterBrand);
+            }
+
+            const prevVal = sel.value;
+            sel.innerHTML = `<option value="">— Selecciona ${step.label.toLowerCase()} —</option>`;
+
+            if (products.length === 0) {
+                const none = document.createElement('option');
+                none.disabled = true;
+                none.textContent = step.key === 'mobo' && cpuSocket
+                    ? `Sin placas para socket ${cpuSocket} con los filtros actuales`
+                    : 'Sin resultados para los filtros actuales';
+                sel.appendChild(none);
+            }
+
+            for (const p of products) {
+                const opt = document.createElement('option');
+                opt.value = p.id;
+                const stockStr = p.stock === 0 ? ' [AGOTADO]' :
+                                 p.stock < 3   ? ` ¡Solo ${p.stock} disponible${p.stock !== 1 ? 's' : ''}!` :
+                                                 ` (${p.stock} en stock)`;
+                opt.textContent = `${p.nombre} — $${p.precio.toLocaleString('es-MX')}${stockStr}`;
+                opt.disabled = p.stock === 0;
+                opt.dataset.stock  = p.stock;
+                opt.dataset.precio = p.precio;
+                opt.dataset.nombre = p.nombre;
+                opt.dataset.socket = p._specs.socket || '';
+                sel.appendChild(opt);
+            }
+
+            // Restore selection if still in filtered list
+            if (prevVal) {
+                sel.value = prevVal;
+                if (!sel.value) {
+                    // Was filtered out — clear info and status
+                    setInfo(step.key, null);
+                    setStatus(step.key, false);
+                }
+            }
+        }
+
+        // ── Event handlers ────────────────────────────────────
+        function onSelChange(key) {
+            const sel = document.getElementById(`sel-${key}`);
+            const opt = sel.value ? sel.options[sel.selectedIndex] : null;
+
+            setInfo(key, opt);
+            setStatus(key, !!opt);
+            document.getElementById(`card-${key}`).classList.toggle('step-done', !!opt);
+
+            if (key === 'cpu') {
+                cpuSocket = opt ? opt.dataset.socket : null;
+                renderStep(STEPS.find(s => s.key === 'mobo'));
+                // Clear mobo selection if socket changed
+                const moboSel = document.getElementById('sel-mobo');
+                if (moboSel.value) {
+                    const moboOpt = moboSel.options[moboSel.selectedIndex];
+                    if (moboOpt && moboOpt.dataset.socket !== cpuSocket) {
+                        moboSel.value = '';
+                        setInfo('mobo', null);
+                        setStatus('mobo', false);
+                        document.getElementById('card-mobo').classList.remove('step-done');
                     }
                 }
-            } else {
-                moboSelect.disabled = true;
             }
-            verificarSeleccion();
+
+            updateSubmitButton();
+            updateSummary();
         }
 
-        function verificarSeleccion() {
-            const cpu = document.getElementById("cpuSelect").value;
-            const mobo = document.getElementById("moboSelect").value;
-            const gpu = document.getElementById("gpuSelect").value;
-            const btn = document.getElementById("btnGenerar");
-            const alertBox = document.getElementById("expertAlert");
-
-            if (cpu !== "" && mobo !== "") {
-                alertBox.style.display = "block";
-            }
-
-            // Si los 3 están seleccionados, habilitar botón
-            if (cpu !== "" && mobo !== "" && gpu !== "") {
-                btn.disabled = false;
-            } else {
-                btn.disabled = true;
-            }
+        function setInfo(key, opt) {
+            const div = document.getElementById(`info-${key}`);
+            if (!opt || !opt.value) { div.innerHTML = ''; return; }
+            const precio = parseFloat(opt.dataset.precio).toLocaleString('es-MX', {minimumFractionDigits: 2});
+            const stock = parseInt(opt.dataset.stock);
+            const socket = opt.dataset.socket;
+            const stockBadge = stock < 3
+                ? `<span style="color:#e65100;"><i class="bi bi-exclamation-triangle-fill"></i> Solo ${stock} disponible${stock !== 1 ? 's' : ''}</span>`
+                : `<span style="color:#2e7d32;"><i class="bi bi-check-circle-fill"></i> ${stock} en stock</span>`;
+            const socketBadge = socket ? `<span><i class="bi bi-plug"></i> ${socket}</span>` : '';
+            div.innerHTML = `<div class="product-info">${socketBadge}${stockBadge}<span style="font-weight:700; color:#1a1a2e;">$${precio}</span></div>`;
         }
 
-        async function enviarAlCarrito() {
-            const cpu = document.getElementById("cpuSelect").options[document.getElementById("cpuSelect").selectedIndex].text;
-            const mobo = document.getElementById("moboSelect").options[document.getElementById("moboSelect").selectedIndex].text;
-            const gpu = document.getElementById("gpuSelect").options[document.getElementById("gpuSelect").selectedIndex].text;
+        function setStatus(key, done) {
+            const el = document.getElementById(`status-${key}`);
+            if (!el) return;
+            el.innerHTML = done
+                ? `<i class="bi bi-check-circle-fill" style="color:#2e7d32;"></i>`
+                : `<i class="bi bi-circle" style="color:#ccc;"></i>`;
+        }
 
-            const buildData = { cpu: cpu, motherboard: mobo, gpu: gpu };
-            const CART_KEY = 'tienda_cart_v1';
+        function applyFilters() {
+            filterText = document.getElementById('searchInput').value.toLowerCase().trim();
+            const priceVal = parseInt(document.getElementById('priceFilter').value);
+            const rangeMax = parseInt(document.getElementById('priceFilter').max);
+            filterMaxPrice = priceVal >= rangeMax ? Infinity : priceVal;
+            filterBrand = document.getElementById('brandFilter').value;
+            for (const step of STEPS) renderStep(step);
+            updateSubmitButton();
+            updateSummary();
+        }
+
+        function clearFilters() {
+            document.getElementById('searchInput').value = '';
+            const priceRange = document.getElementById('priceFilter');
+            priceRange.value = priceRange.max;
+            document.getElementById('priceLabel').textContent = Number(priceRange.max).toLocaleString('es-MX');
+            document.getElementById('brandFilter').value = '';
+            filterText = ''; filterMaxPrice = Infinity; filterBrand = '';
+            for (const step of STEPS) renderStep(step);
+        }
+
+        function toggleFilterPanel() {
+            const panel = document.getElementById('filterPanel');
+            panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function updateSubmitButton() {
+            const allDone = STEPS.every(s => {
+                const sel = document.getElementById(`sel-${s.key}`);
+                return sel && sel.value;
+            });
+            document.getElementById('btnGenerar').disabled = !allDone;
+        }
+
+        function updateSummary() {
+            const summaryDiv = document.getElementById('buildSummary');
+            const contentDiv = document.getElementById('summaryContent');
+            const totalDiv   = document.getElementById('summaryTotal');
+            let anySelected = false;
+            let total = 0;
+            let rows = '';
+
+            for (const step of STEPS) {
+                const sel = document.getElementById(`sel-${step.key}`);
+                const opt = sel && sel.value ? sel.options[sel.selectedIndex] : null;
+                if (opt && opt.value) {
+                    anySelected = true;
+                    const precio = parseFloat(opt.dataset.precio);
+                    total += precio;
+                    rows += `
+                        <div class="summary-row">
+                            <span class="summary-label">${step.label}</span>
+                            <span class="summary-name">${opt.dataset.nombre}</span>
+                            <span class="summary-price">$${precio.toLocaleString('es-MX', {minimumFractionDigits: 2})}</span>
+                        </div>`;
+                }
+            }
+
+            summaryDiv.style.display = anySelected ? 'block' : 'none';
+            contentDiv.innerHTML = rows;
+            totalDiv.innerHTML   = anySelected
+                ? `Total estimado: <strong>$${total.toLocaleString('es-MX', {minimumFractionDigits: 2})}</strong>`
+                : '';
+        }
+
+        // ── Validate & add to cart ────────────────────────────
+        async function validarYAgregar() {
+            const btn = document.getElementById('btnGenerar');
+            const resultDiv = document.getElementById('validationResult');
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Validando con el Sistema Experto…';
+            resultDiv.style.display = 'none';
+
+            const getVal = key => {
+                const v = document.getElementById(`sel-${key}`).value;
+                return v ? parseInt(v) : null;
+            };
+
+            const payload = {
+                cpu_id:        getVal('cpu'),
+                motherboard_id: getVal('mobo'),
+                gpu_id:        getVal('gpu'),
+                ram_id:        getVal('ram'),
+                ssd_id:        getVal('ssd'),
+                fuente_id:     getVal('fuente'),
+                cooler_id:     getVal('cooler'),
+                gabinete_id:   getVal('gabinete'),
+            };
 
             try {
-                // Petición real al backend de FastAPI
-                const response = await fetch('http://127.0.0.1:8080/api/pc-expert/validate', {
+                const res = await fetch(`${BASE_URL}/pc-expert/validate`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(buildData)
+                    body: JSON.stringify(payload),
                 });
-                const result = await response.json();
+                const data = await res.json();
 
-                if (response.ok) {
-                    alert(`¡Sistema Experto aprobó el diseño!\n\nJustificación: ${result.explanation}`);
+                if (res.ok) {
+                    // Add each selected component as individual cart item
+                    const cart = loadCart();
+                    const ids = Object.values(payload).filter(Boolean);
+                    for (const pid of ids) {
+                        const existing = cart.find(i => i.producto_id === pid);
+                        if (existing) existing.cantidad++;
+                        else cart.push({ producto_id: pid, cantidad: 1 });
+                    }
+                    saveCart(cart);
+                    updateCartCount();
 
-                    // Guardar el ensamblado en el carrito compartido (mismo formato que el catálogo)
-                    const cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
-                    // El ensamblado se representa con el producto_id 1 (placeholder de "PC Armada")
-                    // junto con una descripción legible para mostrar en el checkout.
-                    cart.push({
-                        producto_id: 1,
-                        cantidad: 1,
-                        es_build: true,
-                        descripcion_build: `PC Armada: ${cpu} + ${mobo} + ${gpu}`,
-                        precio_estimado: result.precio_estimado
-                    });
-                    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+                    const warningsHtml = data.warnings && data.warnings.length
+                        ? '<ul class="warning-list">' + data.warnings.map(w => `<li>${w}</li>`).join('') + '</ul>'
+                        : '';
 
-                    window.location.href = "checkout.html";
+                    resultDiv.className = 'result-box result-ok';
+                    resultDiv.innerHTML = `
+                        <h4><i class="bi bi-check-circle-fill"></i> ¡Ensamblado válido! Sistema Experto aprobó la configuración.</h4>
+                        <p>${(data.explanation || '').replace(/\n/g, '<br>')}</p>
+                        ${warningsHtml}
+                        <p><strong>${ids.length} componentes agregados al carrito individualmente.</strong></p>
+                        <a href="checkout.html" class="btn-go-cart"><i class="bi bi-bag-check"></i> Ver carrito y finalizar pedido</a>
+                    `;
                 } else {
-                    alert(`Error de validación: ${result.detail}`);
+                    resultDiv.className = 'result-box result-error';
+                    resultDiv.innerHTML = `
+                        <h4><i class="bi bi-x-circle-fill"></i> El Sistema Experto rechazó la configuración</h4>
+                        <p>${data.detail || 'Error desconocido.'}</p>
+                    `;
                 }
-            } catch (error) {
-                console.warn("No se pudo conectar con el backend:", error);
-                alert("No se pudo conectar con el servidor. Verifica que el backend esté corriendo en http://127.0.0.1:8080");
+            } catch(err) {
+                resultDiv.className = 'result-box result-error';
+                resultDiv.innerHTML = `
+                    <h4><i class="bi bi-x-circle-fill"></i> Error de conexión</h4>
+                    <p>Verifica que el backend esté corriendo en http://127.0.0.1:8080</p>
+                `;
             }
+
+            resultDiv.style.display = 'block';
+            btn.disabled = false;
+            btn.innerHTML = '<i class="bi bi-bag-check-fill"></i> Validar Ensamblado y Agregar al Carrito';
+            updateSubmitButton();
         }
+
+        // ── Init ──────────────────────────────────────────────
+        buildStepsGrid();
+        updateCartCount();
+        fetchProducts();
     </script>
 </body>
 </html>

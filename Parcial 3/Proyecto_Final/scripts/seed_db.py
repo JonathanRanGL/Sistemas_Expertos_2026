@@ -56,18 +56,46 @@ PRODUCTOS = [
     # Gabinetes
     (15, "Lian Li Lancool 303", "Gabinete", "Lian Li", 899.00, None, 12, "Gabinete moderno", json.dumps({"form_factor": "ATX", "airflow": "excellent", "tempered_glass": True}), 4.6, 130, 0, 1),
     (16, "NZXT H7 Flow RGB", "Gabinete", "NZXT", 1199.00, 1399.00, 10, "Gabinete gaming", json.dumps({"form_factor": "ATX", "fans": "2x120mm", "tempered_glass": True}), 4.5, 100, 0, 1),
-]
 
-print("📊 Cargando productos de prueba...")
-for prod in PRODUCTOS:
-    execute(
-        """
-        INSERT INTO productos (id, nombre, categoria, marca, precio, precio_original, stock, 
-                               descripcion, specs, rating, num_reviews, es_tendencia, activo)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """,
-        prod
-    )
+    # ── Catálogo ampliado ──────────────────────────────────────────────────────
+
+    # CPUs adicionales
+    (27, "Intel Core i7-14700K", "CPU", "Intel", 7299.00, None, 8, "CPU 20 núcleos 14ª gen alto rendimiento", json.dumps({"cores": 20, "threads": 28, "tdp": "253W", "socket": "LGA1700"}), 4.8, 190, 0, 1),
+    (28, "AMD Ryzen 7 9700X", "CPU", "AMD", 5299.00, 5999.00, 6, "CPU Zen 5 8 núcleos gama alta", json.dumps({"cores": 8, "threads": 16, "tdp": "65W", "socket": "AM5"}), 4.7, 85, 1, 1),
+    (29, "Intel Core i5-14600K", "CPU", "Intel", 4699.00, None, 2, "CPU 14 núcleos 14ª gen precio-rendimiento", json.dumps({"cores": 14, "threads": 20, "tdp": "181W", "socket": "LGA1700"}), 4.7, 215, 0, 1),
+
+    # Motherboards adicionales
+    (30, "ASUS PRIME Z790-A WIFI", "Motherboard", "ASUS", 2699.00, None, 10, "Placa madre Intel Z790 gama media-alta con WiFi 6E", json.dumps({"socket": "LGA1700", "chipset": "Z790", "memory": "DDR5"}), 4.6, 120, 0, 1),
+    (31, "MSI MAG B760M MORTAR WIFI", "Motherboard", "MSI", 1999.00, 2299.00, 13, "Placa madre Intel B760M micro-ATX WiFi 6E", json.dumps({"socket": "LGA1700", "chipset": "B760", "memory": "DDR5"}), 4.5, 144, 0, 1),
+    (32, "ASUS ROG Crosshair X670E Hero", "Motherboard", "ASUS", 5499.00, None, 4, "Placa madre AMD X670E enthusiast para Ryzen 7000", json.dumps({"socket": "AM5", "chipset": "X670E", "memory": "DDR5"}), 4.8, 63, 1, 1),
+
+    # GPUs adicionales
+    (33, "NVIDIA RTX 4080 SUPER 16GB", "GPU", "NVIDIA", 13499.00, None, 6, "GPU 4K ultra con 16GB GDDR6X", json.dumps({"vram": "16GB GDDR6X", "tdp": "320W"}), 4.8, 210, 1, 1),
+    (34, "AMD Radeon RX 7600 8GB", "GPU", "AMD", 3499.00, 4199.00, 20, "GPU gama de entrada para 1080p fluido", json.dumps({"vram": "8GB GDDR6", "tdp": "165W"}), 4.4, 130, 0, 1),
+    (35, "NVIDIA RTX 3070 Ti 8GB", "GPU", "NVIDIA", 5799.00, 6499.00, 2, "GPU generación anterior ideal para 1440p", json.dumps({"vram": "8GB GDDR6X", "tdp": "290W"}), 4.6, 185, 0, 1),
+
+    # RAM adicional
+    (36, "Kingston Fury Beast 16GB DDR5 5200MHz", "RAM", "Kingston", 749.00, None, 25, "RAM DDR5 relación velocidad-precio", json.dumps({"capacity": "16GB", "type": "DDR5", "speed": "5200MHz"}), 4.5, 95, 0, 1),
+    (37, "Corsair Vengeance LPX 32GB DDR4 3200MHz", "RAM", "Corsair", 999.00, 1199.00, 18, "RAM DDR4 clásica perfil bajo", json.dumps({"capacity": "32GB", "type": "DDR4", "speed": "3200MHz"}), 4.7, 320, 0, 1),
+    (38, "G.Skill Ripjaws V 16GB DDR4 3600MHz", "RAM", "G.Skill", 649.00, None, 15, "RAM DDR4 gama media alto rendimiento", json.dumps({"capacity": "16GB", "type": "DDR4", "speed": "3600MHz"}), 4.6, 280, 0, 1),
+
+    # SSDs adicionales
+    (39, "Crucial P3 Plus 1TB NVMe M.2", "SSD", "Crucial", 699.00, 799.00, 30, "SSD NVMe PCIe 4.0 precio-rendimiento", json.dumps({"capacity": "1TB", "type": "NVMe M.2", "speed": "5000MB/s"}), 4.5, 175, 0, 1),
+    (40, "Kingston NV2 2TB NVMe M.2", "SSD", "Kingston", 1099.00, None, 22, "SSD NVMe 2TB PCIe 4.0 gran capacidad", json.dumps({"capacity": "2TB", "type": "NVMe M.2", "speed": "3500MB/s"}), 4.4, 130, 0, 1),
+    (41, "WD Blue SA510 1TB SATA", "SSD", "Western Digital", 549.00, None, 1, "SSD SATA fiable para almacenamiento secundario", json.dumps({"capacity": "1TB", "type": "SATA", "speed": "560MB/s"}), 4.4, 220, 0, 1),
+
+    # Fuentes adicionales
+    (42, "Seasonic Focus GX-850 80+ Gold", "Fuente", "Seasonic", 1799.00, None, 12, "PSU semi-modular 850W Gold silenciosa", json.dumps({"wattage": "850W", "efficiency": "80+ Gold", "modular": "semi"}), 4.8, 145, 0, 1),
+    (43, "be quiet! Straight Power 11 1000W", "Fuente", "be quiet!", 2499.00, None, 8, "PSU full-modular 1000W Platinum silenciosa", json.dumps({"wattage": "1000W", "efficiency": "80+ Platinum", "modular": "full"}), 4.8, 98, 0, 1),
+
+    # Coolers adicionales
+    (44, "Cooler Master Hyper 212 Halo", "Cooler", "Cooler Master", 349.00, 499.00, 28, "Cooler aire económico con iluminación ARGB", json.dumps({"type": "air", "socket": "universal", "tdp": "180W"}), 4.4, 310, 0, 1),
+    (45, "Arctic Liquid Freezer III 360", "Cooler", "Arctic", 1299.00, None, 9, "Cooler líquido AIO 360mm alto rendimiento", json.dumps({"type": "liquid", "size": "360mm", "tdp": "350W"}), 4.8, 125, 0, 1),
+
+    # Gabinetes adicionales
+    (46, "Fractal Design Meshify C", "Gabinete", "Fractal Design", 1099.00, None, 7, "Gabinete compacto airflow optimizado", json.dumps({"form_factor": "ATX", "airflow": "excellent", "tempered_glass": True}), 4.7, 145, 0, 1),
+    (47, "Corsair 4000D Airflow", "Gabinete", "Corsair", 1199.00, 1399.00, 5, "Gabinete ATX mid-tower gran ventilación frontal", json.dumps({"form_factor": "ATX", "fans": "2x120mm", "tempered_glass": True}), 4.6, 188, 0, 1),
+]
 
 # ─────────────────────────────────────────
 # CLIENTES — Datos de prueba
@@ -78,17 +106,6 @@ CLIENTES = [
     (2, "María García", "maria@example.com", "555-5678", 3, 15000.0, 1, 10.0),
     (3, "Carlos López", "carlos@example.com", "555-9012", 1, 8500.0, 0, 0.0),
 ]
-
-print("👥 Cargando clientes de prueba...")
-for cliente in CLIENTES:
-    execute(
-        """
-        INSERT INTO clientes (id, nombre, email, telefono, total_compras, total_gastado, 
-                              es_frecuente, descuento_aplicable)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        """,
-        cliente
-    )
 
 # ─────────────────────────────────────────
 # REGLAS DE INFERENCIA
@@ -104,18 +121,41 @@ REGLAS = [
     (7, "configuracion_balanceada", "gpu_price/cpu_price entre 0.8 y 1.2", "sugerir_configuracion_balanceada()", 1, 0),
 ]
 
-print("📋 Cargando reglas de inferencia...")
-for regla in REGLAS:
-    execute(
-        """
-        INSERT INTO reglas_inferencia (id, nombre, condicion, accion, activa, veces_disparada)
-        VALUES (?, ?, ?, ?, ?, ?)
-        """,
-        regla
-    )
+if __name__ == "__main__":
+    print("📊 Cargando productos de prueba...")
+    for prod in PRODUCTOS:
+        execute(
+            """
+            INSERT INTO productos (id, nombre, categoria, marca, precio, precio_original, stock,
+                                   descripcion, specs, rating, num_reviews, es_tendencia, activo)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            prod
+        )
 
-print("\n✅ Base de datos inicializada correctamente.")
-print("📊 Datos cargados:")
-print(f"   • {len(PRODUCTOS)} productos")
-print(f"   • {len(CLIENTES)} clientes")
-print(f"   • {len(REGLAS)} reglas de inferencia")
+    print("👥 Cargando clientes de prueba...")
+    for cliente in CLIENTES:
+        execute(
+            """
+            INSERT INTO clientes (id, nombre, email, telefono, total_compras, total_gastado,
+                                  es_frecuente, descuento_aplicable)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            cliente
+        )
+
+    print("📋 Cargando reglas de inferencia...")
+    for regla in REGLAS:
+        execute(
+            """
+            INSERT INTO reglas_inferencia (id, nombre, condicion, accion, activa, veces_disparada)
+            VALUES (?, ?, ?, ?, ?, ?)
+            """,
+            regla
+        )
+
+    print("\n✅ Base de datos inicializada correctamente.")
+    print("📊 Datos cargados:")
+    print(f"   • {len(PRODUCTOS)} productos")
+    print(f"   • {len(CLIENTES)} clientes")
+    print(f"   • {len(REGLAS)} reglas de inferencia")

@@ -9,11 +9,15 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', 'Segoe UI', sans-serif; background: #f8f9fa; color: #333; }
 
-        header { background: white; padding: 15px 40px; box-shadow: 0 1px 5px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.2em; font-weight: bold; text-decoration: none; color: #000; cursor: pointer; }
-        nav { display: flex; gap: 20px; align-items: center; }
-        nav a { text-decoration: none; color: #666; font-size: 0.9em; font-weight: 500; }
-        nav a:hover { color: #000; font-weight: 600; }
+        header { background: white; border-bottom: 1px solid #e0e0e0; padding: 15px 0; position: sticky; top: 0; z-index: 100; }
+        .navbar-container { max-width: 1400px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+        .logo { font-size: 1.5em; font-weight: 700; color: #333; text-decoration: none; }
+        nav { flex: 1; display: flex; gap: 30px; justify-content: center; }
+        nav a { text-decoration: none; color: #666; font-weight: 500; transition: color 0.3s; }
+        nav a:hover { color: #667eea; }
+        .nav-right { display: flex; gap: 15px; align-items: center; }
+        .btn-ia { background: #2c2c2c; color: white; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 8px; transition: all 0.3s; text-decoration: none; font-size: 0.95em; }
+        .btn-ia:hover { background: #667eea; }
 
         .page { max-width: 800px; margin: 40px auto; padding: 0 20px; }
         .container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
@@ -33,8 +37,12 @@
 
         .totals { margin-top: 20px; padding-top: 20px; border-top: 2px solid #f0f0f0; display: flex; flex-direction: column; gap: 8px; }
         .totals-row { display: flex; justify-content: space-between; font-size: 1em; color: #555; }
-        .totals-row.total { font-size: 1.3em; font-weight: 800; color: #1a1a1a; }
+        .totals-row.total { font-size: 1.3em; font-weight: 800; color: #1a1a1a; border-top: 1px solid #f0f0f0; padding-top: 8px; margin-top: 4px; }
         .totals-row.discount { color: #28a745; }
+        .shipping-free { color: #28a745; font-weight: 700; }
+        .insurance-option { margin-top: 18px; }
+        .insurance-label { display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 12px 16px; background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 0.93em; }
+        .insurance-label input[type="checkbox"] { width: 16px; height: 16px; accent-color: #667eea; cursor: pointer; flex-shrink: 0; }
 
         .actions { margin-top: 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         .btn { padding: 14px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; font-size: 1em; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s; }
@@ -44,22 +52,49 @@
         .btn-secondary { background: white; color: #666; border: 2px solid #e0e0e0; }
         .btn-secondary:hover { border-color: #667eea; color: #667eea; }
 
-        .agent-box { margin-top: 35px; padding: 25px; border-radius: 10px; background: #f0f4ff; border-left: 5px solid #667eea; display: none; transition: all 0.3s; }
-        .agent-box h3 { display: flex; align-items: center; gap: 10px; font-size: 1.2em; margin-bottom: 15px; color: #333; }
+        .agent-box { margin-top: 35px; border-radius: 10px; display: none; transition: all 0.3s; }
         .agent-response { line-height: 1.7; font-size: 1.05em; color: #444; }
-        .agent-response ul { margin: 10px 0 0 20px; }
+
+        /* ── Ticket de compra ── */
+        .ticket-section { font-family: 'Courier New', Courier, monospace; background: #fafafa; border: 2px dashed #ccc; border-radius: 8px; padding: 20px 22px; margin-bottom: 20px; }
+        .ticket-header { text-align: center; border-bottom: 1px dashed #ccc; padding-bottom: 14px; margin-bottom: 14px; }
+        .ticket-store { display: block; font-size: 0.9em; font-weight: 700; color: #555; letter-spacing: 1px; margin-bottom: 6px; }
+        .ticket-order { display: block; font-size: 1.5em; font-weight: 900; color: #1a1a1a; letter-spacing: 3px; }
+        .ticket-date { display: block; font-size: 0.78em; color: #999; margin-top: 6px; }
+        .ticket-items { width: 100%; border-collapse: collapse; font-size: 0.85em; margin-bottom: 12px; }
+        .ticket-items th { text-align: left; color: #888; font-weight: 600; padding: 4px 4px 6px; border-bottom: 1px dashed #ddd; font-size: 0.82em; }
+        .ticket-items th:last-child, .ticket-items td:last-child { text-align: right; }
+        .ticket-items th:nth-child(2), .ticket-items td:nth-child(2) { text-align: center; width: 40px; }
+        .ticket-items td { padding: 5px 4px; color: #444; vertical-align: top; }
+        .ticket-totals { border-top: 1px dashed #ccc; padding-top: 10px; }
+        .ticket-row { display: flex; justify-content: space-between; font-size: 0.88em; padding: 3px 0; color: #555; }
+        .ticket-total { border-top: 1px dashed #aaa; margin-top: 6px; padding-top: 8px; font-size: 1em; font-weight: 900; color: #1a1a1a; }
+
+        /* ── Análisis Agente Supervisor ── */
+        .agent-analysis-section { background: #e6ffed; border-radius: 8px; padding: 18px 20px; border-left: 4px solid #28a745; }
+        .agent-analysis-header { font-size: 1.05em; font-weight: 700; color: #1a6b2e; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .agent-analysis-body { font-size: 0.95em; color: #444; line-height: 1.7; }
+        .agent-analysis-body ul { margin: 10px 0 0 20px; }
     </style>
 </head>
 <body>
     <header>
-        <a href="index.html" class="logo">🖥️ Tienda Inteligente</a>
-        <nav>
-            <a href="catalog.html">Productos</a>
-            <a href="ofertas.html">Ofertas</a>
-            <a href="armatupc.html">Arma tu PC</a>
-            <a href="soporte.html">Soporte</a>
-            <a href="chat.html" style="color:#000; font-size:0.9em;"><i class="bi bi-robot"></i> Asistente IA</a>
-        </nav>
+        <div class="navbar-container">
+            <a href="index.html" class="logo">🖥️ Tienda Inteligente</a>
+            <nav>
+                <a href="catalog.html">Productos</a>
+                <a href="ofertas.html">Ofertas</a>
+                <a href="armatupc.html">Arma tu PC</a>
+                <a href="soporte.html">Soporte</a>
+            </nav>
+            <div class="nav-right">
+                <a href="chat.html" class="btn-ia"><i class="bi bi-robot"></i> Asistente IA</a>
+                <div style="position:relative; cursor:pointer;" onclick="window.location.href='checkout.html'">
+                    <i class="bi bi-cart" style="font-size:1.2em;"></i>
+                    <span id="cartCount" style="position:absolute; top:-6px; right:-10px; background:#ff4444; color:white; font-size:0.75em; padding:2px 6px; border-radius:12px; display:none;">0</span>
+                </div>
+            </div>
+        </div>
     </header>
 
     <div class="page">
@@ -71,7 +106,16 @@
             <div class="totals" id="totalsBox" style="display:none;">
                 <div class="totals-row"><span>Subtotal</span><span id="totalSubtotal">$0.00</span></div>
                 <div class="totals-row discount" id="discountRow" style="display:none;"><span>Descuento</span><span id="totalDiscount">-$0.00</span></div>
+                <div class="totals-row" id="shippingRow" style="display:none;"><span id="shippingLabel">Envío</span><span id="totalShipping">$129.00</span></div>
+                <div class="totals-row" id="insuranceRow" style="display:none;"><span>Seguro de envío (3%)</span><span id="totalInsurance">$0.00</span></div>
                 <div class="totals-row total"><span>Total</span><span id="totalFinal">$0.00</span></div>
+            </div>
+
+            <div class="insurance-option" id="insuranceOption" style="display:none;">
+                <label class="insurance-label">
+                    <input type="checkbox" id="insuranceCheck" onchange="recalcTotals()">
+                    <span>Agregar seguro de envío <strong>(3% del subtotal)</strong></span>
+                </label>
             </div>
 
             <div class="actions">
@@ -79,9 +123,8 @@
                 <button class="btn btn-primary" onclick="procesarCheckout()" id="checkoutBtn"><i class="bi bi-credit-card"></i> Confirmar y Pagar</button>
             </div>
 
-            <!-- Caja de Explicabilidad del Agente 3 -->
+            <!-- Confirmación del Agente 3: ticket + análisis -->
             <div class="agent-box" id="agentBox">
-                <h3><i class="bi bi-robot"></i> Análisis del Agente Supervisor</h3>
                 <div class="agent-response" id="agentResponse"></div>
             </div>
         </div>
@@ -91,6 +134,7 @@
         const BASE_API_URL = 'http://127.0.0.1:8080/api';
         const CART_KEY = 'tienda_cart_v1';
         let productCache = {};
+        let cartSubtotal = 0;
 
         function loadCart() {
             try { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); } catch (e) { return []; }
@@ -98,6 +142,62 @@
 
         function saveCart(cart) {
             localStorage.setItem(CART_KEY, JSON.stringify(cart));
+        }
+
+        function updateCartCount() {
+            const cart = loadCart();
+            const total = cart.reduce((s, it) => s + it.cantidad, 0);
+            const badge = document.getElementById('cartCount');
+            if (!badge) return;
+            if (total > 0) { badge.style.display = 'inline-block'; badge.textContent = total; } else { badge.style.display = 'none'; }
+        }
+        document.addEventListener('DOMContentLoaded', updateCartCount);
+
+        function recalcTotals() {
+            const SHIPPING_THRESHOLD = 3500;
+            const SHIPPING_COST = 129;
+            const shippingRow    = document.getElementById('shippingRow');
+            const insuranceRow   = document.getElementById('insuranceRow');
+            const insuranceOption = document.getElementById('insuranceOption');
+            const insuranceCheck  = document.getElementById('insuranceCheck');
+
+            if (cartSubtotal <= 0) {
+                shippingRow.style.display = 'none';
+                insuranceRow.style.display = 'none';
+                if (insuranceOption) insuranceOption.style.display = 'none';
+                return;
+            }
+
+            // Envío
+            let shipping = 0;
+            if (cartSubtotal >= SHIPPING_THRESHOLD) {
+                document.getElementById('shippingLabel').textContent = 'Envío';
+                const el = document.getElementById('totalShipping');
+                el.textContent = 'Gratis';
+                el.className = 'shipping-free';
+            } else {
+                shipping = SHIPPING_COST;
+                const el = document.getElementById('totalShipping');
+                el.textContent = `$${SHIPPING_COST.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+                el.className = '';
+            }
+            shippingRow.style.display = 'flex';
+            if (insuranceOption) insuranceOption.style.display = 'block';
+
+            // Seguro de envío (opcional)
+            let insurance = 0;
+            if (insuranceCheck && insuranceCheck.checked) {
+                insurance = cartSubtotal * 0.03;
+                document.getElementById('totalInsurance').textContent =
+                    `$${insurance.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+                insuranceRow.style.display = 'flex';
+            } else {
+                insuranceRow.style.display = 'none';
+            }
+
+            const total = cartSubtotal + shipping + insurance;
+            document.getElementById('totalFinal').textContent =
+                `$${total.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
         }
 
         async function fetchProductInfo(id) {
@@ -176,11 +276,12 @@
 
             container.innerHTML = rows.join('');
 
+            cartSubtotal = subtotal;
             document.getElementById('totalSubtotal').textContent = '$' + subtotal.toLocaleString(undefined, {minimumFractionDigits:2});
-            document.getElementById('totalFinal').textContent = '$' + subtotal.toLocaleString(undefined, {minimumFractionDigits:2});
             document.getElementById('discountRow').style.display = 'none';
             totalsBox.style.display = 'flex';
             document.getElementById('checkoutBtn').style.display = 'inline-flex';
+            recalcTotals();
         }
 
         function changeQty(index, delta) {
@@ -234,9 +335,35 @@
                 agentBox.style.display = 'block';
 
                 if (response.ok) {
-                    agentBox.style.background = '#e6ffed';
-                    agentBox.style.borderLeftColor = '#28a745';
+                    // ── Capturar estado del carrito ANTES de limpiar ──────────
+                    const cartSnapshot = loadCart();
+                    const subtotalSnapshot = cartSubtotal;
+                    const insuranceCheck = document.getElementById('insuranceCheck');
+                    const hasInsurance = insuranceCheck && insuranceCheck.checked;
+                    const shippingAmt = subtotalSnapshot >= 3500 ? 0 : 129;
+                    const insuranceAmt = hasInsurance ? subtotalSnapshot * 0.03 : 0;
+                    const totalAmt = subtotalSnapshot + shippingAmt + insuranceAmt;
 
+                    // ── Filas de items para el ticket ─────────────────────────
+                    let ticketRows = '';
+                    for (const item of cartSnapshot) {
+                        if (item.es_build) {
+                            const price = item.precio_estimado || 0;
+                            ticketRows += `<tr><td>${item.descripcion_build || 'PC Armada'}</td><td>1</td><td>$${price.toLocaleString(undefined, {minimumFractionDigits:2})}</td></tr>`;
+                        } else {
+                            const prod = productCache[item.producto_id];
+                            const nombre = prod ? prod.nombre : `Producto #${item.producto_id}`;
+                            const precioUnit = prod ? prod.precio : 0;
+                            const lineTotal = precioUnit * item.cantidad;
+                            ticketRows += `<tr><td>${nombre}</td><td>${item.cantidad}</td><td>$${lineTotal.toLocaleString(undefined, {minimumFractionDigits:2})}</td></tr>`;
+                        }
+                    }
+
+                    const now = new Date();
+                    const fechaStr = now.toLocaleDateString('es-MX', {day:'2-digit', month:'long', year:'numeric'})
+                        + ' — ' + now.toLocaleTimeString('es-MX', {hour:'2-digit', minute:'2-digit'});
+
+                    // ── Recomendaciones y advertencias del agente ─────────────
                     let extra = '';
                     if (data.inferencias && data.inferencias.recommendations && data.inferencias.recommendations.length) {
                         extra += '<ul>' + data.inferencias.recommendations.map(r => `<li>${r}</li>`).join('') + '</ul>';
@@ -245,16 +372,46 @@
                         extra += '<ul>' + data.inferencias.warnings.map(w => `<li>⚠ ${w}</li>`).join('') + '</ul>';
                     }
 
-                    agentResponse.innerHTML = `<strong style="color: #28a745; font-size:1.1em;">¡Transacción Aprobada! (Pedido #${data.pedido_id})</strong><br><br>${data.explicacion_agente3}${extra}`;
+                    agentBox.style.background = 'transparent';
+                    agentBox.style.border = 'none';
+                    agentBox.style.padding = '0';
+
+                    agentResponse.innerHTML = `
+                        <div class="ticket-section">
+                            <div class="ticket-header">
+                                <span class="ticket-store">🖥️ TIENDA INTELIGENTE</span>
+                                <span class="ticket-order">PEDIDO #${data.pedido_id}</span>
+                                <span class="ticket-date">${fechaStr}</span>
+                            </div>
+                            <table class="ticket-items">
+                                <thead><tr><th>Producto</th><th>Cant</th><th>Total</th></tr></thead>
+                                <tbody>${ticketRows}</tbody>
+                            </table>
+                            <div class="ticket-totals">
+                                <div class="ticket-row"><span>Subtotal</span><span>$${subtotalSnapshot.toLocaleString(undefined,{minimumFractionDigits:2})}</span></div>
+                                <div class="ticket-row"><span>Envío</span><span>${shippingAmt === 0 ? 'Gratis ✓' : '$' + shippingAmt.toLocaleString(undefined,{minimumFractionDigits:2})}</span></div>
+                                ${hasInsurance ? `<div class="ticket-row"><span>Seguro (3%)</span><span>$${insuranceAmt.toLocaleString(undefined,{minimumFractionDigits:2})}</span></div>` : ''}
+                                <div class="ticket-row ticket-total"><span>TOTAL</span><span>$${totalAmt.toLocaleString(undefined,{minimumFractionDigits:2})}</span></div>
+                            </div>
+                        </div>
+                        <div class="agent-analysis-section">
+                            <div class="agent-analysis-header"><i class="bi bi-robot"></i> Análisis del Agente Supervisor</div>
+                            <div class="agent-analysis-body">${data.explicacion_agente3}${extra}</div>
+                        </div>`;
 
                     localStorage.removeItem(CART_KEY);
+                    cartSubtotal = 0;
                     document.getElementById('cartItems').innerHTML = '';
                     document.getElementById('totalsBox').style.display = 'none';
+                    document.getElementById('insuranceOption').style.display = 'none';
                     btn.style.display = 'none';
                 } else {
                     agentBox.style.background = '#ffe6e6';
-                    agentBox.style.borderLeftColor = '#dc3545';
-                    agentResponse.innerHTML = `<strong style="color: #dc3545;">Restricción del Agente:</strong><br>${data.detail}`;
+                    agentBox.style.border = '';
+                    agentBox.style.padding = '25px';
+                    agentBox.style.borderLeft = '5px solid #dc3545';
+                    agentBox.style.borderRadius = '10px';
+                    agentResponse.innerHTML = `<strong style="color: #dc3545;">⚠ Restricción del Agente:</strong><br><br>${data.detail}`;
 
                     btn.disabled = false;
                     btn.innerHTML = '<i class="bi bi-credit-card"></i> Reintentar Pago';
@@ -264,7 +421,10 @@
                 const agentResponse = document.getElementById('agentResponse');
                 agentBox.style.display = 'block';
                 agentBox.style.background = '#ffe6e6';
-                agentBox.style.borderLeftColor = '#dc3545';
+                agentBox.style.border = '';
+                agentBox.style.padding = '25px';
+                agentBox.style.borderLeft = '5px solid #dc3545';
+                agentBox.style.borderRadius = '10px';
                 agentResponse.innerHTML = '<strong style="color: #dc3545;">Error de conexión: Verifica que el servidor backend esté corriendo</strong>';
                 btn.disabled = false;
                 btn.innerHTML = '<i class="bi bi-credit-card"></i> Confirmar y Pagar';

@@ -137,7 +137,8 @@
         }
         
         .product-image {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background-color: #ffffff;
+            width: 100%;
             height: 200px;
             display: flex;
             align-items: center;
@@ -149,31 +150,35 @@
         
         .product-trending {
             position: absolute;
-            top: 10px;
-            left: 10px;
-            background: #666;
+            top: 8px;
+            left: 8px;
+            background: #555;
             color: white;
-            padding: 6px 12px;
+            padding: 4px 8px;
             border-radius: 6px;
-            font-size: 0.8em;
-            font-weight: 600;
+            font-size: 0.7rem;
+            font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 5px;
+            z-index: 1;
         }
-        
+
         .product-discount {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 8px;
+            right: 8px;
             background: #ff4444;
             color: white;
-            padding: 6px 12px;
+            padding: 4px 8px;
             border-radius: 6px;
-            font-size: 0.85em;
+            font-size: 0.7rem;
             font-weight: 700;
-            box-shadow: 0 2px 5px rgba(255,68,68,0.3);
+            z-index: 1;
         }
+
+        /* Product images */
+        .product-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; padding: 12px; }
+        .product-img-fallback { font-size: 3.5em; }
         
         .product-body {
             padding: 20px;
@@ -375,9 +380,11 @@
                 return `
                     <div class="product-card">
                         <div class="product-image">
-                            ${product.es_tendencia ? '<div class="product-trending"><i class="bi bi-graph-up"></i> Tendencia</div>' : ''}
+                            <img src="assets/products/${product.id}.png" alt="${product.nombre}" class="product-img"
+                                 onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <span class="product-img-fallback" style="display:none; align-items:center; justify-content:center;">🔥</span>
+                            ${product.es_tendencia ? '<div class="product-trending">📈</div>' : ''}
                             ${discountPercent > 0 ? `<div class="product-discount">-${discountPercent}%</div>` : ''}
-                            🔥
                         </div>
                         
                         <div class="product-body">

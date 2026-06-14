@@ -161,10 +161,16 @@
         }
         
         .filters {
-            display: flex;
+            display: none;
             gap: 15px;
             flex-wrap: wrap;
+            padding-top: 18px;
+            border-top: 1px solid #f0f0f0;
+            margin-top: 5px;
         }
+
+        .filters.open { display: flex; }
+        .filter-btn.active { background: #667eea; color: white; border-color: #667eea; }
         
         .filter-select {
             padding: 10px 15px;
@@ -204,7 +210,8 @@
         }
         
         .product-image {
-            background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
+            background-color: #ffffff;
+            width: 100%;
             height: 180px;
             display: flex;
             align-items: center;
@@ -216,30 +223,35 @@
         
         .product-trending {
             position: absolute;
-            top: 10px;
-            left: 10px;
-            background: #666;
+            top: 8px;
+            left: 8px;
+            background: #555;
             color: white;
-            padding: 6px 12px;
+            padding: 4px 8px;
             border-radius: 6px;
-            font-size: 0.8em;
-            font-weight: 600;
+            font-size: 0.7rem;
+            font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 5px;
+            z-index: 1;
         }
-        
+
         .product-discount {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 8px;
+            right: 8px;
             background: #ff4444;
             color: white;
-            padding: 6px 12px;
+            padding: 4px 8px;
             border-radius: 6px;
-            font-size: 0.8em;
-            font-weight: 600;
+            font-size: 0.7rem;
+            font-weight: 700;
+            z-index: 1;
         }
+
+        /* Product images */
+        .product-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; padding: 12px; }
+        .product-img-fallback { font-size: 3em; }
         
         .product-body {
             padding: 20px;
@@ -426,37 +438,52 @@
                     placeholder="Buscar productos..."
                     id="searchInput"
                 >
-                <button class="filter-btn">
+                <button class="filter-btn" id="filterBtn" onclick="toggleFilters()">
                     <i class="bi bi-funnel"></i> Filtros
                 </button>
             </div>
             
-            <div class="filters">
+            <div class="filters" id="filtersPanel">
                 <select class="filter-select" id="categoryFilter">
                     <option value="">Todas las categorías</option>
-                    <option value="GPU">GPU</option>
                     <option value="CPU">CPU</option>
+                    <option value="GPU">GPU</option>
+                    <option value="Motherboard">Motherboard</option>
                     <option value="RAM">RAM</option>
                     <option value="SSD">SSD</option>
-                    <option value="Motherboard">Motherboard</option>
                     <option value="Fuente">Fuente</option>
                     <option value="Cooler">Cooler</option>
                     <option value="Gabinete">Gabinete</option>
                 </select>
-                
+
                 <select class="filter-select" id="brandFilter">
                     <option value="">Todas las marcas</option>
-                    <option value="NVIDIA">NVIDIA</option>
                     <option value="AMD">AMD</option>
-                    <option value="Intel">Intel</option>
-                    <option value="Corsair">Corsair</option>
-                    <option value="Samsung">Samsung</option>
+                    <option value="Arctic">Arctic</option>
                     <option value="ASUS">ASUS</option>
+                    <option value="be quiet!">be quiet!</option>
+                    <option value="Cooler Master">Cooler Master</option>
+                    <option value="Corsair">Corsair</option>
+                    <option value="Crucial">Crucial</option>
+                    <option value="EVGA">EVGA</option>
+                    <option value="Fractal Design">Fractal Design</option>
+                    <option value="G.Skill">G.Skill</option>
+                    <option value="Gigabyte">Gigabyte</option>
+                    <option value="Intel">Intel</option>
+                    <option value="Kingston">Kingston</option>
+                    <option value="Lian Li">Lian Li</option>
+                    <option value="MSI">MSI</option>
+                    <option value="NVIDIA">NVIDIA</option>
+                    <option value="Noctua">Noctua</option>
+                    <option value="NZXT">NZXT</option>
+                    <option value="Samsung">Samsung</option>
+                    <option value="Seasonic">Seasonic</option>
+                    <option value="Western Digital">Western Digital</option>
                 </select>
-                
-                <input 
-                    type="number" 
-                    class="filter-select" 
+
+                <input
+                    type="number"
+                    class="filter-select"
                     placeholder="Precio máximo"
                     id="maxPriceFilter"
                 >
@@ -513,9 +540,11 @@
             grid.innerHTML = products.map(product => `
                 <div class="product-card">
                     <div class="product-image">
-                        ${product.es_tendencia ? '<div class="product-trending"><i class="bi bi-graph-up"></i> Tendencia</div>' : ''}
+                        <img src="assets/products/${product.id}.png" alt="${product.nombre}" class="product-img"
+                             onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <span class="product-img-fallback" style="display:none; align-items:center; justify-content:center;">📦</span>
+                        ${product.es_tendencia ? '<div class="product-trending">📈</div>' : ''}
                         ${product.precio_original ? `<div class="product-discount">-${Math.round((1 - product.precio / product.precio_original) * 100)}%</div>` : ''}
-                        📦
                     </div>
                     
                     <div class="product-body">
@@ -580,6 +609,16 @@
                 }
             }
         });
+
+        function toggleFilters() {
+            const panel = document.getElementById('filtersPanel');
+            const btn = document.getElementById('filterBtn');
+            const open = panel.classList.toggle('open');
+            btn.classList.toggle('active', open);
+            btn.innerHTML = open
+                ? '<i class="bi bi-x-lg"></i> Ocultar filtros'
+                : '<i class="bi bi-funnel"></i> Filtros';
+        }
 
         // Inicializar
         fetchProducts();
