@@ -1,488 +1,319 @@
-# 🖥️ Tienda Inteligente — Sistema Experto de Venta de Componentes PC
+# Tienda Inteligente
 
-**Versión:** 1.0.0 | **Estado:** En Desarrollo | **Fecha:** Junio 2026
+Sistema experto de venta de componentes de PC construido con FastAPI, SQLite y una arquitectura de tres agentes inteligentes. El sistema integra un motor de inferencias basado en reglas IF-THEN con IA generativa (Gemini) para atención al cliente, validación de compatibilidad de hardware y gestión de pedidos.
 
----
-
-## 📋 Descripción General
-
-**Tienda Inteligente** es un **sistema experto moderno basado en agentes inteligentes** diseñado para automatizar la venta de componentes y equipos informáticos. Mediante la colaboración de 3 agentes especializados, el sistema es capaz de:
-
-- 🤖 **Entender peticiones de clientes** en lenguaje natural
-- 📊 **Analizar compatibilidades** y aplicar inferencias automáticas
-- 💡 **Generar recomendaciones personalizadas** según presupuesto y caso de uso
-- 📝 **Explicar todas las decisiones tomadas** (explicabilidad IA)
-- 💾 **Gestionar pedidos** completos en una base de datos SQLite
-
-El sistema demuestra cómo la **ingeniería del conocimiento** y los **sistemas expertos** pueden mejorar significativamente la experiencia de compra en e-commerce.
+El proyecto demuestra los principios centrales de la ingeniería del conocimiento: representación del conocimiento en reglas declarativas, encadenamiento hacia adelante (forward chaining), explicabilidad de decisiones y colaboración entre agentes especializados.
 
 ---
 
-## 🎯 Características Principales
+## Arquitectura del sistema
 
-### 1. **Asistencia Inteligente 24/7**
-- Agente de atención al cliente disponible continuamente
-- Responde consultas sobre productos, precios, stock y especificaciones
-- Entiende intenciones de compra, consulta y soporte técnico
-- Base de conocimiento actualizada en tiempo real
+```
+Usuario (navegador)
+        |
+        v
+  Frontend estático
+  (HTML / CSS / JS)
+        |
+        v
+  FastAPI  (puerto 8080)
+        |
+   _____|_______________________________
+  |             |             |         |
+  v             v             v         v
+Agente 1    Agente 2      Agente 3   Motor de
+Atención    Generador     Supervisor inferencias
+al cliente  de pedidos    Explicador
+  |             |             |         |
+  v             v             v         v
+              SQLite  <-----------  reglas_inferencia
+              tienda.db
+```
 
-### 2. **Recomendaciones Personalizadas**
-- Arma tu PC según presupuesto
-- Recomendación por tipo de build (Gaming, Trabajo, Balanceado)
-- Análisis de compatibilidad entre componentes
-- Optimización automática de presupuesto
-- Comparación de rendimiento
+**Agente 1 — Atención al cliente** (`agent1_customer.py`): Recibe mensajes del usuario, detecta la categoría o marca consultada y genera una respuesta. Delega a Gemini API cuando hay una clave configurada; en caso contrario responde con el motor de reglas del propio agente.
 
-### 3. **Motor de Inferencias Avanzado**
-- 10+ reglas IF-THEN configurables
-- Aplicación automática de descuentos
-- Detección de incompatibilidades
-- Alertas de stock bajo
-- Cálculo de envío gratis automático
+**Agente 2 — Generador de pedidos** (`agent2_order.py`): Recibe el carrito desde el frontend, valida stock, invoca el motor de inferencias para calcular descuentos y envío gratis, y persiste el pedido en la base de datos.
 
-### 4. **Catálogo Completo**
-- 10,000+ productos disponibles
-- 8 categorías principales (GPU, CPU, RAM, SSD, Motherboard, Fuente, Cooler, Gabinete)
-- Filtros avanzados por marca, precio, especificaciones
-- Productos trending y ofertas especiales
+**Agente 3 — Supervisor / Explicador** (`agent3_supervisor.py`): Genera la explicación en lenguaje natural del pedido: qué reglas se dispararon, qué descuentos se aplicaron y cuál es el total final. Su salida se guarda en el campo `notas_agente` de cada pedido.
 
-### 5. **Centro de Soporte Integral**
-- Chat en vivo con agentes IA
-- Email y teléfono de soporte
-- Base de preguntas frecuentes
-- Tickets de soporte automáticos
-- Devoluciones facilitadas
+El motor de inferencias (`InferenceEngine`) evalúa un conjunto de reglas IF-THEN sobre el contexto del pedido (cliente, items, subtotal, especificaciones de los componentes) y devuelve descuentos, advertencias, recomendaciones y la lista de reglas disparadas.
 
 ---
 
-## 🤖 Arquitectura de Agentes
+## Características principales
 
-El sistema opera mediante una **arquitectura de 3 agentes especializados**:
-
-### **Agente 1: Atención al Cliente** 👤
-**Tecnología:** LangChain + Google Gemini API
-
-**Responsabilidades:**
-- Lee y procesa mensajes de clientes
-- Detecta intención (compra, consulta, soporte, devolucion)
-- Extrae entidades (productos, cantidades, presupuesto, preferencias)
-- Consulta base de datos para información relevante
-- Genera respuestas naturales y personalizadas
-
-**Ejemplo:**
-```
-Cliente: "Necesito un procesador gaming con presupuesto de $100,000"
-↓
-Agente 1: Detecta intención=compra, extrae presupuesto=100k, tipo=gaming
-```
-
-### **Agente 2: Generador de Pedidos** 📦
-**Tecnología:** Python + Motor de Inferencias + SQLite
-
-**Responsabilidades:**
-- Procesa información del Agente 1
-- Valida stock y disponibilidad
-- Verifica compatibilidad entre componentes
-- Ejecuta reglas de inferencia
-- Calcula descuentos y precios finales
-- Genera y guarda pedido en BD
-
-**Ejemplo:**
-```
-Datos de entrada: {producto: "CPU i9", cantidad: 1, cliente_id: 5}
-↓
-Validaciones:
-  ✓ Stock disponible (10 unidades)
-  ✓ Cliente frecuente → Aplicar descuento 10%
-  ✓ Total > $50,000 → Envío gratis
-↓
-Pedido generado: ID=156, Total=$89,999 (antes $99,999)
-```
-
-### **Agente 3: Supervisor/Explicador** 🧠
-**Tecnología:** LangChain + Google Gemini API
-
-**Responsabilidades:**
-- Genera resumen ejecutivo del pedido
-- Explica cada decisión tomada
-- Lista todas las reglas disparadas
-- Justifica descuentos y modificaciones
-- Solicita confirmación final
-- Guarda explicaciones en BD
-
-**Ejemplo:**
-```
-Salida del Agente 3:
-"Se detectó que solicitaste 1 CPU Intel Core i9-13900K.
- ✓ Stock: 10 unidades disponibles
- ✓ Cliente frecuente: Se aplicó descuento del 10% ($10,000)
- ✓ Total > $50,000: Envío gratis
- Total final: $89,999 (antes $99,999)
- ¿Confirmas la compra?"
-```
+- Catálogo de **47 productos** reales distribuidos en 8 categorías: GPU, CPU, RAM, SSD, Motherboard, Fuente, Cooler y Gabinete.
+- Configurador **Arma tu PC** en 8 pasos con validación automática de compatibilidad de socket (AM5 / LGA1700) y suficiencia de la fuente de poder (TDP total vs. wattage).
+- Sistema de **ofertas**: productos con `precio_original` mayor al precio actual aparecen en la sección de deals con el porcentaje de descuento calculado.
+- **Carrito** con cálculo de envío y aplicación automática de descuentos según reglas de inferencia.
+- **Chat con IA**: usa `gemini-2.5-flash-lite` con memoria de conversación y contexto del catálogo; si la API key no está configurada o la cuota se agota, el `CustomerAgent` basado en reglas responde automáticamente.
+- **Motor de inferencias** con 9 reglas de negocio (ver sección dedicada más adelante).
 
 ---
 
-## 🧠 Base de Conocimiento y Reglas de Inferencia
+## Stack tecnológico
 
-El sistema implementa **10 reglas IF-THEN** que automatizan decisiones de venta:
+| Capa | Tecnología | Version minima |
+|------|-----------|----------------|
+| Backend | Python + FastAPI | fastapi >= 0.115.0 |
+| Servidor ASGI | Uvicorn | uvicorn[standard] >= 0.30.0 |
+| Validacion | Pydantic | >= 2.9.0 |
+| Base de datos | SQLite (aiosqlite) | aiosqlite >= 0.20.0 |
+| IA generativa | Google Gemini (google-genai) | >= 1.0.0 |
+| Variables de entorno | python-dotenv | >= 1.0.1 |
+| Cliente HTTP | httpx | >= 0.27.0 |
+| Frontend | HTML5 / CSS3 / JavaScript vanilla | — |
 
-| # | Regla | Condición | Acción |
-|---|-------|-----------|--------|
-| 1 | `descuento_cliente_frecuente` | `cliente.total_compras > 5` | Aplicar 10% descuento |
-| 2 | `descuento_cliente_vip` | `cliente.total_gastado > $100,000` | Aplicar 20% descuento |
-| 3 | `envio_gratis_por_monto` | `total_pedido > $50,000` | Envío sin costo |
-| 4 | `alerta_stock_bajo` | `stock < cantidad_solicitada` | Generar alerta reabastecimiento |
-| 5 | `incompatibilidad_socket` | `cpu.socket != motherboard.socket` | Sugerir alternativa compatible |
-| 6 | `psu_insuficiente` | `total_tdp > psu_wattage * 0.8` | Alertar PSU insuficiente |
-| 7 | `configuracion_balanceada` | `gpu_price/cpu_price entre 0.8 y 1.2` | Sugerir config balanceada |
-| 8 | `descuento_por_cantidad` | `cantidad >= 5` | Aplicar 5% descuento mayorista |
-| 9 | `recomendacion_cooler` | `cpu.tdp > 125W` | Recomendar cooler líquido |
-| 10 | `oferta_relacionada` | `producto_en_carrito` | Sugerir producto complementario |
+El modelo de Gemini configurado en produccion es `gemini-2.5-flash-lite` (definido en `backend/api/chat.py`).
 
 ---
 
-## 🛠️ Stack Tecnológico
-
-### **Backend**
-- **Python 3.11+** - Lenguaje principal
-- **FastAPI** - Framework API REST de alto rendimiento
-- **LangChain 0.2.1** - Orquestación de agentes IA
-- **Google Generativeai (Gemini)** - Modelo de IA para procesamiento de lenguaje
-- **SQLite 3** - Base de datos local
-
-### **Frontend**
-- **HTML5** - Estructura semántica
-- **CSS3** - Diseño responsive y moderno
-- **JavaScript (Vanilla)** - Interactividad sin dependencias
-- **Bootstrap Icons** - Iconografía
-
-### **Bases de Datos**
-- **SQLite** (local)
-  - 5 tablas normalizadas
-  - Índices para búsquedas rápidas
-  - Constraints de integridad referencial
-
-### **APIs Externas**
-- **Google Gemini 1.5 Flash** (Gratuita) - IA generativa
-- **OpenRouter** (alternativa gratuita)
-
----
-
-## 💾 Esquema de Base de Datos
-
-### Tabla: `productos`
-```sql
-- id (PK)
-- nombre: string
-- categoria: enum (GPU, CPU, RAM, SSD, Motherboard, Fuente, Cooler, Gabinete)
-- marca: string
-- precio: float
-- precio_original: float (nullable)
-- stock: integer
-- descripcion: text
-- specs: json (especificaciones técnicas)
-- rating: float (0-5)
-- num_reviews: integer
-- es_tendencia: boolean
-- activo: boolean
-- fecha_creacion: timestamp
-```
-
-### Tabla: `clientes`
-```sql
-- id (PK)
-- nombre: string
-- email: string (UNIQUE)
-- telefono: string
-- total_compras: integer
-- total_gastado: float
-- es_frecuente: boolean (calculado por inferencia)
-- descuento_aplicable: float (%)
-- fecha_registro: timestamp
-- ultimo_pedido: timestamp
-```
-
-### Tabla: `pedidos`
-```sql
-- id (PK)
-- cliente_id: FK (clientes)
-- estado: enum (pendiente, confirmado, enviado, cancelado)
-- subtotal: float
-- descuento: float
-- total: float
-- envio_gratis: boolean
-- notas_agente: text (explicación del Agente 3)
-- inferencias: json (reglas disparadas)
-- fecha_pedido: timestamp
-```
-
-### Tabla: `detalle_pedido`
-```sql
-- id (PK)
-- pedido_id: FK (pedidos)
-- producto_id: FK (productos)
-- cantidad: integer
-- precio_unit: float
-- subtotal: float
-```
-
-### Tabla: `reglas_inferencia`
-```sql
-- id (PK)
-- nombre: string (UNIQUE)
-- condicion: text (descripción IF)
-- accion: text (descripción THEN)
-- activa: boolean
-- veces_disparada: integer
-```
-
----
-
-## 📁 Estructura del Proyecto
+## Estructura del proyecto
 
 ```
 Proyecto_Final/
+├── .env                        # Variables de entorno (no versionado)
+├── .env.example                # Plantilla de configuracion
+├── requirements.txt
 ├── backend/
-│   ├── agents/                    # Agentes inteligentes
-│   │   ├── __init__.py
-│   │   ├── agent1_customer.py     # Agente de atención
-│   │   ├── agent2_order.py        # Generador de pedidos
-│   │   └── agent3_supervisor.py   # Supervisor explicador
-│   │
-│   ├── api/                       # Endpoints REST
-│   │   ├── __init__.py
-│   │   ├── products.py            # GET /api/products
-│   │   ├── clients.py             # GET/POST /api/clients
-│   │   ├── orders.py              # POST /api/orders
-│   │   └── chat.py                # POST /api/chat
-│   │
-│   ├── core/                      # Lógica del sistema experto
-│   │   ├── __init__.py
-│   │   └── inference_engine.py    # Motor de reglas IF-THEN
-│   │
-│   ├── db/                        # Acceso a datos
-│   │   ├── __init__.py
-│   │   ├── database.py            # Conexión SQLite
-│   │   └── models.py              # Schema SQL
-│   │
-│   ├── __init__.py
-│   └── main.py                    # Punto de entrada FastAPI
-│
+│   ├── main.py                 # Punto de entrada FastAPI; registra todos los routers
+│   ├── agents/
+│   │   ├── agent1_customer.py  # Agente 1: respuesta al cliente basada en reglas
+│   │   ├── agent2_order.py     # Agente 2: creacion y validacion de pedidos
+│   │   └── agent3_supervisor.py# Agente 3: explicacion del pedido en lenguaje natural
+│   ├── api/
+│   │   ├── products.py         # Endpoints del catalogo
+│   │   ├── orders.py           # Endpoint de checkout y consulta de pedidos
+│   │   ├── chat.py             # Endpoint de chat (Gemini + fallback)
+│   │   ├── pc_expert.py        # Endpoint del configurador Arma tu PC
+│   │   ├── clients.py          # CRUD de clientes
+│   │   └── admin.py            # Endpoint de reset para demos
+│   ├── core/
+│   │   └── inference_engine.py # Motor de inferencias IF-THEN
+│   └── db/
+│       ├── database.py         # Conexion SQLite y helpers query/execute
+│       └── models.py           # Esquema de tablas y creacion de indices
 ├── frontend/
-│   ├── index.html                 # Landing page
-│   ├── catalog.html               # Catálogo de productos
-│   ├── chat.html                  # Chat inteligente
-│   ├── order.html                 # Confirmación de pedido
-│   ├── support.html               # Centro de soporte
-│   ├── styles.css                 # Estilos globales
-│   ├── script.js                  # JavaScript global
+│   ├── index.html              # Pagina principal
+│   ├── catalog.html            # Catalogo con filtros
+│   ├── armatupc.html           # Configurador de 8 pasos
+│   ├── checkout.html           # Carrito y checkout
+│   ├── chat.html               # Chat con IA
+│   ├── ofertas.html            # Productos en oferta
+│   ├── soporte.html            # Pagina de soporte
 │   └── assets/
-│       ├── products/              # Imágenes de productos
-│       ├── screenshots/           # Capturas del sistema
-│       └── icons/                 # Iconografía
-│
+│       └── products/           # 47 imagenes de productos (1.png ... 47.png)
 ├── scripts/
-│   ├── init_db.py                 # Crea tablas
-│   ├── seed_db.py                 # Carga datos de prueba
-│   └── test_agents.py             # Tests de agentes
-│
+│   ├── init_db.py              # Crea las tablas del esquema
+│   ├── seed_db.py              # Carga 47 productos, 3 clientes y 7 reglas
+│   └── reset_db.py             # Restaura el estado inicial para demostraciones
 ├── docs/
-│   ├── architecture.md            # Diagrama de arquitectura
-│   ├── api.md                     # Documentación API
-│   └── database.md                # Schema BD detallado
-│
-├── index.html                     # Root landing page
-├── README.md                      # Este archivo
-├── COMMITS_PLAN.md                # Cronograma de 9 días
-├── COMMIT_DIA1.md                 # Resumen Día 1
-├── DEV_GUIDE.md                   # Guía para desarrolladores
-├── requirements.txt               # Dependencias Python
-├── .env.example                   # Template de variables
-└── .gitignore                     # Archivos ignorados
+│   └── architecture.md
+├── tests/
+│   └── test_api.py
+└── assets/
+    └── 7E_23110179_prototipoSE.pdf
 ```
 
 ---
 
-## 🚀 Instalación Rápida
+## Requisitos previos
 
-### Requisitos Previos
+- Python 3.10 o superior
+- pip
+- API key de Google Gemini (gratuita en https://aistudio.google.com/app/apikey)
+
+La API key es opcional: el sistema responde con el motor de reglas integrado si no esta configurada.
+
+---
+
+## Instalacion y configuracion (Windows / PowerShell)
+
+**1. Posicionarse en el directorio del proyecto**
+
+```powershell
+cd "Proyecto_Final"
 ```
-Python 3.11+
-pip
-git
-Gemini API Key (gratuita en https://aistudio.google.com)
+
+**2. Crear y activar el entorno virtual**
+
+```powershell
+python -m venv .venv
+.venv\Scripts\activate
 ```
 
-### Pasos de Instalación
+**3. Instalar dependencias**
 
-```bash
-# 1. Clonar/descargar el proyecto
-cd Proyecto_Final
-
-# 2. Crear entorno virtual
-python -m venv venv
-
-# 3. Activar entorno (Windows)
-venv\Scripts\activate
-# O en Linux/Mac:
-source venv/bin/activate
-
-# 4. Instalar dependencias
+```powershell
 pip install -r requirements.txt
+```
 
-# 5. Configurar variables de entorno
-cp .env.example .env
-# Editar .env y añadir GEMINI_API_KEY
+Todos los paquetes de `requirements.txt` disponen de wheels precompilados para Windows, por lo que no se requiere compilador de C.
 
-# 6. Inicializar base de datos
+**4. Configurar variables de entorno**
+
+```powershell
+Copy-Item .env.example .env
+```
+
+Abrir `.env` y reemplazar `your_api_key_here` con la clave de Gemini:
+
+```
+GEMINI_API_KEY=AIza...
+```
+
+**5. Inicializar la base de datos**
+
+```powershell
 python scripts/init_db.py
-
-# 7. Cargar datos de prueba
 python scripts/seed_db.py
+```
 
-# 8. Iniciar servidor backend
-uvicorn backend.main:app --reload
+`seed_db.py` carga: **47 productos**, **3 clientes** de prueba y **7 reglas de inferencia** en la tabla `reglas_inferencia`.
 
-# 9. Abrir frontend
-# Abrir index.html en el navegador (o usar Live Server)
+---
+
+## Ejecucion
+
+**Levantar el backend:**
+
+```powershell
+python -m uvicorn backend.main:app --reload --port 8080
+```
+
+**Abrir el frontend:** abrir `frontend/index.html` directamente en el navegador.
+
+**Verificar que el backend responde:**
+
+- Pagina de documentacion interactiva: http://127.0.0.1:8080/docs
+- Health check: http://127.0.0.1:8080/health
+
+---
+
+## Reinicio de datos de demostracion
+
+Para restaurar el catalogo al estado original (stock completo, sin pedidos de prueba, contadores de ID reiniciados) hay dos formas equivalentes:
+
+**Por linea de comandos:**
+
+```powershell
+python scripts/reset_db.py
+```
+
+**Por endpoint HTTP (mientras el servidor esta corriendo):**
+
+```
+POST http://127.0.0.1:8080/api/admin/reset
+```
+
+Ambas opciones restauran el stock original de los 47 productos, eliminan todos los pedidos y lineas de detalle, reinician los contadores AUTOINCREMENT de SQLite y devuelven los 3 clientes a sus valores iniciales del seed.
+
+---
+
+## Motor de inferencias y reglas
+
+El `InferenceEngine` evalua 9 reglas sobre el contexto de cada operacion. Siete de ellas estan ademas registradas en la tabla `reglas_inferencia` de la base de datos (para trazabilidad y auditoria); las dos restantes se evaluan exclusivamente en codigo.
+
+| Nombre | Condicion | Accion |
+|--------|-----------|--------|
+| `descuento_cliente_frecuente` | `cliente.total_compras > 5` | Aplica 10% de descuento sobre el subtotal |
+| `descuento_cliente_vip` | `cliente.total_gastado > 100 000` | Aplica 20% de descuento (toma el mayor entre ambos descuentos) |
+| `envio_gratis_por_monto` | `subtotal > 50 000` | Activa envio gratis |
+| `alerta_stock_bajo` | `cantidad_solicitada > stock_disponible` | Genera advertencia; bloquea el pedido si algun item esta agotado |
+| `sugerir_reabastecimiento` | `stock_producto < 3` | Agrega recomendacion de reabastecimiento al resultado |
+| `incompatibilidad_socket` | `cpu.socket != motherboard.socket` | Bloquea el pedido / configuracion y explica la incompatibilidad |
+| `psu_insuficiente` | `total_tdp > psu_wattage * 0.8` | Genera advertencia sobre la fuente de poder |
+| `configuracion_balanceada` | `0.8 <= gpu_precio / cpu_precio <= 1.2` | Agrega recomendacion de configuracion balanceada |
+| `presupuesto_excedido` | `subtotal > 150 000` | Genera advertencia de presupuesto alto |
+
+Las reglas `sugerir_reabastecimiento` y `presupuesto_excedido` se evaluan en el motor pero no tienen entrada en la tabla `reglas_inferencia` del seed actual.
+
+---
+
+## Endpoints principales de la API
+
+| Metodo | Ruta | Descripcion |
+|--------|------|-------------|
+| GET | `/api/products` | Lista el catalogo; soporta `q`, `category`, `brand`, `max_price` como parametros opcionales |
+| GET | `/api/products/deals` | Productos con descuento activo (`precio_original > precio`), ordenados por porcentaje de descuento |
+| GET | `/api/products/{id}` | Detalle de un producto por ID |
+| POST | `/api/orders/checkout` | Procesa el carrito: valida stock, aplica inferencias, persiste el pedido; devuelve resumen + explicacion del Agente 3 |
+| GET | `/api/orders/{id}` | Consulta un pedido con sus lineas de detalle y la explicacion del Agente 3 |
+| POST | `/api/chat` | Envia un mensaje al Agente 1; acepta historial de conversacion para mantener contexto |
+| POST | `/api/pc-expert/validate` | Valida la configuracion del configurador Arma tu PC (socket, PSU, stock) |
+| GET | `/api/clients` | Lista todos los clientes registrados |
+| GET | `/api/clients/{id}` | Detalle de un cliente |
+| POST | `/api/clients` | Registra un nuevo cliente |
+| POST | `/api/admin/reset` | Reinicia stock, pedidos y clientes al estado del seed (uso en demos) |
+| GET | `/` | Estado general del sistema (version, agentes activos) |
+| GET | `/health` | Health check |
+
+La documentacion interactiva completa (Swagger UI) esta disponible en `/docs` mientras el servidor esta corriendo.
+
+---
+
+## Notas sobre el chat con IA
+
+El endpoint `POST /api/chat` implementa una estrategia de degradacion elegante:
+
+1. Si `GEMINI_API_KEY` esta configurada, el mensaje se envia a `gemini-2.5-flash-lite` con un `system_instruction` que incluye el rol del agente, el resumen del catalogo actual y hasta 8 productos relevantes filtrados por categoria y marca mencionadas en el mensaje. El historial de conversacion se pasa completo para mantener el contexto.
+
+2. Si la clave no esta configurada, la cuota de Gemini se ha agotado, o la llamada falla por cualquier razon, el sistema responde automaticamente usando el `CustomerAgent` basado en reglas (`agent1_customer.py`). Este agente detecta palabras clave del mensaje, consulta la base de datos y genera una respuesta estructurada.
+
+El chat **nunca deja de responder**: el mecanismo de respaldo garantiza disponibilidad aunque no haya acceso a la API de Gemini.
+
+---
+
+## Solucion de problemas comunes
+
+**Error al instalar dependencias en Windows**
+
+Si aparece `error: linker 'link.exe' not found` durante `pip install`, significa que pip esta intentando compilar un paquete desde codigo fuente. Esto no deberia ocurrir con las versiones especificadas en `requirements.txt`, que tienen wheels precompilados para Windows. Verificar que pip este actualizado:
+
+```powershell
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+**Puerto 8080 ocupado**
+
+```powershell
+# Ver que proceso usa el puerto
+netstat -ano | findstr :8080
+
+# Terminar el proceso (reemplazar PID con el numero obtenido)
+taskkill /PID <PID> /F
+```
+
+Alternativamente, iniciar uvicorn en otro puerto:
+
+```powershell
+python -m uvicorn backend.main:app --reload --port 8090
+```
+
+**El chat responde con mensajes genericos o de respaldo**
+
+Esto indica que Gemini no esta disponible (cuota agotada, clave incorrecta o ausente). El sistema sigue funcionando: el `CustomerAgent` interno responde con informacion del catalogo. Para restaurar Gemini, verificar que `GEMINI_API_KEY` en `.env` sea valida y que la cuenta no haya excedido la cuota gratuita diaria.
+
+**La base de datos no existe al iniciar el servidor**
+
+El servidor arranca sin error pero las consultas fallaran. Ejecutar los scripts en orden:
+
+```powershell
+python scripts/init_db.py
+python scripts/seed_db.py
 ```
 
 ---
 
-## 📊 Funcionalidades por Página
+## Pruebas
 
-### **Landing Page** (`index.html`)
-- Presentación del sistema
-- 3 tarjetas con descripción de agentes
-- Botones de navegación (Catálogo, Chat)
-- Estadísticas del sistema
-- Banner hero responsive
-
-### **Catálogo** (`catalog.html`)
-- Grid de productos dinámicos
-- Filtros (categoría, marca, rango de precio)
-- Search en tiempo real
-- Tarjetas con: foto, nombre, precio, rating, stock, botón agregar
-- Carrito flotante
-- Ofertas destacadas
-
-### **Chat IA** (`chat.html`)
-- Interfaz de chat conversacional
-- Mensajes del usuario y asistente
-- Integración con Agente 1
-- Sugerencias rápidas
-- Historial de conversación
-
-### **Centro de Soporte** (`support.html`)
-- Formulario de tickets
-- Email y teléfono
-- Chat con agentes
-- Preguntas frecuentes
-- Estado de devoluciones
-
-### **Carrito** (Modal)
-- Listado de productos agregados
-- Ajuste de cantidades
-- Cálculo de totales
-- Aplicación de descuentos
-- Botón proceder a pago
-
----
-
-## 📈 Casos de Uso
-
-### **Caso 1: Cliente Gamer**
-```
-1. Usuario: "Quiero una PC para gaming con $300,000"
-2. Agente 1: Detecta intención=compra, presupuesto=$300k, caso=gaming
-3. Agente 2: Recomenda GPU RTX 4090, CPU i9, 32GB RAM
-   - Valida compatibilidad: ✓
-   - Calcula total: $299,999
-4. Agente 3: "Se recomendó config balanceada RTX 4090 + i9.
-             Total: $299,999. ¿Confirmas?"
-```
-
-### **Caso 2: Cliente Frecuente**
-```
-1. Usuario: "Necesito un SSD"
-2. Agente 1: Reconoce cliente_id=2 (ya compró 7 veces)
-3. Agente 2: 
-   - Aplica regla: descuento_cliente_frecuente (10%)
-   - Aplica regla: recomendacion_cooler (cliente armó PC hace poco)
-   - Total: $2,700 (antes $3,000)
-4. Agente 3: "Cliente frecuente! Se aplicó 10% descuento.
-             Subtotal: $3,000 → Total: $2,700"
-```
-
-### **Caso 3: Stock Bajo**
-```
-1. Usuario: "Quiero 5 RTX 4090"
-2. Agente 2:
-   - Stock disponible: 3 unidades
-   - Dispara regla: alerta_stock_bajo
-   - Genera sugerencia: RTX 4080 (12 en stock)
-3. Agente 3: "Solo tenemos 3 RTX 4090. Te recomendamos
-             RTX 4080 con 12 disponibles. ¿Cambias?"
+```powershell
+python -m unittest tests.test_api -v
 ```
 
 ---
 
-## 🔍 Requisitos Técnicos Mínimos
+## Contexto academico
 
-El sistema demuestra:
-- ✅ **Conexión a Base de Datos** - SQLite completamente funcional
-- ✅ **Reglas de Inferencia** - 10 reglas IF-THEN automáticas
-- ✅ **Explicabilidad** - Cada decisión es justificada por el Agente 3
-- ✅ **Interacción Usuario-Sistema** - Chat bidireccional
-- ✅ **Arquitectura de Agentes** - 3 agentes colaborativos
-- ✅ **Procesamiento de Lenguaje Natural** - Gemini API integration
-- ✅ **Gestión de Pedidos** - Almacenamiento y seguimiento en BD
-
----
-
-## 📅 Cronograma de Desarrollo
-
-| Día | Commit | Tema |
-|-----|--------|------|
-| **1** | `init: scaffold base structure` | ✅ Base completada |
-| **2** | `feat: database initialization` | Scripts y BD |
-| **3** | `feat: Agent 1 - Customer Service` | Agente atención |
-| **4** | `feat: Agent 2 & Inference Engine` | Generador de pedidos |
-| **5** | `feat: Agent 3 - Supervisor` | Supervisor explicador |
-| **6** | `feat: FastAPI endpoints` | API REST |
-| **7** | `feat: Frontend UI` | Interfaz web |
-| **8** | `fix: Integration & Testing` | Tests |
-| **9** | `docs: Final Documentation` | PDF y video |
-
----
-
-## 👨‍💻 Desarrollo
-
-Para contribuir o trabajar en el proyecto:
-
-1. Ver [DEV_GUIDE.md](DEV_GUIDE.md) para configuración
-2. Ver [COMMITS_PLAN.md](COMMITS_PLAN.md) para tareas diarias
-3. Ver [docs/architecture.md](docs/architecture.md) para arquitectura
-
----
-
-## 📞 Soporte
-
-Para consultas técnicas sobre el proyecto:
-- 📧 Email: soporte@tiendainteligente.com
-- 💬 Chat: Usar Agente 1 en la interfaz
-- 📋 Issues: Crear ticket en el repositorio
-
----
-
-## 📄 Licencia
-
-Proyecto desarrollado para **propósitos académicos** en la materia **Sistemas Expertos** - CETI Ingeniería.
-
----
-
-**Última actualización:** Junio 6, 2026  
-**Versión:** 1.0.0 - Beta  
-**Autor:** Jonathan Rangel | **Matricula:** [Tu matrícula] 
-
+Proyecto academico — Materia: Sistemas Expertos, 2026.
